@@ -22,7 +22,7 @@ Within an open interactive psql session:
 \set ON_ERROR_STOP on
 
 -- Uncomment these lines to import sfm and sim files respectively.
---\set import_sfm
+\set import_sfm
 \set import_sim
 
 -- Configure the location from which to get CSV files.
@@ -66,39 +66,54 @@ SET search_path TO "MC_results_database";
 \echo Import current_msr_mat
 \i 'schema/create_current_msr_mat.sql'
 truncate "current_msr_mat";
-\set command '\\copy "current_msr_mat" FROM ' :'file0' ' WITH (FORMAT csv, HEADER MATCH)'
-:command
+--\set command '\\copy "current_msr_mat" FROM ' :'file0' ' WITH (FORMAT csv, HEADER MATCH)'
+--:command
+\copy "current_msr_mat" FROM 'results/DMo_Furnace/67 Baseline/current_msr_mat.csv'           WITH (FORMAT csv, HEADER MATCH)
+\copy "current_msr_mat" FROM 'results/MFm_Furnace_Ex/Baseline 67/current_msr_mat.csv'        WITH (FORMAT csv, HEADER MATCH)
+\copy "current_msr_mat" FROM 'results/MFm_Furnace_New/Baseline 67/current_msr_mat.csv'       WITH (FORMAT csv, HEADER MATCH)
+\copy "current_msr_mat" FROM 'results/SFm_Furnace_1975_1985/Baseline 67/current_msr_mat.csv' WITH (FORMAT csv, HEADER MATCH)
+\copy "current_msr_mat" FROM 'results/SFm_Furnace_New/Baseline 67/current_msr_mat.csv'       WITH (FORMAT csv, HEADER MATCH)
 
 \echo Import sim_annual
 \i 'schema/create_sim_annual.sql'
 \if :{?import_sim}
 truncate "sim_annual";
-\set command '\\copy "sim_annual" FROM ' :'file1' ' WITH (FORMAT csv, HEADER MATCH)'
-:command
+--\set command '\\copy "sim_annual" FROM ' :'file1' ' WITH (FORMAT csv, HEADER MATCH)'
+--:command
+\copy "sim_annual" FROM 'results/DMo_Furnace/67 Baseline/sim_annual.csv'           WITH (FORMAT csv, HEADER MATCH)
+\copy "sim_annual" FROM 'results/MFm_Furnace_Ex/Baseline 67/sim_annual.csv'        WITH (FORMAT csv, HEADER MATCH)
+\copy "sim_annual" FROM 'results/MFm_Furnace_New/Baseline 67/sim_annual.csv'       WITH (FORMAT csv, HEADER MATCH)
 \endif
 
 \echo Import sim_hourly_wb
 \i 'schema/create_sim_hourly_wb.sql'
 \if :{?import_sim}
 truncate "sim_hourly_wb";
-\set command '\\copy "sim_hourly_wb" FROM ' :'file2' ' WITH (FORMAT csv, HEADER MATCH)'
-:command
+--\set command '\\copy "sim_hourly_wb" FROM ' :'file2' ' WITH (FORMAT csv, HEADER MATCH)'
+--:command
+\copy "sim_hourly_wb" FROM 'results/DMo_Furnace/67 Baseline/sim_hourly_wb.csv'           WITH (FORMAT csv, HEADER MATCH)
+\copy "sim_hourly_wb" FROM 'results/MFm_Furnace_Ex/Baseline 67/sim_hourly_wb.csv'        WITH (FORMAT csv, HEADER MATCH)
+\copy "sim_hourly_wb" FROM 'results/MFm_Furnace_New/Baseline 67/sim_hourly_wb.csv'       WITH (FORMAT csv, HEADER MATCH)
 \endif
 
 \echo Import sfm_annual
 \i 'schema/create_sfm_annual.sql'
 \if :{?import_sfm}
 truncate "sfm_annual";
-\set command '\\copy "sfm_annual" FROM ' :'file3' ' WITH (FORMAT csv, HEADER MATCH)'
-:command
+--\set command '\\copy "sfm_annual" FROM ' :'file3' ' WITH (FORMAT csv, HEADER MATCH)'
+--:command
+\copy "sfm_annual" FROM 'results/SFm_Furnace_1975_1985/Baseline 67/sfm_annual.csv' WITH (FORMAT csv, HEADER MATCH)
+\copy "sfm_annual" FROM 'results/SFm_Furnace_New/Baseline 67/sfm_annual.csv'       WITH (FORMAT csv, HEADER MATCH)
 \endif
 
 \echo Import sfm_hourly_wb
 \i 'schema/create_sfm_hourly_wb.sql'
 \if :{?import_sfm}
 truncate "sfm_hourly_wb";
-\set command '\\copy "sfm_hourly_wb" FROM ' :'file4' ' WITH (FORMAT csv, HEADER MATCH)'
-:command
+--\set command '\\copy "sfm_hourly_wb" FROM ' :'file4' ' WITH (FORMAT csv, HEADER MATCH)'
+--:command
+\copy "sfm_hourly_wb" FROM 'results/SFm_Furnace_1975_1985/Baseline 67/sfm_hourly_wb.csv' WITH (FORMAT csv, HEADER MATCH)
+\copy "sfm_hourly_wb" FROM 'results/SFm_Furnace_New/Baseline 67/sfm_hourly_wb.csv'       WITH (FORMAT csv, HEADER MATCH)
 \endif
 
 \echo Loading support tables
