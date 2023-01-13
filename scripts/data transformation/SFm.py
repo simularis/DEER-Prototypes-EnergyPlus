@@ -8,7 +8,7 @@ import datetime as dt
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 # %%
 #Read master workbook for measure / tech list
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list.xlsx', sheet_name='Measure_list', skiprows=4)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list+WallFurnace.xlsx', sheet_name='Measure_list', skiprows=4)
 
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
@@ -20,7 +20,7 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here
-measure_name = 'SEER Rated AC/HP'
+measure_name = 'Wall Furnace'
 
 # %%
 #SFm only script
@@ -31,8 +31,8 @@ os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
 #input the two subdirectory of SFm, one being 1975, the other 1985. If New vintage, input path at path1 and leave other blank.
-path1 = 'Analysis/SFm_SEER Rated AC_HP_1975'
-path2 = 'Analysis/SFm_SEER Rated AC_HP_1985'
+path1 = 'C:\DEER-Prototypes-EnergyPlus\Analysis\SFm_Furnace_1975'
+path2 = 'C:\DEER-Prototypes-EnergyPlus\Analysis\SFm_Furnace_1985'
 
 paths = [path1, path2]
 
@@ -181,28 +181,28 @@ case_cohort_list = df_measure['Measure Group Name'].unique()
 # %%
 #SFm only script
 ####Define path
-os.chdir(os.path.dirname(__file__)) #resets to current script directory
-print(os.path.abspath(os.curdir))
-os.chdir("../..") #go up two directory
-print(os.path.abspath(os.curdir))
+#os.chdir(os.path.dirname(__file__)) #resets to current script directory
+#print(os.path.abspath(os.curdir))
+#os.chdir("../..") #go up two directory
+#print(os.path.abspath(os.curdir))
 
 #input the two subdirectory of SFm, one being 1975, the other 1985. If New vintage, input path at path1 and leave other blank.
-path1 = 'analysis/SFm_SEER Rated AC_HP_1975'
-path2 = 'analysis/SFm_SEER Rated AC_HP_1985'
+#path1 = 'Analysis/SFm_Furnace_New'
+#path2 = ''
 
-paths = [path1, path2]
+#paths = [path1, path2]
 
-if any('New' in x for x in paths):
-    paths = [path1]
+#if any('New' in x for x in paths):
+#    paths = [path1]
 # %%
 ##STEP 1: Annual output data read/transform
 sim_annual_raw = pd.DataFrame()
 for path in paths:
     print(f'processing data in {path}')
-    df_raw = pd.read_csv(path+'/'+'/results-summary.csv', usecols=['File Name'])
+    df_raw = pd.read_csv(path+'/results-summary.csv', usecols=['File Name'])
     num_runs = len(df_raw['File Name'].dropna().unique()) - 1
     #Read annual data
-    annual_df = pd.read_csv(path+'/'+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
+    annual_df = pd.read_csv(path+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
     split_meta_cols_eu = annual_df['File Name'].str.split('/', expand=True)
 
     #looping over multiple folders/cohort cases, use a list
@@ -250,9 +250,9 @@ for path in paths:
     #extract data per bldgtype-bldghvac-bldgvint group
     hourly_df = pd.DataFrame(index=range(0,8760))
     #extract num_runs / split_meta_cols_eu
-    df_raw = pd.read_csv(path+'/'+'/results-summary.csv', usecols=['File Name'])
+    df_raw = pd.read_csv(path +'/results-summary.csv', usecols=['File Name'])
     num_runs = len(df_raw['File Name'].dropna().unique()) - 1
-    annual_df = pd.read_csv(path+'/'+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
+    annual_df = pd.read_csv(path +'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
     split_meta_cols_eu = annual_df['File Name'].str.split('/', expand=True)
     for i in range(0,num_runs):
         print(f"merging record {i}")
