@@ -5,6 +5,8 @@ results-summary.csv
 modelkit_cmd_output.txt
 results-profile-elec.csv
 results-profile-gas.csv
+scripts/results
+sim_hourly_wb.csv
 
 # OS generated files #
 ######################
@@ -13,3 +15,4 @@ results-profile-gas.csv
 # Other #
 #########
 stderr
+.bak
