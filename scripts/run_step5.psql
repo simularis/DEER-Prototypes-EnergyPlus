@@ -68,9 +68,9 @@ SET search_path TO "MC_results_database";
 truncate "current_msr_mat";
 --\set command '\\copy "current_msr_mat" FROM ' :'file0' ' WITH (FORMAT csv, HEADER MATCH)'
 --:command
-\copy "current_msr_mat" FROM 'results/DMo_Furnace/67 Baseline/current_msr_mat.csv'           WITH (FORMAT csv, HEADER MATCH)
-\copy "current_msr_mat" FROM 'results/MFm_Furnace_Ex/Baseline 67/current_msr_mat.csv'        WITH (FORMAT csv, HEADER MATCH)
-\copy "current_msr_mat" FROM 'results/MFm_Furnace_New/Baseline 67/current_msr_mat.csv'       WITH (FORMAT csv, HEADER MATCH)
+\copy "current_msr_mat" FROM 'results/DMo_Furnace/67 Redo/current_msr_mat.csv'           WITH (FORMAT csv, HEADER MATCH)
+\copy "current_msr_mat" FROM 'results/MFm_Furnace_Ex/67 Redo/current_msr_mat.csv'        WITH (FORMAT csv, HEADER MATCH)
+\copy "current_msr_mat" FROM 'results/MFm_Furnace_New/67 Redo/current_msr_mat.csv'       WITH (FORMAT csv, HEADER MATCH)
 \copy "current_msr_mat" FROM 'results/SFm_Furnace_1975_1985/Baseline 67/current_msr_mat.csv' WITH (FORMAT csv, HEADER MATCH)
 \copy "current_msr_mat" FROM 'results/SFm_Furnace_New/Baseline 67/current_msr_mat.csv'       WITH (FORMAT csv, HEADER MATCH)
 
@@ -80,9 +80,9 @@ truncate "current_msr_mat";
 truncate "sim_annual";
 --\set command '\\copy "sim_annual" FROM ' :'file1' ' WITH (FORMAT csv, HEADER MATCH)'
 --:command
-\copy "sim_annual" FROM 'results/DMo_Furnace/67 Baseline/sim_annual.csv'           WITH (FORMAT csv, HEADER MATCH)
-\copy "sim_annual" FROM 'results/MFm_Furnace_Ex/Baseline 67/sim_annual.csv'        WITH (FORMAT csv, HEADER MATCH)
-\copy "sim_annual" FROM 'results/MFm_Furnace_New/Baseline 67/sim_annual.csv'       WITH (FORMAT csv, HEADER MATCH)
+\copy "sim_annual" FROM 'results/DMo_Furnace/67 Redo/sim_annual.csv'           WITH (FORMAT csv, HEADER MATCH)
+\copy "sim_annual" FROM 'results/MFm_Furnace_Ex/67 Redo/sim_annual.csv'        WITH (FORMAT csv, HEADER MATCH)
+\copy "sim_annual" FROM 'results/MFm_Furnace_New/67 Redo/sim_annual.csv'       WITH (FORMAT csv, HEADER MATCH)
 \endif
 
 \echo Import sim_hourly_wb
@@ -91,9 +91,9 @@ truncate "sim_annual";
 truncate "sim_hourly_wb";
 --\set command '\\copy "sim_hourly_wb" FROM ' :'file2' ' WITH (FORMAT csv, HEADER MATCH)'
 --:command
-\copy "sim_hourly_wb" FROM 'results/DMo_Furnace/67 Baseline/sim_hourly_wb.csv'           WITH (FORMAT csv, HEADER MATCH)
-\copy "sim_hourly_wb" FROM 'results/MFm_Furnace_Ex/Baseline 67/sim_hourly_wb.csv'        WITH (FORMAT csv, HEADER MATCH)
-\copy "sim_hourly_wb" FROM 'results/MFm_Furnace_New/Baseline 67/sim_hourly_wb.csv'       WITH (FORMAT csv, HEADER MATCH)
+\copy "sim_hourly_wb" FROM 'results/DMo_Furnace/67 Redo/sim_hourly_wb.csv'           WITH (FORMAT csv, HEADER MATCH)
+\copy "sim_hourly_wb" FROM 'results/MFm_Furnace_Ex/67 Redo/sim_hourly_wb.csv'        WITH (FORMAT csv, HEADER MATCH)
+\copy "sim_hourly_wb" FROM 'results/MFm_Furnace_New/67 Redo/sim_hourly_wb.csv'       WITH (FORMAT csv, HEADER MATCH)
 \endif
 
 \echo Import sfm_annual
