@@ -1,0 +1,9 @@
+cd SFm_Furnace_1975\runs
+for /d %v in (CZ*) do (rmdir /S %v\SFm^&2^&rDXGF^&Ex^&SpaceHtg_eq__GasFurnace)
+
+cd SFm_Furnace_1985\runs
+for /d %v in (CZ*) do (rmdir /S %v\SFm^&2^&rDXGF^&Ex^&SpaceHtg_eq__GasFurnace)
+
+cd SFm_SEER Rated AC_HP_1975\runs
+for /d %v in (CZ*) do (rmdir /S /Q %v\SFm^&2^&rDXHP^&Ex^&dxHP_equip)
+
