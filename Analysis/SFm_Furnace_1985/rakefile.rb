@@ -739,7 +739,7 @@ end
 file results_profile_gas_path => run_csv_paths do
   # NOTE: If Gas:Facility is the last column, there is an extra blank space after
   #   the column name. The blank space must be included for CSV to find the column.
-  aggregate_profiles("Gas:Facility [J](Hourly) ", results_profile_gas_path, run_csv_paths, runs_pathname)
+  aggregate_profiles("NaturalGas:Facility [J](Hourly) ", results_profile_gas_path, run_csv_paths, runs_pathname)
 end
 
 
