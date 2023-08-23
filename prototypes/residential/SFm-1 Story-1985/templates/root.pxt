@@ -20239,6 +20239,16 @@ Output:Variable,
     *,                       !- Key Value
     Air System Heating Coil NaturalGas Energy ,  !- Variable Name
     Hourly;                  !- Reporting Frequency
+	
+Output:Variable,
+    *,                       !- Key Value
+    Zone Predicted Sensible Load to Heating Setpoint Heat Transfer Rate ,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+	
+Output:Variable,
+    *,                       !- Key Value
+    Zone Air Heat Balance System Air Transfer Rate ,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
 !-   =========== End customization for dual fuel models ===========
 
 !-   ===========  ALL OBJECTS IN CLASS: OUTPUT:PREPROCESSORMESSAGE ===========
