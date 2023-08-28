@@ -18635,7 +18635,7 @@ AirLoopHVAC:UnitarySystem,
     No,                      !- Use DOAS DX Cooling Coil
     2,                       !- Minimum Supply Air Temperature {C}
     SensibleOnlyLoadControl, !- Latent Load Control
-    Coil:Heating:Electric,   !- Supplemental Heating Coil Object Type
+    Coil:Heating:Fuel,   !- Supplemental Heating Coil Object Type
     DXGF EL7 Heating Coil,   !- Supplemental Heating Coil Name
     SupplyAirFlowRate,       !- Cooling Supply Air Flow Rate Method
     autosize,                !- Cooling Supply Air Flow Rate {m3/s}
@@ -18655,7 +18655,7 @@ AirLoopHVAC:UnitarySystem,
     ,                        !- No Load Supply Air Flow Rate Per Unit of Capacity During Cooling Operation {m3/s-W}
     ,                        !- No Load Supply Air Flow Rate Per Unit of Capacity During Heating Operation {m3/s-W}
     80,                      !- Maximum Supply Air Temperature {C}
-    21,                      !- Maximum Outdoor Dry-Bulb Temperature for Supplemental Heater Operation {C}
+    1.66666666666667,        !- Maximum Outdoor Dry-Bulb Temperature for Supplemental Heater Operation {C}
     ,                        !- Outdoor Dry-Bulb Temperature Sensor Node Name
     2.5,                     !- Maximum Cycling Rate {cycles/hr}
     60,                      !- Heat Pump Time Constant {s}
@@ -18698,8 +18698,8 @@ AirLoopHVAC:UnitarySystem,
     No,                      !- Use DOAS DX Cooling Coil
     2,                       !- Minimum Supply Air Temperature {C}
     SensibleOnlyLoadControl, !- Latent Load Control
-    Coil:Heating:Electric,   !- Supplemental Heating Coil Object Type
-    DXGF EL8 Heating Coil,   !- Supplemental Heating Coil Name
+    Coil:Heating:Fuel,   !- Supplemental Heating Coil Object Type
+	DXGF EL8 Heating Coil,   !- Supplemental Heating Coil Name
     SupplyAirFlowRate,       !- Cooling Supply Air Flow Rate Method
     autosize,                !- Cooling Supply Air Flow Rate {m3/s}
     ,                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
@@ -18718,7 +18718,7 @@ AirLoopHVAC:UnitarySystem,
     ,                        !- No Load Supply Air Flow Rate Per Unit of Capacity During Cooling Operation {m3/s-W}
     ,                        !- No Load Supply Air Flow Rate Per Unit of Capacity During Heating Operation {m3/s-W}
     80,                      !- Maximum Supply Air Temperature {C}
-    21,                      !- Maximum Outdoor Dry-Bulb Temperature for Supplemental Heater Operation {C}
+    1.66666666666667,        !- Maximum Outdoor Dry-Bulb Temperature for Supplemental Heater Operation {C}
     ,                        !- Outdoor Dry-Bulb Temperature Sensor Node Name
     2.5,                     !- Maximum Cycling Rate {cycles/hr}
     60,                      !- Heat Pump Time Constant {s}
@@ -18766,7 +18766,7 @@ AirLoopHVAC:UnitaryHeatPump:AirToAir,
     DXHP EL7 Heating Coil,   !- Heating Coil Name
     Coil:Cooling:DX:SingleSpeed,  !- Cooling Coil Object Type
     DXGF EL7 Cooling Coil,   !- Cooling Coil Name
-    Coil:Heating:Electric,   !- Supplemental Heating Coil Object Type
+    Coil:Heating:Fuel,   !- Supplemental Heating Coil Object Type
     DXGF EL7 Heating Coil,   !- Supplemental Heating Coil Name
     50,                      !- Maximum Supply Air Temperature from Supplemental Heater {C}
     21,                      !- Maximum Outdoor Dry-Bulb Temperature for Supplemental Heater Operation {C}
@@ -18789,7 +18789,7 @@ AirLoopHVAC:UnitaryHeatPump:AirToAir,
     DXHP EL8 Heating Coil,   !- Heating Coil Name
     Coil:Cooling:DX:SingleSpeed,  !- Cooling Coil Object Type
     DXGF EL8 Cooling Coil,   !- Cooling Coil Name
-    Coil:Heating:Electric,   !- Supplemental Heating Coil Object Type
+    Coil:Heating:Fuel,   !- Supplemental Heating Coil Object Type
     DXGF EL8 Heating Coil,   !- Supplemental Heating Coil Name
     50,                      !- Maximum Supply Air Temperature from Supplemental Heater {C}
     21,                      !- Maximum Outdoor Dry-Bulb Temperature for Supplemental Heater Operation {C}
@@ -18799,23 +18799,33 @@ AirLoopHVAC:UnitaryHeatPump:AirToAir,
 
 <% end %>
 
-!-   ===========  ALL OBJECTS IN CLASS: COIL:HEATING:ELECTRIC ===========
+!-   ===========  ALL OBJECTS IN CLASS: COIL:HEATING:Fuel ===========
 
-Coil:Heating:Electric,
+Coil:Heating:Fuel,
     DXGF EL7 Heating Coil,   !- Name
     always_avail,            !- Availability Schedule Name
-    1,                       !- Efficiency
+    NaturalGas,              !- Fuel Type
+	0.95,                    !- Burner Efficiency
     autosize,                !- Nominal Capacity {W}
     DXGF EL7 Heating Coil Outlet,  !- Air Inlet Node Name
-    DXGF EL7 Air Loop Outlet;!- Air Outlet Node Name
+    DXGF EL7 Air Loop Outlet, !- Air Outlet Node Name
+	,                        !- Temperature Setpoint Node Name
+	0,                       !- Parasitic Electric Load {W}
+	,                        !- Part Load Fraction Correlation Curve Name
+	0;                       !- Parasitic Fuel Load {W}
 
-Coil:Heating:Electric,
+Coil:Heating:Fuel,
     DXGF EL8 Heating Coil,   !- Name
     always_avail,            !- Availability Schedule Name
-    1,                       !- Efficiency
+    NaturalGas,                             !- Fuel Type
+	0.95,                                   !- Burner Efficiency
     autosize,                !- Nominal Capacity {W}
     DXGF EL8 Heating Coil Outlet,  !- Air Inlet Node Name
-    DXGF EL8 Air Loop Outlet;!- Air Outlet Node Name
+    DXGF EL8 Air Loop Outlet, !- Air Outlet Node Name
+	,                                       !- Temperature Setpoint Node Name
+	0,                                      !- Parasitic Electric Load {W}
+	,                                       !- Part Load Fraction Correlation Curve Name
+	0;                                      !- Parasitic Fuel Load {W}
 
 !-   ===========  ALL OBJECTS IN CLASS: AIRLOOPHVAC:ZONESPLITTER ===========
 
@@ -21139,6 +21149,27 @@ Output:Variable,
     *,                       !- Key Value
     Zone Air Heat Balance System Air Transfer Rate ,  !- Variable Name
     Hourly;                  !- Reporting Frequency
+	
+Output:Variable,
+  DXGF EL7 Heating Coil,   !- Key Value
+  Heating Coil Heating Energy,            !- Variable Name
+  Hourly;                              !- Reporting Frequency
+
+Output:Variable,
+  DXGF EL8 Heating Coil,   !- Key Value
+  Heating Coil Heating Energy,            !- Variable Name
+  Hourly;                              !- Reporting Frequency
+  
+Output:Variable,
+  DXGF EL7 Heating Coil,   !- Key Value
+  Heating Coil NaturalGas Energy,         !- Variable Name
+  Hourly;                              !- Reporting Frequency
+  
+Output:Variable,
+  DXGF EL8 Heating Coil,   !- Key Value
+  Heating Coil NaturalGas Energy,         !- Variable Name
+  Hourly;                              !- Reporting Frequency
+
 !-   =========== End customization for dual fuel models ===========
 
 !-   ===========  ALL OBJECTS IN CLASS: OUTPUT:PREPROCESSORMESSAGE ===========
