@@ -1,6 +1,6 @@
 
 SETLOCAL
-set "DEERROOT=C:\Users\nfette\source\repos\deer-dual-fuel-models"
+set "DEERROOT=%~dp0\.."
 REM set "mycmd=call modelkit rake --dry-run"
 set "mycmd=call modelkit rake"
 
@@ -10,8 +10,9 @@ set mydirs=^
   "SFm_SEER Rated AC_HP_1975" ^
   "SFm_SEER Rated AC_HP_1985"
 
-REM call :compose
+call :compose
 call :run
+REM call :clean
 
 ENDLOCAL
 exit /b
@@ -32,4 +33,12 @@ for %%v in (%mydirs%) do (
   %mycmd% run
   @echo on
 )
+
+:clean
+for %%v in (%mydirs%) do (
+  cd "%DEERROOT%\Analysis\%%~v"
+  %mycmd% clean
+  @echo on
+)
+
 exit /b
