@@ -63,6 +63,9 @@ parameter "supplyfan_total_eff", :default=>0.12
 parameter "motor_eff", :default=>0.24
 parameter "vfd_curve_name", :default=>""
 
+# Fan On/Off
+parameter "fan_schedule_name", :default=>"always_avail"
+
 # Cooling COP
 parameter "cooling_coil_cop", :default=>3.28
 parameter "cooling_coil_cop2", :default=>3.28
