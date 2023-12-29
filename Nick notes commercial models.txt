@@ -1,0 +1,10 @@
+Running models.
+There are now 25 commercial prototypes.
+
+Folders like this include 24/25 prototypes.
+SWXX000-00 Measure Name_1975\runs * 34/384 (9%) = 125 MB.
+Estimate that SWXX000-00 Measure Name_1975\runs (100%) = 1,388 MB.
+For 10 such vintages: 10 * 1388 MB = 13,888 MB.
+
+For additional hotel building type: (25/24) * 13,888 MB = 14,467 MB.
+For only one climate zone: 14,467 MB / 16 = 904 MB.
