@@ -324,6 +324,11 @@ AirLoopHVAC:UnitarySystem,
   Coil:Heating:Water,      !- Heating Coil Object Type
   <%= unitary_name %> Heating Coil,  !- Heating Coil Name
   ,                        !- DX Heating Coil Sizing Ratio
+<% elsif (heat_coil_type == "STEAM") %>
+  Coil:Heating:Steam,      !- Heating Coil Object Type
+  <%= unitary_name %> Heating Coil,  !- Heating Coil Name
+  ,                        !- DX Heating Coil Sizing Ratio
+  
 <% elsif (heat_coil_type == "NONE") %>
   ,                        !- Heating Coil Object Type
   ,                        !- Heating Coil Name
@@ -2658,6 +2663,26 @@ Coil:Heating:Water,
   ,                        !- Rated Inlet Air Temperature {C}
   ,                        !- Rated Outlet Water Temperature {C}
   ;                        !- Rated Outlet Air Temperature {C}
+
+<% elsif (heat_coil_type == "STEAM") %>
+Coil:Heating:Steam,
+  <%= unitary_name %> Heating Coil,  !- Name
+  ,                        !- Availability Schedule Name
+  Autosize,                !- Maximum Steam Flow Rate {m3/s}
+  <%= unitary_name %> HeatCDemand Inlet Node,  !- Water Inlet Node Name
+  <%= unitary_name %> HeatCDemand Outlet Node,  !- Water Outlet Node Name
+<% if (fan_config == "DRAW-THROUGH" and cool_coil_type == "NONE") %>
+  <%= unitary_name %> Unitary Inlet Node,  !- Air Inlet Node Name
+<% elsif (fan_config == "BLOW-THROUGH" and cool_coil_type == "NONE") %>
+  <%= unitary_name %> Supply Fan Outlet Node,  !- Air Inlet Node Name
+<% else %>
+  <%= unitary_name %> Cooling Coil Outlet Node,  !- Air Inlet Node Name
+<% end %>
+<% if (fan_config == "BLOW-THROUGH" and aux_heat_coil_type == "NONE") %>
+  <%= unitary_name %> Unitary Outlet Node,  !- Air Outlet Node Name
+<% else %>
+  <%= unitary_name %> Heating Coil Outlet Node,  !- Air Outlet Node Name
+<% end %>
 
 ! Controller not needed with Unitary...?
 !Controller:WaterCoil,

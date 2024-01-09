@@ -27,8 +27,8 @@ parameter "pump_power", :default=>Autosize
 parameter "pump_curve", :default=>"NOT USED"
 
 
-parameter "heating_source", :default=>"BOILER"  # (BOILER | DISTRICT | GSHP | CHP )
-parameter "boiler_duplicate", :default=>false  # Heating Source BOILER Only!!
+parameter "heating_source", :default=>"BOILER"  # (BOILER | STEAM BOILER | DISTRICT | GSHP | CHP )
+parameter "boiler_duplicate", :default=>false  # Heating Source BOILER and STEAM BOILER Only!!
 
 parameter "boiler_type", :default=>"NONCONDENSING"     #  (NONCONDENSING | CONDENSING | ELECTRIC)
 parameter "boiler_fuel", :default=>"NATURALGAS"     #  (NATURALGAS | FUELOIL | ELECTRICITY)
@@ -144,6 +144,8 @@ PlantEquipmentList,
   <%= name %> Equipment List, !- Name
 <% if (heating_source == "BOILER") %>
   Boiler:HotWater,         !- Equipment 1 Object Type
+<% elsif (heating_source == "STEAM BOILER") %>
+  Boiler:Steam,         !- Equipment 1 Object Type
 <% elsif (heating_source == "DISTRICT") %>
   DistrictHeating,         !- Equipment 1 Object Type
 <% elsif (heating_source == "GSHP") %>
@@ -163,6 +165,10 @@ PlantEquipmentList,
   <%= name %> Heating Source 1,  !- Equipment 1 Name
   Boiler:HotWater,                      !- Equipment 2 Object Type
   <%= name %> Heating Source 2;  !- Equipment 2 Name
+<% elsif (boiler_duplicate) %>
+  <%= name %> Heating Source 1,  !- Equipment 1 Name
+  Boiler:Steam,                      !- Equipment 2 Object Type
+  <%= name %> Heating Source 2;  !- Equipment 2 Name   
 <% else %>
   <%= name %> Heating Source;  !- Equipment 1 Name
 <% end %>
@@ -215,6 +221,8 @@ Branch,
   ,                        !- Pressure Drop Curve Name
 <% if (heating_source == "BOILER") %>
   Boiler:HotWater,         !- Component 1 Object Type
+<% elsif (heating_source == "STEAM BOILER") %>
+  Boiler:Steam,         !- Component 1 Object Type
 <% elsif (heating_source == "DISTRICT") %>
   DistrictHeating,         !- Component 1 Object Type
 <% elsif (heating_source == "GSHP") %>
@@ -235,6 +243,8 @@ Branch,
   ,                        !- Pressure Drop Curve Name
 <% if (heating_source == "BOILER") %>
   Boiler:HotWater,         !- Component 1 Object Type
+<% elsif (heating_source == "STEAM BOILER") %>
+  Boiler:Steam,         !- Component 1 Object Type
 <% elsif (heating_source == "DISTRICT") %>
   DistrictHeating,         !- Component 1 Object Type
 <% elsif (heating_source == "GSHP") %>
@@ -256,6 +266,8 @@ Branch,
   ,                        !- Pressure Drop Curve Name
 <% if (heating_source == "BOILER") %>
   Boiler:HotWater,         !- Component 1 Object Type
+<% elsif (heating_source == "STEAM BOILER") %>
+  Boiler:Steam,         !- Component 1 Object Type
 <% elsif (heating_source == "DISTRICT") %>
   DistrictHeating,         !- Component 1 Object Type
 <% elsif (heating_source == "GSHP") %>
@@ -472,6 +484,54 @@ Curve:Bicubic,
   0.99;                    !- Maximum Curve Output
 <% end %>
 
+<% if (heating_source == "STEAM BOILER") %>
+  <% if (boiler_duplicate) %>
+Boiler:Steam,
+  <%= name %> Heating Source 1,  !- Name
+<% if (boiler_fuel == "NATURALGAS") %>
+  NaturalGas,              !- Fuel Type
+<% elsif (boiler_fuel == "FUELOIL") %>
+  FuelOilNo1,               !- Fuel Type
+<% elsif (boiler_fuel == "ELECTRICITY") %>
+  Electricity,             !- Fuel Type
+<% end %>
+  <%= boiler_cap %>,  !- Nominal Capacity {W}
+  <%= boiler_eff %>,  !- Theoritical Efficiency
+  0.00001,                     !- Minimum Part Load Ratio
+  1.0,                     !- Maximum Part Load Ratio
+  0.2,                     !- Optimum Part Load Ratio
+  0.8,                     !- Coefficient 1 of Fuel Use Function of Part Load Ratio Curve
+  0.1,                     !- Coefficient 2 of Fuel Use Function of Part Load Ratio Curve
+  0.1,                     !- Coefficient 3 of Fuel Use Function of Part Load Ratio Curve
+  <%= name %> Heating Source 1 Inlet Node,  !- Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node 1,  !- Steam Outlet Node Name
+  100,                    !- Design Outlet Steam Temperature {C}
+  ,                        !- Parasitic Electric Load {W}
+  1;                        !- Sizing Factor
+
+Boiler:Steam,
+  <%= name %> Heating Source 2,  !- Name
+<% if (boiler_fuel == "NATURALGAS") %>
+  NaturalGas,              !- Fuel Type
+<% elsif (boiler_fuel == "FUELOIL") %>
+  FuelOilNo1,               !- Fuel Type
+<% elsif (boiler_fuel == "ELECTRICITY") %>
+  Electricity,             !- Fuel Type
+<% end %>
+  <%= boiler_cap %>,  !- Nominal Capacity {W}
+  <%= boiler_eff %>,  !- Theoritical Efficiency
+  0.00001,                     !- Minimum Part Load Ratio
+  1.0,                     !- Maximum Part Load Ratio
+  0.2,                     !- Optimum Part Load Ratio
+  0.8,                     !- Coefficient 1 of Fuel Use Function of Part Load Ratio Curve
+  0.1,                     !- Coefficient 2 of Fuel Use Function of Part Load Ratio Curve
+  0.1,                     !- Coefficient 3 of Fuel Use Function of Part Load Ratio Curve
+  <%= name %> Heating Source 2 Inlet Node,  !- Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node 2,  !- Steam Outlet Node Name
+  100,                    !- Design Outlet Steam Temperature {C}
+  ,                        !- Parasitic Electric Load {W}
+  1;                        !- Sizing Factor
+  
 <% elsif (heating_source == "DISTRICT") %>
 DistrictHeating,
   <%= name %> Heating Source,  !- Name

@@ -1,0 +1,8 @@
+case_name,:heating_source,:boiler_eff,:boiler_type,:heat_coil_type,:lo_outdoor_temp,:hi_outdoor_temp
+AFUE_84_Non-Condensing_baseline,BOILER,0.84,NONCONDENSING,WATER,165,140
+AFUE_83_Non-Condensing_baseline,BOILER,0.83,NONCONDENSING,WATER,165,140
+Msr_AFUE_93_ Condensing_ECM,BOILER,0.93,CONDENSING,WATER,140,115
+Msr_AFUE_94_ Condensing_ECM,BOILER,0.94,CONDENSING,WATER,140,115
+TE_82_Steam_baseline,STEAM BOILER ,0.82,,STEAM,165,140
+Msr_TE_83_ECM,STEAM BOILER ,0.83,,STEAM,165,140
+Msr_TE_84_ECM,STEAM BOILER ,0.84,,STEAM,165,140
