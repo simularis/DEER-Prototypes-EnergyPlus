@@ -409,7 +409,10 @@ import "system/hw.pxt", :group => "hw", :prefix => "hw_" do
   parameter "pump_head", :default => 60.0['ft H2O']
   parameter "pump_eff", :default => 0.9
   parameter "pump_control", :default => "INTERMITTENT"
-  parameter "heating_source", :default=>"BOILER" 
+  parameter "heating_source", :default=>"BOILER"
+  parameter "fluid_type", :default=>"WATER"  # (WATER | STEAM )
+  parameter "max_loop_temp", :default=>100  # (100 | 120 )
+  parameter "min_loop_temp", :default=>10  # (10 | 10 )
   
 end
 

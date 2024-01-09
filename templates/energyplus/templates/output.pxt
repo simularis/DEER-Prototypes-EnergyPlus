@@ -92,6 +92,11 @@ Output:Table:SummaryReports,
   ZoneCoolingSummaryMonthly,  !- Report 12 Name
   ZoneHeatingSummaryMonthly;  !- Report 13 Name
 
+Output:Variable,
+    *,                       !- Key Value
+    Boiler NaturalGas Energy ,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
 OutputControl:ReportingTolerances,
   <%= reporting_tolerance %>,  !- Tolerance for Time Heating Setpoint Not Met {deltaC}
   <%= reporting_tolerance %>;  !- Tolerance for Time Cooling Setpoint Not Met {deltaC}

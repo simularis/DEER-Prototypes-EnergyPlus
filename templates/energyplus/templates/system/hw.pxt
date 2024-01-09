@@ -27,8 +27,11 @@ parameter "pump_power", :default=>Autosize
 parameter "pump_curve", :default=>"NOT USED"
 
 
-parameter "heating_source", :default=>"BOILER"  # (BOILER | STEAM BOILER | DISTRICT | GSHP | CHP )
-parameter "boiler_duplicate", :default=>false  # Heating Source BOILER and STEAM BOILER Only!!
+parameter "heating_source", :default=>"BOILER"  # (BOILER | STEAMBOILER | DISTRICT | GSHP | CHP )
+parameter "boiler_duplicate", :default=>false  # Heating Source BOILER and STEAMBOILER Only!!
+parameter "fluid_type", :default=>"WATER"  # (WATER | STEAM )
+parameter "max_loop_temp", :default=>100  # (100 | 120 )
+parameter "min_loop_temp", :default=>10  # (10 | 10 )
 
 parameter "boiler_type", :default=>"NONCONDENSING"     #  (NONCONDENSING | CONDENSING | ELECTRIC)
 parameter "boiler_fuel", :default=>"NATURALGAS"     #  (NATURALGAS | FUELOIL | ELECTRICITY)
@@ -71,12 +74,12 @@ Schedule:Compact,
 
 PlantLoop,
   <%= name %>,  !- Name
-  Water,                   !- Fluid Type
+  <%= fluid_type %>,                   !- Fluid Type
   ,                        !- User Defined Fluid Type
   <%= name %> Operation Schemes,  !- Plant Equipment Operation Scheme Name
   <%= name %> Supply Outlet Node,  !- Loop Temperature Setpoint Node Name
-  100.0,                   !- Maximum Loop Temperature {C}
-  10.0,                    !- Minimum Loop Temperature {C}
+  <%= max_loop_temp %>,                   !- Maximum Loop Temperature {C}
+  <%= min_loop_temp %>,                   !- Minimum Loop Temperature {C}
   Autosize,                !- Maximum Loop Flow Rate {m3/s}
   0.0,                     !- Minimum Loop Flow Rate {m3/s}
   Autosize,                !- Plant Loop Volume {m3}
@@ -144,7 +147,7 @@ PlantEquipmentList,
   <%= name %> Equipment List, !- Name
 <% if (heating_source == "BOILER") %>
   Boiler:HotWater,         !- Equipment 1 Object Type
-<% elsif (heating_source == "STEAM BOILER") %>
+<% elsif (heating_source == "STEAMBOILER") %>
   Boiler:Steam,         !- Equipment 1 Object Type
 <% elsif (heating_source == "DISTRICT") %>
   DistrictHeating,         !- Equipment 1 Object Type
@@ -221,7 +224,7 @@ Branch,
   ,                        !- Pressure Drop Curve Name
 <% if (heating_source == "BOILER") %>
   Boiler:HotWater,         !- Component 1 Object Type
-<% elsif (heating_source == "STEAM BOILER") %>
+<% elsif (heating_source == "STEAMBOILER") %>
   Boiler:Steam,         !- Component 1 Object Type
 <% elsif (heating_source == "DISTRICT") %>
   DistrictHeating,         !- Component 1 Object Type
@@ -243,7 +246,7 @@ Branch,
   ,                        !- Pressure Drop Curve Name
 <% if (heating_source == "BOILER") %>
   Boiler:HotWater,         !- Component 1 Object Type
-<% elsif (heating_source == "STEAM BOILER") %>
+<% elsif (heating_source == "STEAMBOILER") %>
   Boiler:Steam,         !- Component 1 Object Type
 <% elsif (heating_source == "DISTRICT") %>
   DistrictHeating,         !- Component 1 Object Type
@@ -266,7 +269,7 @@ Branch,
   ,                        !- Pressure Drop Curve Name
 <% if (heating_source == "BOILER") %>
   Boiler:HotWater,         !- Component 1 Object Type
-<% elsif (heating_source == "STEAM BOILER") %>
+<% elsif (heating_source == "STEAMBOILER") %>
   Boiler:Steam,         !- Component 1 Object Type
 <% elsif (heating_source == "DISTRICT") %>
   DistrictHeating,         !- Component 1 Object Type
@@ -484,7 +487,7 @@ Curve:Bicubic,
   0.99;                    !- Maximum Curve Output
 <% end %>
 
-<% if (heating_source == "STEAM BOILER") %>
+<% if (heating_source == "STEAMBOILER") %>
   <% if (boiler_duplicate) %>
 Boiler:Steam,
   <%= name %> Heating Source 1,  !- Name
