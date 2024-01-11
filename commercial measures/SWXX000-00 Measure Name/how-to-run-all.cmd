@@ -26,7 +26,7 @@ set mydirs=^
   "SWXX000-00 Measure Name_Htl_2020"
 
 call :compose
-call :run
+REM call :run
 
 ENDLOCAL
 exit /b

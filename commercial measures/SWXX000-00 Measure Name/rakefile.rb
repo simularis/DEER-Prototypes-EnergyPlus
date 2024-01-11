@@ -1004,7 +1004,7 @@ $start_time = Time.now
 
 at_exit do
   #$bar.finished
-  if (not rake_task_name =~ /^none$/)
+  #if (not rake_task_name =~ /^none$/)
     puts "Elapsed task duration: #{Time.now - $start_time} sec"
-  end
+  #end
 end

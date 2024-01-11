@@ -221,25 +221,28 @@ def progress_bar2(root):
 
     try:
         while overall_done < overall_models:
-            sleep(delta_t)
-            # loop over subfolders and their respective progress bars
-            for i, (subroot, n_models, pbar) in enumerate(zip(
-                a_subroot, a_n_models, a_pbar
-            )):
-                # Count finished simulations.
-                n_done = len(list(subroot.glob('**/runs/**/instance*.sql')))
-                # Lag = how many simulations finished since last progress bar update
-                lag = n_done - pbar.n
-                # Update progress bar by at most 100 points, to animate progress already accrued
-                pbar.update(min(100,lag))
-                a_n_done[i] = pbar.n
-                overall_lag += lag
-            overall_done = sum(a_n_done)
-            # Actively adjust the sleep interval based on rate of progress, to reduce disk activity.
-            if overall_lag < 1:
-                delta_t = min(delta_t_max, delta_t*1.414)
-            elif overall_lag >= 2:
-                delta_t /= 2
+            try:
+                sleep(delta_t)
+                # loop over subfolders and their respective progress bars
+                for i, (subroot, n_models, pbar) in enumerate(zip(
+                    a_subroot, a_n_models, a_pbar
+                )):
+                    # Count finished simulations.
+                    n_done = len(list(subroot.glob('**/runs/**/instance*.sql')))
+                    # Lag = how many simulations finished since last progress bar update
+                    lag = n_done - pbar.n
+                    # Update progress bar by at most 100 points, to animate progress already accrued
+                    pbar.update(min(100,lag))
+                    a_n_done[i] = pbar.n
+                    overall_lag += lag
+                overall_done = sum(a_n_done)
+                # Actively adjust the sleep interval based on rate of progress, to reduce disk activity.
+                if overall_lag < 1:
+                    delta_t = min(delta_t_max, delta_t*1.414)
+                elif overall_lag >= 2:
+                    delta_t /= 2
+            except FileNotFoundError:
+                pass
     except KeyboardInterrupt:
         return
     finally:

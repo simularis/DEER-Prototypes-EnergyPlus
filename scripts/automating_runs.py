@@ -20,15 +20,19 @@ for prototype in tqdm(dir_prototypes):
         #with f_stdout.open('w') as f:
         #    result = subprocess.run("modelkit rake clean", shell=True, check=True,text=True, cwd=prototype, stdout=f, stderr=subprocess.STDOUT, input='y')
 
-        f_stdout = prototype.joinpath('modelkit_compose_stdout.txt')
-        with f_stdout.open('w') as f:
-            result = subprocess.run("modelkit rake compose", shell=True, check=True,text=True, cwd=prototype, stdout=f, stderr=subprocess.STDOUT)
+        #f_stdout = prototype.joinpath('modelkit_compose_stdout.txt')
+        #with f_stdout.open('w') as f:
+        #    result = subprocess.run("modelkit rake compose", shell=True, check=True,text=True, cwd=prototype, stdout=f, stderr=subprocess.STDOUT)
+
+        f_stdout = prototype.joinpath('modelkit_rake_stdout.txt')
+        with f_stdout.open('a') as f:
+            result = subprocess.run("modelkit rake", shell=True, check=True,text=True, cwd=prototype, stdout=f, stderr=subprocess.STDOUT)
 
         if "error" in f_stdout.read_text().lower():
-            print("*** Potential error ***\n- Check modelkit_cmd_output.txt in " + prototype + " for a potential modelkit case running error\n")
+            print("*** Potential error ***\n- Check modelkit_cmd_output.txt in ", prototype, " for a potential modelkit case running error\n")
 
     except subprocess.CalledProcessError as err:
-        print("*** cmd error ***\n-Prototype '"+ prototype + "'\n-modelkit error:\n" + err.stderr)
+        print("*** cmd error ***\n-Prototype '", prototype, "'\n-modelkit error:\n" + err.stderr)
 
     print()
 # %%
