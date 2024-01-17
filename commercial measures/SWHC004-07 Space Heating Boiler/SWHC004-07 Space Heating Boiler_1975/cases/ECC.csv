@@ -1,8 +1,8 @@
-case_name,:heating_source,:boiler_eff,:boiler_type,:heat_coil_type,:lo_outdoor_temp,:hi_outdoor_temp
-AFUE_84_Non-Condensing_baseline,BOILER,0.84,NONCONDENSING,WATER,165,140
-AFUE_83_Non-Condensing_baseline,BOILER,0.83,NONCONDENSING,WATER,165,140
-Msr_AFUE_93_ Condensing_ECM,BOILER,0.93,CONDENSING,WATER,140,115
-Msr_AFUE_94_ Condensing_ECM,BOILER,0.94,CONDENSING,WATER,140,115
-TE_82_Steam_baseline,STEAM BOILER ,0.82,,STEAM,165,140
-Msr_TE_83_ECM,STEAM BOILER ,0.83,,STEAM,165,140
-Msr_TE_84_ECM,STEAM BOILER ,0.84,,STEAM,165,140
+skip,case_name,:hw_heating_source,:hw_fluid_type,:hw_boiler_eff,:hw_boiler_type,:hw_setpoint_type,:main_heat_coil_type,:alt_heat_coil_type,:doas_heat_coil_type,:kitch_heat_coil_type,:crac_heat_coil_type,:hw_supply_temp_at_lo,:hw_supply_temp_at_hi,:hw_max_loop_temp,:hw_min_loop_temp
+#,AFUE_84_Non-Condensing_baseline,BOILER,WATER,0.84,NONCONDENSING,Reset,WATER,NONE,COMBUSTION,WATER,NONE,73.88,60,100,10
+#,AFUE_83_Non-Condensing_baseline,BOILER,WATER,0.83,NONCONDENSING,Reset,WATER,WATER,WATER,WATER,WATER,165,140,100,10
+#,Msr_AFUE_93_ Condensing_ECM,BOILER,WATER,0.93,CONDENSING,Reset,WATER,WATER,WATER,WATER,WATER,140,115,100,10
+#,Msr_AFUE_94_ Condensing_ECM,BOILER,WATER,0.94,CONDENSING,Reset,WATER,WATER,WATER,WATER,WATER,140,115,100,10
+,TE_82_Steam_baseline,STEAMBOILER,WATER,0.82,,Reset,WATER,NONE,COMBUSTION,WATER,NONE,73.88,60,120,10
+#,Msr_TE_83_ECM,STEAMBOILER,STEAM,0.83,,Reset,WATER,STEAM,STEAM,STEAM,STEAM,165,140,120,10
+#,Msr_TE_84_ECM,STEAMBOILER,STEAM,0.84,,Reset,WATER,STEAM,STEAM,STEAM,STEAM,165,140,120,10

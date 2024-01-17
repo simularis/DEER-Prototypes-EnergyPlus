@@ -397,7 +397,7 @@ import "system/ahu.pxt", :group => "doas", :prefix => "doas_" do
   parameter "sat_temp_max", :default => 60.0['F']
 end
 
-import "system/hw.pxt", :group => "hw", :prefix => "hw_" do
+  import "system/hw.pxt", :group => "hw", :prefix => "hw_" do
   include "*"
   exclude "name|branch_names"
   parameter "boiler_eff", :default => 0.8

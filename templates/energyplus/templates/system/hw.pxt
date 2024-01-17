@@ -4,7 +4,7 @@ require "modelkit/energyplus"
 parameter "name"
 parameter "branch_names"
 
-parameter "setpoint_type", :default=>"Constant"  # ( Constant | Reset )
+parameter "setpoint_type", :default=>"Reset"  # ( Constant | Reset )
 
 parameter "design_flow", :default=>Autosize
 parameter "design_temp", :default=>180['F']
@@ -487,7 +487,7 @@ Curve:Bicubic,
   0.99;                    !- Maximum Curve Output
 <% end %>
 
-<% if (heating_source == "STEAMBOILER") %>
+<% elsif (heating_source == "STEAMBOILER") %>
   <% if (boiler_duplicate) %>
 Boiler:Steam,
   <%= name %> Heating Source 1,  !- Name
@@ -498,8 +498,10 @@ Boiler:Steam,
 <% elsif (boiler_fuel == "ELECTRICITY") %>
   Electricity,             !- Fuel Type
 <% end %>
-  <%= boiler_cap %>,  !- Nominal Capacity {W}
+  159958.369, !- Maximum Operating Pressure
   <%= boiler_eff %>,  !- Theoritical Efficiency
+  100,                    !- Design Outlet Steam Temperature {C}
+  <%= boiler_cap %>,  !- Nominal Capacity {W}
   0.00001,                     !- Minimum Part Load Ratio
   1.0,                     !- Maximum Part Load Ratio
   0.2,                     !- Optimum Part Load Ratio
@@ -508,9 +510,8 @@ Boiler:Steam,
   0.1,                     !- Coefficient 3 of Fuel Use Function of Part Load Ratio Curve
   <%= name %> Heating Source 1 Inlet Node,  !- Water Inlet Node Name
   <%= name %> Supply Equipment Outlet Node 1,  !- Steam Outlet Node Name
-  100,                    !- Design Outlet Steam Temperature {C}
-  ,                        !- Parasitic Electric Load {W}
-  1;                        !- Sizing Factor
+  1,                        !- Sizing Factor
+  ,;						!- End-Use Subcategory
 
 Boiler:Steam,
   <%= name %> Heating Source 2,  !- Name
@@ -521,8 +522,10 @@ Boiler:Steam,
 <% elsif (boiler_fuel == "ELECTRICITY") %>
   Electricity,             !- Fuel Type
 <% end %>
-  <%= boiler_cap %>,  !- Nominal Capacity {W}
+  159958.369, !- Maximum Operating Pressure
   <%= boiler_eff %>,  !- Theoritical Efficiency
+  100,                    !- Design Outlet Steam Temperature {C}
+  <%= boiler_cap %>,  !- Nominal Capacity {W}
   0.00001,                     !- Minimum Part Load Ratio
   1.0,                     !- Maximum Part Load Ratio
   0.2,                     !- Optimum Part Load Ratio
@@ -531,9 +534,35 @@ Boiler:Steam,
   0.1,                     !- Coefficient 3 of Fuel Use Function of Part Load Ratio Curve
   <%= name %> Heating Source 2 Inlet Node,  !- Water Inlet Node Name
   <%= name %> Supply Equipment Outlet Node 2,  !- Steam Outlet Node Name
+  1,                        !- Sizing Factor
+  ,;						!- End-Use Subcategory
+  <% else %>
+  
+Boiler:Steam,
+  <%= name %> Heating Source,  !- Name
+<% if (boiler_fuel == "NATURALGAS") %>
+  NaturalGas,              !- Fuel Type
+<% elsif (boiler_fuel == "FUELOIL") %>
+  FuelOilNo1,               !- Fuel Type
+<% elsif (boiler_fuel == "ELECTRICITY") %>
+  Electricity,             !- Fuel Type
+<% end %>
+  159958.369,           !- Maximum Operating Pressure
+  <%= boiler_eff %>,  !- Theoritical Efficiency
   100,                    !- Design Outlet Steam Temperature {C}
-  ,                        !- Parasitic Electric Load {W}
-  1;                        !- Sizing Factor
+  <%= boiler_cap %>,  !- Nominal Capacity {W}
+  0.00001,                     !- Minimum Part Load Ratio
+  1.0,                     !- Maximum Part Load Ratio
+  0.2,                     !- Optimum Part Load Ratio
+  0.8,                     !- Coefficient 1 of Fuel Use Function of Part Load Ratio Curve
+  0.1,                     !- Coefficient 2 of Fuel Use Function of Part Load Ratio Curve
+  0.1,                     !- Coefficient 3 of Fuel Use Function of Part Load Ratio Curve
+  <%= name %> Heating Source Inlet Node,  !- Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node ,  !- Steam Outlet Node Name
+  1,                        !- Sizing Factor
+  ,;						!- End-Use Subcategory
+  <% end %>
+
   
 <% elsif (heating_source == "DISTRICT") %>
 DistrictHeating,
