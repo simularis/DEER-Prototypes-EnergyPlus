@@ -6,8 +6,10 @@ templates-dir = '../../templates/energyplus/templates'
 weather-dir = '../../weather'
 codes-dir = '../../codes'
 
-max-workers = 350  # Maximum number of simulations to run in parallel
-
+# for big computer w/ 96 threads
+#max-workers = 350  # Maximum number of simulations to run in parallel
+# for normal laptop
+max-workers = 10  # Maximum number of simulations to run in parallel
 
 [template-compose]
 annotate = true
