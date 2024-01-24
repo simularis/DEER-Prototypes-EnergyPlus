@@ -2708,9 +2708,10 @@ Coil:Heating:Steam,
 <% if (fan_config == "BLOW-THROUGH" and aux_heat_coil_type == "NONE") %>
   <%= unitary_name %> Unitary Outlet Node;  !- Air Outlet Node Name
 <% else %>
-  <%= unitary_name %> Heating Coil Outlet Node;  !- Air Outlet Node Name
+  <%= unitary_name %> Heating Coil Outlet Node,  !- Air Outlet Node Name
 <% end %>
-
+   ZoneLoadControl;     !- Coil Control Type
+   
 ! Controller not needed with Unitary...?
 !Controller:WaterCoil,
 !  <%= unitary_name %> Heating Coil Controller,  !- Name

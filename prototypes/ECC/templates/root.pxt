@@ -403,6 +403,7 @@ end
   parameter "boiler_eff", :default => 0.8
   parameter "boiler_type", :default => "T24_NONCONDENSING"
   parameter "boiler_duplicate", :default => true
+  parameter "boiler_duplicate_1", :default => true
   parameter "boiler_parasitic", :default=> 100.0['W']
   parameter "design_delta", :default => 40.0['deltaF']
   parameter "pump_type", :default => "VARIABLE"
@@ -413,7 +414,8 @@ end
   parameter "fluid_type", :default=>"WATER"  # (WATER | STEAM )
   parameter "max_loop_temp", :default=>100  # (100 | 120 )
   parameter "min_loop_temp", :default=>10  # (10 | 10 )
-  
+  parameter "min_loop_temp", :default=>10  # (10 | 10 )
+  parameter "boiler_duplicate_1", :default=> true  # (TRUE | FALSE )
 end
 
 import "system/chw.pxt", :group => "chw", :prefix => "chw_" do
@@ -722,6 +724,7 @@ for zone in all_zones
     ahu_branches[sys_name] ||= []
     ahu_branches[sys_name] << branch_name
     hw_branches << "#{branch_name} ATU" if (this_hvac_zone[:atu_reheat_coil_type] == "WATER")
+	hw_branches << "#{branch_name} ATU" if (this_hvac_zone[:atu_reheat_coil_type] == "STEAM")
 
     if (this_hvac[:atu_type] == "CAV-CHB")
       chw_branches << branch_name
@@ -731,6 +734,8 @@ for zone in all_zones
     end
 
     if (this_hvac[:heat_coil_type] == "WATER")
+      hw_branches |= ["#{this_hvac_type}-#{sys_name}"]
+	elsif (this_hvac[:heat_coil_type] == "STEAM")
       hw_branches |= ["#{this_hvac_type}-#{sys_name}"]
     elsif (this_hvac[:heat_coil_type] == "DX-WATER")
       wshp_branches  |= ["#{this_hvac_type}-#{sys_name} HR Branch"]
@@ -820,6 +825,8 @@ for zone in irregular_zones
 
   if (zone_hvac_group[:heat_coil_type] == "WATER")
     hw_branches |= ["#{branch_name}"]
+  elsif	(zone_hvac_group[:heat_coil_type] == "STEAM")
+	hw_branches |= ["#{branch_name}"]
   elsif (zone_hvac_group[:heat_coil_type] == "DX-WATER")
     wshp_branches  |= ["#{branch_name}"]
   end
