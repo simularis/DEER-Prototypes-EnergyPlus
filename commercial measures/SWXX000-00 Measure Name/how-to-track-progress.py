@@ -34,6 +34,7 @@ import matplotlib.dates as mdates
 from datetime import datetime, timedelta
 from tqdm import tqdm
 from time import sleep
+import re
 
 # site.pxt is one per climate zone.
 # Regular sim folders have 12 files.
@@ -118,6 +119,27 @@ def applyTimeFormat(ax):
     ax.xaxis.set_major_locator(locator)
     ax.xaxis.set_major_formatter(formatter)
 
+def get_energyplus_runtime_from_stdout(text: str) -> str:
+    """Given the text stdout, find the simulation run time.
+
+    Works by scanning modelkit/energyplus "stdout" file for lines like the following:
+
+    EnergyPlus Starting
+    EnergyPlus, Version 22.2.0-c249759bad, YMD=2024.01.17 01:48
+    ...
+    Writing tabular output file results using comma format.
+    Writing tabular output file results using HTML format.
+    Writing final SQL reports
+    EnergyPlus Run Time=01hr 01min  8.96sec
+    ...
+    """
+    m1 = re.search("EnergyPlus, Version (.*), YMD=(.*)", text)
+    m2 = re.search("EnergyPlus Run Time=(.*)", text)
+    version = m1[1] if m1 else None
+    start = m1[2] if m1 else None
+    elapsed = m2[1] if m2 else None
+    return (version, start, elapsed)
+
 def plot_time_series(root):
     """
     Plots a time series chart showing cumulative number of composed input files,
@@ -142,13 +164,22 @@ def plot_time_series(root):
     dft2=pandas.DataFrame([(f.relative_to(root).parent.as_posix(), f.name, f.suffix, datetime.fromtimestamp(f.lstat().st_mtime))
                            for f in root.glob('**/runs/**/*.sql')],
                        columns=['folder','name','suffix','mtime'])
+    # Stdout has no suffix
+    dft3=pandas.DataFrame([(f.relative_to(root).parent.as_posix(), f.name, f.name,
+                            *get_energyplus_runtime_from_stdout(f.read_text()))
+                           for f in root.glob('**/runs/**/stdout')],
+                       columns=['folder','name','suffix','version', 'start', 'elapsed'])
+    print(dft3)
 
     dft=pandas.concat([dft0,dft1,dft2])
+    #dft=pandas.concat([dft0,dft1,dft2,dft3])
     tmin,tmax = dft['mtime'].min(), dft['mtime'].max()
     trange = tmax-tmin
-    dftb=dft.pivot(index='folder',columns='suffix',values='mtime').reset_index()
+    dftb=dft.pivot(index='folder',columns='suffix',values=['mtime','simtime']).reset_index()
     print(dftb.head())
     print(dftb.tail())
+    # Save timestamps for record-keeping or debugging
+    dftb.to_csv('sim_run_timestamps.csv')
 
     plt.plot(dftb[id0].sort_values(), range(len(dftb)), 'o', label=label0)
     plt.plot(dftb[id1].sort_values(), range(len(dftb)), '-', label=label1)
@@ -271,9 +302,11 @@ if __name__ == '__main__':
     parser.add_argument("--list-unfinished", action="store_true")
     parser.add_argument("--plot-stats", action="store_true")
     parser.add_argument("--time-series", action="store_true")
+    parser.add_argument("--skip", action="store_true", help="skip display of progress bar to show other info")
 
     args=parser.parse_args()
-    progress_bar2(args.analysis_root)
+    if not args.skip:
+        progress_bar2(args.analysis_root)
     stats, unfinished_list = get_stats_by_folder(args.analysis_root, args.list_unfinished, args.plot_stats)
     if args.time_series:
         plot_time_series(args.analysis_root)
