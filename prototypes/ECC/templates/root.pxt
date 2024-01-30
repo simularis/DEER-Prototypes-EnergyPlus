@@ -415,7 +415,7 @@ end
   parameter "max_loop_temp", :default=>100  # (100 | 120 )
   parameter "min_loop_temp", :default=>10  # (10 | 10 )
   parameter "min_loop_temp", :default=>10  # (10 | 10 )
-  parameter "boiler_duplicate_1", :default=> true  # (TRUE | FALSE )
+  parameter "boiler_duplicate_1", :default=> true  # (TRUE | FALSE ) 
 end
 
 import "system/chw.pxt", :group => "chw", :prefix => "chw_" do
