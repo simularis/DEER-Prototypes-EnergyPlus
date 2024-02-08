@@ -17,7 +17,7 @@ max-workers = 12  #4  # Maximum number of simulations to run in parallel
 annotate = true
 indent = "    "
 esc-line = "! "
-dirs = '~\Documents\Modelkit Catalyst\templates\net-zero-templates\templates'  # Must be an absolute path
+dirs = '~\Documents\Modelkit Caboodle\templates\energyplus\templates'  # Must be an absolute path
 
 [energyplus-run]
 engine = 'C:\EnergyPlusV9-5-0'  # Must be an absolute path

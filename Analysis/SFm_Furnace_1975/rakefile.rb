@@ -252,8 +252,8 @@ if (not rake_task_name =~ /^(clean|none)$/)
   old_site_paths = Dir.glob("#{runs_dir}/*/site.pxt")
   old_pxv_paths = Dir.glob("#{runs_dir}/**/instance.pxv")
 
-  climates = Modelkit::Parametrics::Worksheet.open(climates_csv_path)
-  cohorts = Modelkit::Parametrics::Worksheet.open(cohorts_csv_path)
+  climates = Modelkit::Worksheet.open(climates_csv_path)
+  cohorts = Modelkit::Worksheet.open(cohorts_csv_path)
 
   climate_pattern = ENV["CLIMATE"] || ""
 
@@ -343,7 +343,7 @@ if (not rake_task_name =~ /^(clean|none)$/)
 
       # Better to pre-read and cache this outside the looping?
       # There are only N worksheets...1 per building type.
-      cases = Modelkit::Parametrics::Worksheet.open(cases_csv_path)
+      cases = Modelkit::Worksheet.open(cases_csv_path)
 
       cases.each_row(:ashrae_climate => variables1[:ashrae_climate]) do |_, index3, variables3, parameters3|
         #puts "    case_index = #{index3}"
