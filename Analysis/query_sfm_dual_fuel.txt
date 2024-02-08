@@ -31,8 +31,8 @@ AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Gen
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Total End Uses
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/Utility Use Per Conditioned Floor Area/Electricity Intensity/HVAC
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/Utility Use Per Conditioned Floor Area/Natural Gas Intensity/HVAC
-InputVerificationandResultsSummary/Entire Facility/General/Value/Program Version and Build
-InputVerificationandResultsSummary/Entire Facility/General/Value/Weather File
+#InputVerificationandResultsSummary/Entire Facility/General/Value/Program Version and Build
+#InputVerificationandResultsSummary/Entire Facility/General/Value/Weather File
 InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/Conditioned Total
 ComponentSizingSummary/Entire Facility/AirLoopHVAC:Unitary:Furnace:HeatCool/Nominal Heating Capacity/DXGF EL2 FURNACE WITH DX COOLING
 ComponentSizingSummary/Entire Facility/AirLoopHVAC:Unitary:Furnace:HeatCool/Nominal Heating Capacity/DXGF EL5 FURNACE WITH DX COOLING
