@@ -10,8 +10,9 @@ set mydirs=^
   "SFm_SEER Rated AC_HP_1975" ^
   "SFm_SEER Rated AC_HP_1985"
 
-call :compose
-call :run
+REM call :compose
+REM call :run
+call :results
 REM call :clean
 
 ENDLOCAL
@@ -33,6 +34,15 @@ for %%v in (%mydirs%) do (
   %mycmd% run
   @echo on
 )
+exit /b
+
+:results
+for %%v in (%mydirs%) do (
+  cd "%DEERROOT%\Analysis\%%~v"
+  %mycmd% results
+  @echo on
+)
+exit /b
 
 :clean
 for %%v in (%mydirs%) do (
@@ -40,5 +50,4 @@ for %%v in (%mydirs%) do (
   %mycmd% clean
   @echo on
 )
-
 exit /b
