@@ -114,7 +114,15 @@ def get_a_result(sqlfile: Path, resultspec: ResultSpec, aggtype='sum') -> tuple:
             query += """ AND ColumnName <> 'Water';"""
 
     with connect(sqlfile) as conn:
-        sim_sizing_data = pd.read_sql_query(query, conn,  params=asdict(resultspec), dtype={'Value':float})
+        try:
+            sim_sizing_data = pd.read_sql_query(query, conn,  params=asdict(resultspec), dtype={'Value':float})
+        except:
+            # If user requested a query that returns a string value
+            # To do: aggregation doesn't work with string type results.
+            sim_sizing_data = pd.read_sql_query(query, conn,  params=asdict(resultspec))
+
+    if sim_sizing_data.empty:
+        return None, None
 
     sizing_agg = (
         sim_sizing_data
@@ -194,6 +202,8 @@ def parse_query_file(queryfile: Path):
                     listlist_query_path_and_name.append(list_query_path_and_name)
                     list_query_path_and_name = []
                 continue
+            if query_line.startswith("#"):
+                continue
             m = re.match(r'\s*(.+)\s*,\s*(.+)\s*',query_line)
             if m:
                 query_path, user_column_name = m.groups()
@@ -254,6 +264,9 @@ def gather_sizing_data2(subroot: Path, queryfile: Path, progressbar=False):
             sizing_agg_row = {"File Name": relstr}
             for resultspec, user_column_name in list_query_path_and_name:
                 a,b = get_a_result(sqlfile, resultspec)
+                if a is None:
+                    # No data found matching the result spec. Skip this and go to next.
+                    continue
                 a["File Name"] = relstr
                 units = a['Units'].iloc[0]
                 sim_sizing_data.append(a)
