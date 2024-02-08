@@ -116,20 +116,25 @@ def get_a_result(sqlfile: Path, resultspec: ResultSpec, aggtype='sum') -> tuple:
     with connect(sqlfile) as conn:
         try:
             sim_sizing_data = pd.read_sql_query(query, conn,  params=asdict(resultspec), dtype={'Value':float})
-        except:
+        except ValueError:
             # If user requested a query that returns a string value
             # To do: aggregation doesn't work with string type results.
             sim_sizing_data = pd.read_sql_query(query, conn,  params=asdict(resultspec))
 
     if sim_sizing_data.empty:
+        # No data found matching result spec
         return None, None
-
-    sizing_agg = (
-        sim_sizing_data
-        .groupby(agg_columns)
-        ['Value'].agg(aggtype).iloc[0]
-    )
-    return sim_sizing_data, sizing_agg
+    elif len(sim_sizing_data) == 1:
+        # Only one value, no aggregation required
+        return sim_sizing_data, sim_sizing_data['Value']
+    else:
+        # Aggregation requested. Calculate a single float value.
+        sizing_agg = (
+            sim_sizing_data
+            .groupby(agg_columns)
+            ['Value'].agg(aggtype).iloc[0]
+        )
+        return sim_sizing_data, sizing_agg
 
 def gather_sizing_data1(subroot: Path, resultspec: ResultSpec, progressbar=False):
     """
