@@ -222,7 +222,7 @@ def parse_query_file(queryfile: Path):
         listlist_query_path_and_name.append(list_query_path_and_name)
     return listlist_query_path_and_name
 
-def gather_sizing_data2(subroot: Path, queryfile: Path, progressbar=False):
+def gather_sizing_data2(subroot: Path, queryfile: Path, progressbar=False, runspath='runs'):
     r"""
     Read selected data entries from SQL outputs and write to CSV.
     Result set specifications are parsed from query.txt, e.g. (resultspec, name).
@@ -247,7 +247,7 @@ def gather_sizing_data2(subroot: Path, queryfile: Path, progressbar=False):
         columns_out = ['File Name'] + [name for _,name in list_query_path_and_name]
 
         # Count composed models.
-        runs_root = subroot.joinpath('runs')
+        runs_root = subroot.joinpath(runspath)
         subroot_finished_list = list(runs_root.glob('**/'+FILENAME_FINISHED))
         n_models = len(subroot_finished_list)
 
@@ -259,7 +259,7 @@ def gather_sizing_data2(subroot: Path, queryfile: Path, progressbar=False):
 
         sim_sizing_data, sizing_agg = [], []
         for sqlfile in myiter:
-            relpath = sqlfile.relative_to(subroot)
+            relpath = sqlfile.relative_to(runs_root)
             # E.g. relpath = Path(r"CZ01\SFm&1&rDXGF&Ex&SpaceHtg_eq__GasFurnace\Msr-Res-GasFurnace-AFUE95-ECM\instance-out.sql")
             relstr = relpath.as_posix() # with forward slashes
             # E.g. relstr = "CZ01/SFm&1&rDXGF&Ex&SpaceHtg_eq__GasFurnace/Msr-Res-GasFurnace-AFUE95-ECM/instance-out.sql"
@@ -298,9 +298,11 @@ def main():
                         help=r'Output file for detailed sizing info, e.g. results-sizing-detail.csv')
     parser.add_argument('-a','--aggfile', type=Path, default='results-sizing-agg.csv',
                         help=r'Output file for aggregated sizing info, e.g. results-sizing-agg.csv')
+    parser.add_argument('-r','--runspath', type=str, default='runs',
+                        help=r'Path within study folder to omit from "File Name" output column.')
 
     pargs = parser.parse_args()
-    result_sets = gather_sizing_data2(pargs.subroot, pargs.queryfile, True)
+    result_sets = gather_sizing_data2(pargs.subroot, pargs.queryfile, True, pargs.runspath)
 
     output1 = BytesIO()
     output2 = BytesIO()
