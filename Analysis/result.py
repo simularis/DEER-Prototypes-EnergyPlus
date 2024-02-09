@@ -126,7 +126,7 @@ def get_a_result(sqlfile: Path, resultspec: ResultSpec, aggtype='sum') -> tuple:
         return None, None
     elif len(sim_sizing_data) == 1:
         # Only one value, no aggregation required
-        return sim_sizing_data, sim_sizing_data['Value']
+        return sim_sizing_data, sim_sizing_data.loc[0,'Value']
     else:
         # Aggregation requested. Calculate a single float value.
         sizing_agg = (
