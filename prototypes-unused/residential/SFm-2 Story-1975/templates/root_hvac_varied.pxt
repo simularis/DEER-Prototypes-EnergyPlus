@@ -19992,6 +19992,11 @@ Output:Variable,
         Cooling Coil Total Cooling Energy ,  !- Variable Name
         Hourly;                  !- Reporting Frequency
 
+<%
+# Customization for dual fuel heating hourly analysis, Nicholas Fette
+insert 'singlefamily_dualfuel_outputs.pxt'
+%>
+
 !-   ===========  ALL OBJECTS IN CLASS: OUTPUT:DIAGNOSTICS ===========
 
 Output:Diagnostics,
