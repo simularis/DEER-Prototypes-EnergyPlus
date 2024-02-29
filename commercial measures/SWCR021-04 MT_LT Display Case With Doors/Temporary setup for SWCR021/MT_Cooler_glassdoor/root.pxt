@@ -731,12 +731,12 @@ insert "ref-case.pxt",
   :case_temp => 27['F'],
   :fan_power => 88.58['W/m'],
   :light_power => 0 ['W/m'] ,
-  :ash_power => 32.8 ['W/m'],
+  :ash_power => 0 ['W/m'],
   :ash_control => "CONSTANT",
   :ash_frac_to_case => 0.6,
   :defrost_power =>  480.76 ['W/m'],
   :defrost_type => "OFF-CYCLE",
-  :case_type => "OPEN"
+  :case_type => "GLASS-DOOR"
 
 insert "ref-case.pxt",
   :case_name => "FishDisplayCase",
@@ -746,12 +746,12 @@ insert "ref-case.pxt",
   :case_temp => 27['F'],
   :fan_power => 49.21['W/m'],
   :light_power => 0 ['W/m'] ,
-  :ash_power => 13.12 ['W/m'],
+  :ash_power => 0 ['W/m'],
   :ash_control => "CONSTANT",
   :ash_frac_to_case => 0.6,
   :defrost_power =>  624.99 ['W/m'],
   :defrost_type => "OFF-CYCLE",
-  :case_type => "OPEN"
+  :case_type => "GLASS-DOOR"
 
 
 insert "ref-case.pxt",
@@ -762,12 +762,12 @@ insert "ref-case.pxt",
   :case_temp => 26['F'],
   :fan_power => 114.83['W/m'],
   :light_power => 36.09 ['W/m'] ,
-  :ash_power => 36.09 ['W/m'],
+  :ash_power => 0 ['W/m'],
   :ash_control => "CONSTANT",
   :ash_frac_to_case => 0.6,
   :defrost_power =>  480.76 ['W/m'],
   :defrost_type => "OFF-CYCLE",
-  :case_type => "OPEN"
+  :case_type => "GLASS-DOOR"
 
 insert "ref-case.pxt",
   :case_name => "MT_Deli",
@@ -782,7 +782,7 @@ insert "ref-case.pxt",
   :ash_frac_to_case => 0.6,
   :defrost_power =>  480.76 ['W/m'],
   :defrost_type => "OFF-CYCLE",
-  :case_type => "OPEN"
+  :case_type => "GLASS-DOOR"
 
 insert "ref-case.pxt",
   :case_name => "MT_DeliServ",
@@ -792,12 +792,12 @@ insert "ref-case.pxt",
   :case_temp => 28['F'],
   :fan_power => 6.56['W/m'],
   :light_power => 111.55 ['W/m'] ,
-  :ash_power => 111.55 ['W/m'],
+  :ash_power => 0 ['W/m'],
   :ash_control => "CONSTANT",
   :ash_frac_to_case => 0.6,
   :defrost_power =>  480.76 ['W/m'],
   :defrost_type => "OFF-CYCLE",
-  :case_type => "OPEN"
+  :case_type => "GLASS-DOOR"
 
 insert "ref-case.pxt",
   :case_name => "MT_Meat2",
@@ -807,12 +807,12 @@ insert "ref-case.pxt",
   :case_temp => 29['F'],
   :fan_power => 42.65['W/m'],
   :light_power => 39.37 ['W/m'] ,
-  :ash_power => 65.62 ['W/m'],
+  :ash_power => 0 ['W/m'],
   :ash_control => "CONSTANT",
   :ash_frac_to_case => 0.6,
   :defrost_power =>  480.76 ['W/m'],
   :defrost_type => "OFF-CYCLE",
-  :case_type => "OPEN"
+  :case_type => "GLASS-DOOR"
 
 insert "ref-case.pxt",
   :case_name => "MT_Meat3",
@@ -827,7 +827,7 @@ insert "ref-case.pxt",
   :ash_frac_to_case => 0.6,
   :defrost_power =>  480.76 ['W/m'],
   :defrost_type => "OFF-CYCLE",
-  :case_type => "OPEN"
+  :case_type => "GLASS-DOOR"
 
 insert "ref-case.pxt",
   :case_name => "MT_Dairy1",
@@ -842,7 +842,7 @@ insert "ref-case.pxt",
   :ash_frac_to_case => 0.6,
   :defrost_power =>  480.76 ['W/m'],
   :defrost_type => "OFF-CYCLE",
-  :case_type => "OPEN"
+  :case_type => "GLASS-DOOR"
 
 insert "ref-case.pxt",
   :case_name => "MT_Dairy2",
@@ -857,7 +857,7 @@ insert "ref-case.pxt",
   :ash_frac_to_case => 0.6,
   :defrost_power =>  480.76 ['W/m'],
   :defrost_type => "OFF-CYCLE",
-  :case_type => "OPEN"
+  :case_type => "GLASS-DOOR"
 
 insert "ref-case.pxt",
   :case_name => "MT_Produce",
@@ -872,7 +872,7 @@ insert "ref-case.pxt",
   :ash_frac_to_case => 0.6,
   :defrost_power =>  480.76 ['W/m'],
   :defrost_type => "OFF-CYCLE",
-  :case_type => "OPEN"
+  :case_type => "GLASS-DOOR"
 
 insert "ref-walkin.pxt",
   :walkin_name => "WalkInCooler",

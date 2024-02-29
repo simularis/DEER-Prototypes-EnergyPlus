@@ -17,9 +17,10 @@ parameter "humidity_at_zero_ash", :default=>35.0
 parameter "height", :default=>0.0['ft']
 parameter "defrost_power", :default=>0['W/m']
 parameter "defrost_type", :default=>"OFF-CYCLE" # (NONE | OFF-CYCLE | ELECTRIC | HOTGAS)
-parameter "case_type", :default=>"OPEN" # (GLASS-DOOR | OPEN | WALK-IN | SELF-CONTAINED)
+parameter "case_type", :default=>"GLASS-DOOR" # (GLASS-DOOR | OPEN | WALK-IN | SELF-CONTAINED)
 parameter "case_credit", :default=>true # (true | false)
 parameter "under_case_hvac_ret_frac", :default=>0
+parameter "cond_curves_source", :default=>"MediumTemp" # (SelfContained | MediumTemp | LowTemp)
 parameter "lighting_schedule", :default=>
 "
   Through: 12/31,
@@ -106,11 +107,26 @@ Refrigeration:Case,
   ;  !- Case Credit Fraction Schedule Name
 <% end %>
 
-Schedule:Constant,
-  <%= case_name %> Case Availability Sch,  !- Name
-  Binary Control,          !- Schedule Type Limits Name
-  1;                       !- Hourly Value
-
+<% if (cond_curves_source == "MediumTemp") %>
+  Schedule:Constant,
+	<%= case_name %> Case Availability Sch,  !- Name
+	Binary Control,          !- Schedule Type Limits Name
+	<% if case_name.start_with?("MT")  || case_name == "Meat1DisplayCase" || case_name == "FishDisplayCase" %>
+		1;                       !- Hourly Value
+	<% else %>
+		0;
+	<% end %>
+<% elsif (cond_curves_source == "LowTemp") %>
+  Schedule:Constant,
+	<%= case_name %> Case Availability Sch,  !- Name
+	Binary Control,          !- Schedule Type Limits Name
+	<% if case_name.start_with?("LT") %>
+		1;                       !- Hourly Value
+	<% else %>
+		0;
+	<% end %>
+<% end %>
+	  	  
 Schedule:Compact,
   <%= case_name %> Case Light Sch,  !- Name
   Unit Interval,           !- Schedule Type Limits Name
@@ -274,8 +290,8 @@ Schedule:Compact,
   Through: 12/31,          !- Field 1
   For:AllDays,             !- Field 2
   Interpolate:No,          !- Field 3
-  Until: 7:00, 0.2,        !- Field 5
-  Until: 21:00, 0.6,       !- Field 7
-  Until: 24:00, 0.2;       !- Field 9
+  Until: 7:00, 0.10,        !- Field 5
+  Until: 21:00, 0.15,       !- Field 7
+  Until: 24:00, 0.10;       !- Field 9
   <% end %>
 <% end %>
