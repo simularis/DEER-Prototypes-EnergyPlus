@@ -7,11 +7,11 @@ parameter "ref_sys_comp_names"
 parameter "suction_piping_location"
 parameter "suction_gains", :default=>false # (true | false)
 parameter "piping_suction_ua", :default=>10 # in ['W/K']
-parameter "cond_curves_source", :default=>"MediumTemp" # (SelfContained | MediumTemp | LowTemp)
+parameter "cond_curves_source", :default=>"SelfContained" # (SelfContained | MediumTemp | LowTemp)
 parameter "cond_fan_power", :default=>2600['W']
 parameter "cond_subcool", :default=>0['C']
 parameter "working_fluid", :default=>"R507" # TODO add other fluids R22
-parameter "condenser_type", :default=>"AirCooled" # (AirCooled | WaterCooled | EvaporativelyCooled)
+parameter "condenser_type", :default=>"EvaporativelyCooled" # (AirCooled | WaterCooled | EvaporativelyCooled)
 %>
 
 <%
