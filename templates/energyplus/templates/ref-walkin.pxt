@@ -12,6 +12,7 @@ parameter "floor_area", :default=> 1559.8['ft2']
 parameter "floor_U_value", :default=>0.207 # in ['W/m2-K']
 parameter "total_insulated_area", :default=> 3119.6['ft2']
 parameter "surface_U_value", :default=>0.235 # in ['W/m2-K']
+parameter "availability_schedule", :default=>1.0 # (TRUE:1.0 | FALSE:0)
 parameter "lighting_Schedule", :default=>
 "
   Through: 12/31,
@@ -75,7 +76,7 @@ Refrigeration:WalkIn,
 Schedule:Constant,
   <%= walkin_name %> Walkin Availability Sch,  !- Name
   Binary Control,          !- Schedule Type Limits Name
-  1;                       !- Hourly Value
+  <%= availability_schedule %>;                       !- Hourly Value
 
 Schedule:Compact,
     <%= walkin_name %> Walkin Heater Sch,      !- Name
