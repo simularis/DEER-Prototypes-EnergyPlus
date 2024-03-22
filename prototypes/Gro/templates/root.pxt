@@ -1073,7 +1073,7 @@ insert "ref-sys.pxt",
   :case_walkin_names => MT_System_case_walkin_names,
   :ref_sys_comp_names => MT_System_ref_sys_comp_names,
   :cond_curves_source => "MediumTemp",
-  :condenser_type => refsys_condenser_type # (AirCooled | WaterCooled | EvaporativelyCooled)
+  :condenser_type => "AirCooled" # (AirCooled | WaterCooled | EvaporativelyCooled)
 
 insert "ref-case.pxt",
   :case_name => mt_meatdc1_case_name,
@@ -1308,7 +1308,7 @@ insert "ref-sys.pxt",
   :case_walkin_names => LT_System_case_walkin_names,
   :ref_sys_comp_names => LT_System_ref_sys_comp_names,
   :cond_curves_source => "LowTemp",
-  :condenser_type => refsys_condenser_type # (AirCooled | WaterCooled | EvaporativelyCooled)
+  :condenser_type => "AirCooled" # (AirCooled | WaterCooled | EvaporativelyCooled)
 
 insert "ref-case.pxt",
   :case_name => lt_reachin1_case_name,
