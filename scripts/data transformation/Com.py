@@ -24,7 +24,8 @@ print(measures)
 #%%
 #Define measure name here (name of the measure folder itself
 ##NOTE: The example folder used here, 'SWXX111-00 Example_SEER_AC' is only used to illustrate an example workflow thru post-procesing
-measure_name = 'SWXX111-00 Example_SEER_AC'
+measure_name = 'SWHC024-05 Fan Belt'
+
 
 #filter to specific measure mapping records from mapping workbook
 df_measure = df_com[df_com['Modelkit Folder Primary Name']== measure_name]
@@ -124,7 +125,8 @@ def parse_measure_name(measure_name):
     measure_name_split = measure_name.split('&', 4) 
     # Check here if the presented name has 5 attributes as expected:
     if not len(measure_name_split) == 5:
-        sys.exit('The case name must have at least 5 attributes similar to < BldgType&Story&BldgHVAC&BldgVint&TechGroup__TechType >')
+       print(f'the measure name that has problem: {measure_name}')
+       sys.exit('The case name must have at least 5 attributes similar to < BldgType&Story&BldgHVAC&BldgVint&TechGroup__TechType >')
     
     attributes = list(expected_att.keys())
     measure_name_dict = {attributes[i]: measure_name_split[i] for i in range(0,5)}
@@ -132,6 +134,8 @@ def parse_measure_name(measure_name):
     # Check here if the presented attributes are as expected:
     for att in attributes:
         if measure_name_dict[att] not in expected_att[att]:
+            #print(f'!!!!!!!!!!!!!!{measure_name_dict[att]}')
+            #print(f'!!!!!!!!!!!!!!{expected_att[att]}')
             sys.exit(f'Attribute <{measure_name_dict[att]}> was not expected')
             
 
@@ -206,7 +210,7 @@ def annual_raw_parsing_com(df, cohort_dict, case):
     df['file'] = split_meta_cols_all[split_meta_cols_all[1]==case][3]
     
     #COM modelkit output is kBtu for the time being. change this after fix
-
+    
     annual_df_v1 = df[['TechID', 'file', 'BldgLoc', 'BldgType','BldgHVAC','BldgVint','Story', 'TechGroup_TechType','Total (kWh)', 'Heating (kWh)', 'Cooling (kWh)',
        'Interior Lighting (kWh)', 'Exterior Lighting (kWh)',
        'Interior Equipment (kWh)', 'Exterior Equipment (kWh)', 'Fans (kWh)',
@@ -286,7 +290,7 @@ for folder in folder_list:
         #insert subsequent processing here
         df_raw = pd.read_csv(filepath+"/"+folder+'/results-summary.csv', usecols=['File Name'])
         num_runs = len(df_raw['File Name'].dropna().unique()) - 1 
-        annual_df = pd.read_csv(filepath+"/"+folder+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
+        annual_df = pd.read_csv(filepath+"/"+folder+'/results-summary.csv', nrows=num_runs, skiprows=(num_runs+2))
         split_meta_cols_eu = annual_df['File Name'].str.split('/', expand=True)
 
         #concat each dataset
@@ -295,6 +299,7 @@ for folder in folder_list:
 
         print("processed.")
     else:
+        print(filepath+"/"+folder)
         print(f"no data found.")
 
 
@@ -535,6 +540,8 @@ metadata_cols['TechID'].unique()
 #if looping over all HVAC types, ignore BldgHVAC filter
 PreTechIDs = df_measure[['PreTechID','Common_PreTechID']].drop_duplicates()
 StdTechIDs = df_measure[['StdTechID','Common_StdTechID']].drop_duplicates()
+#columns_with_nan = df_measure.columns[df_measure.isna().any()].tolist()
+#print(f'*********!!!!!!!!!!!!!Columns with NaN values:{columns_with_nan}')
 MeasTechIDs = df_measure[['MeasTechID','Common_MeasTechID']].drop_duplicates()
 # %%
 #filter out each pre, std, msr using the Common TechIDs from master table
@@ -671,6 +678,7 @@ else:
 if False in list(StdTechIDs['StdTechID']==StdTechIDs['Common_StdTechID']):
     sim_annual_std = pd.DataFrame()
     for common_id, new_id in zip(StdTechIDs['Common_StdTechID'], StdTechIDs['StdTechID']):
+        print(f'******************{StdTechIDs}')
         print(f'common is {common_id}, changing into new id is {new_id}')
         #Isolate specific common id (old)
         sim_annual_std_mod = sim_annual_std_common[sim_annual_std_common['TechID']==common_id].copy()
