@@ -3,7 +3,7 @@
 
 if (not defined?(Modelkit))
   begin
-    require("modelkit")2
+    require("modelkit")
   rescue LoadError => exception
     args = ARGV.join(" ")
     puts exception
