@@ -140,7 +140,7 @@ end
 ! GPARM parameters as run:
 !    TEMPLATE_PATH = template/v9.5
 Version,
-    9.5;                     !- Version Identifier
+    24.2;                     !- Version Identifier
 
 
 !-   ===========  ALL OBJECTS IN CLASS: SIMULATIONCONTROL ===========
@@ -241,6 +241,7 @@ ScheduleTypeLimits,
 
 !
 !
+
 Schedule:Day:Hourly,
     OccupancyDay,            !- Name
     fraction,                !- Schedule Type Limits Name
@@ -8773,290 +8774,280 @@ Schedule:Compact,
     any number,              !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 1:00,             !- Field 3
-    0.00194740740740741,     !- Field 4
-    Until: 2:00,             !- Field 5
-    0.000885185185185185,    !- Field 6
-    Until: 3:00,             !- Field 7
-    0.000531111111111111,    !- Field 8
-    Until: 4:00,             !- Field 9
-    0.000885185185185185,    !- Field 10
-    Until: 5:00,             !- Field 11
-    0.00247851851851852,     !- Field 12
-    Until: 6:00,             !- Field 13
-    0.00920592592592592,     !- Field 14
-    Until: 7:00,             !- Field 15
-    0.0208903703703704,      !- Field 16
-    Until: 8:00,             !- Field 17
-    0.0207133333333333,      !- Field 18
-    Until: 9:00,             !- Field 19
-    0.0168185185185185,      !- Field 20
-    Until: 10:00,            !- Field 21
-    0.0131007407407407,      !- Field 22
-    Until: 11:00,            !- Field 23
-    0.0106222222222222,      !- Field 24
-    Until: 12:00,            !- Field 25
-    0.00832074074074074,     !- Field 26
-    Until: 13:00,            !- Field 27
-    0.00601925925925926,     !- Field 28
-    Until: 14:00,            !- Field 29
-    0.00513407407407407,     !- Field 30
-    Until: 15:00,            !- Field 31
-    0.00460296296296296,     !- Field 32
-    Until: 16:00,            !- Field 33
-    0.00442592592592593,     !- Field 34
-    Until: 17:00,            !- Field 35
-    0.00531111111111111,     !- Field 36
-    Until: 18:00,            !- Field 37
-    0.00690444444444444,     !- Field 38
-    Until: 19:00,            !- Field 39
-    0.00743555555555556,     !- Field 40
-    Until: 20:00,            !- Field 41
-    0.00743555555555556,     !- Field 42
-    Until: 21:00,            !- Field 43
-    0.00743555555555556,     !- Field 44
-    Until: 22:00,            !- Field 45
-    0.00725851851851852,     !- Field 46
-    Until: 23:00,            !- Field 47
-    0.00513407407407407,     !- Field 48
-    Until: 24:00,            !- Field 49
-    0.00371777777777778;     !- Field 50
+    Until: 1:00,0.00194740740740741, !- Field 3
+									   
+    Until: 2:00,0.000885185185185185, !- Field 5
+									   
+    Until: 3:00,0.000531111111111111, !- Field 7
+									   
+    Until: 4:00,0.000885185185185185, !- Field 9
+										
+    Until: 5:00,0.00247851851851852, !- Field 11
+										
+    Until: 6:00,0.00920592592592592, !- Field 13
+										
+    Until: 7:00,0.0208903703703704, !- Field 15
+										
+    Until: 8:00,0.0207133333333333, !- Field 17
+										
+    Until: 9:00,0.0168185185185185, !- Field 19
+										
+    Until: 10:00,0.0131007407407407, !- Field 21
+										
+    Until: 11:00,0.0106222222222222, !- Field 23
+										
+    Until: 12:00,0.00832074074074074, !- Field 25
+										
+    Until: 13:00,0.00601925925925926, !- Field 27
+										
+    Until: 14:00,0.00513407407407407, !- Field 29
+										
+    Until: 15:00,0.00460296296296296, !- Field 31
+										
+    Until: 16:00,0.00442592592592593, !- Field 33
+										
+    Until: 17:00,0.00531111111111111, !- Field 35
+										
+    Until: 18:00,0.00690444444444444, !- Field 37
+										
+    Until: 19:00,0.00743555555555556, !- Field 39
+										
+    Until: 20:00,0.00743555555555556, !- Field 41
+										
+    Until: 21:00,0.00743555555555556, !- Field 43
+										
+    Until: 22:00,0.00725851851851852, !- Field 45
+										
+    Until: 23:00,0.00513407407407407, !- Field 47
+										
+    Until: 24:00,0.00371777777777778; !- Field 49
+    
 
 Schedule:Compact,
     BA_bath_sch,             !- Name
     any number,              !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 1:00,             !- Field 3
-    0.000181818181818182,    !- Field 4
-    Until: 2:00,             !- Field 5
-    9.09090909090909e-05,    !- Field 6
-    Until: 3:00,             !- Field 7
-    9.09090909090909e-05,    !- Field 8
-    Until: 4:00,             !- Field 9
-    9.09090909090909e-05,    !- Field 10
-    Until: 5:00,             !- Field 11
-    0.000181818181818182,    !- Field 12
-    Until: 6:00,             !- Field 13
-    0.000431818181818182,    !- Field 14
-    Until: 7:00,             !- Field 15
-    0.00104545454545455,     !- Field 16
-    Until: 8:00,             !- Field 17
-    0.00131818181818182,     !- Field 18
-    Until: 9:00,             !- Field 19
-    0.0015,                  !- Field 20
-    Until: 10:00,            !- Field 21
-    0.00131818181818182,     !- Field 22
-    Until: 11:00,            !- Field 23
-    0.00104545454545455,     !- Field 24
-    Until: 12:00,            !- Field 25
-    0.000795454545454545,    !- Field 26
-    Until: 13:00,            !- Field 27
-    0.000704545454545454,    !- Field 28
-    Until: 14:00,            !- Field 29
-    0.000522727272727273,    !- Field 30
-    Until: 15:00,            !- Field 31
-    0.000522727272727273,    !- Field 32
-    Until: 16:00,            !- Field 33
-    0.000522727272727273,    !- Field 34
-    Until: 17:00,            !- Field 35
-    0.000886363636363636,    !- Field 36
-    Until: 18:00,            !- Field 37
-    0.00104545454545455,     !- Field 38
-    Until: 19:00,            !- Field 39
-    0.00175,                 !- Field 40
-    Until: 20:00,            !- Field 41
-    0.00227272727272727,     !- Field 42
-    Until: 21:00,            !- Field 43
-    0.00227272727272727,     !- Field 44
-    Until: 22:00,            !- Field 45
-    0.00175,                 !- Field 46
-    Until: 23:00,            !- Field 47
-    0.0015,                  !- Field 48
-    Until: 24:00,            !- Field 49
-    0.000886363636363636;    !- Field 50
+    Until: 1:00,0.000181818181818182, !- Field 3
+									   
+    Until: 2:00,9.09090909090909e-05, !- Field 5
+									   
+    Until: 3:00,9.09090909090909e-05, !- Field 7
+									   
+    Until: 4:00,9.09090909090909e-05, !- Field 9
+										
+    Until: 5:00,0.000181818181818182, !- Field 11
+										
+    Until: 6:00,0.000431818181818182, !- Field 13
+										
+    Until: 7:00,0.00104545454545455, !- Field 15
+										
+    Until: 8:00,0.00131818181818182, !- Field 17
+										
+    Until: 9:00,0.0015,      !- Field 19
+    Until: 10:00,0.00131818181818182, !- Field 21
+										
+    Until: 11:00,0.00104545454545455, !- Field 23
+										
+    Until: 12:00,0.000795454545454545, !- Field 25
+										
+    Until: 13:00,0.000704545454545454, !- Field 27
+										
+    Until: 14:00,0.000522727272727273, !- Field 29
+										
+    Until: 15:00,0.000522727272727273, !- Field 31
+										
+    Until: 16:00,0.000522727272727273, !- Field 33
+										
+    Until: 17:00,0.000886363636363636, !- Field 35
+										
+    Until: 18:00,0.00104545454545455, !- Field 37
+										
+    Until: 19:00,0.00175,    !- Field 39
+    Until: 20:00,0.00227272727272727, !- Field 41
+										
+    Until: 21:00,0.00227272727272727, !- Field 43
+										
+    Until: 22:00,0.00175,    !- Field 45
+    Until: 23:00,0.0015,     !- Field 47
+    Until: 24:00,0.000886363636363636; !- Field 49
+    
 
 Schedule:Compact,
     BA_sink_sch,             !- Name
     any number,              !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 1:00,             !- Field 3
-    0.0043187134502924,      !- Field 4
-    Until: 2:00,             !- Field 5
-    0.0021593567251462,      !- Field 6
-    Until: 3:00,             !- Field 7
-    0.00154239766081871,     !- Field 8
-    Until: 4:00,             !- Field 9
-    0.00154239766081871,     !- Field 10
-    Until: 5:00,             !- Field 11
-    0.0021593567251462,      !- Field 12
-    Until: 6:00,             !- Field 13
-    0.00555263157894737,     !- Field 14
-    Until: 7:00,             !- Field 15
-    0.0129561403508772,      !- Field 16
-    Until: 8:00,             !- Field 17
-    0.019125730994152,       !- Field 18
-    Until: 9:00,             !- Field 19
-    0.020359649122807,       !- Field 20
-    Until: 10:00,            !- Field 21
-    0.019125730994152,       !- Field 22
-    Until: 11:00,            !- Field 23
-    0.0166578947368421,      !- Field 24
-    Until: 12:00,            !- Field 25
-    0.0154239766081871,      !- Field 26
-    Until: 13:00,            !- Field 27
-    0.0151154970760234,      !- Field 28
-    Until: 14:00,            !- Field 29
-    0.0138815789473684,      !- Field 30
-    Until: 15:00,            !- Field 31
-    0.0132646198830409,      !- Field 32
-    Until: 16:00,            !- Field 33
-    0.0126476608187135,      !- Field 34
-    Until: 17:00,            !- Field 35
-    0.0148070175438597,      !- Field 36
-    Until: 18:00,            !- Field 37
-    0.0200511695906433,      !- Field 38
-    Until: 19:00,            !- Field 39
-    0.0231359649122807,      !- Field 40
-    Until: 20:00,            !- Field 41
-    0.0212850877192982,      !- Field 42
-    Until: 21:00,            !- Field 43
-    0.0175833333333333,      !- Field 44
-    Until: 22:00,            !- Field 45
-    0.0148070175438597,      !- Field 46
-    Until: 23:00,            !- Field 47
-    0.0123391812865497,      !- Field 48
-    Until: 24:00,            !- Field 49
-    0.00832894736842105;     !- Field 50
+    Until: 1:00,0.0043187134502924, !- Field 3
+									   
+    Until: 2:00,0.0021593567251462, !- Field 5
+									   
+    Until: 3:00,0.00154239766081871, !- Field 7
+									   
+    Until: 4:00,0.00154239766081871, !- Field 9
+										
+    Until: 5:00,0.0021593567251462, !- Field 11
+										
+    Until: 6:00,0.00555263157894737, !- Field 13
+										
+    Until: 7:00,0.0129561403508772, !- Field 15
+										
+    Until: 8:00,0.019125730994152, !- Field 17
+										
+    Until: 9:00,0.020359649122807, !- Field 19
+										
+    Until: 10:00,0.019125730994152, !- Field 21
+										
+    Until: 11:00,0.0166578947368421, !- Field 23
+										
+    Until: 12:00,0.0154239766081871, !- Field 25
+										
+    Until: 13:00,0.0151154970760234, !- Field 27
+										
+    Until: 14:00,0.0138815789473684, !- Field 29
+										
+    Until: 15:00,0.0132646198830409, !- Field 31
+										
+    Until: 16:00,0.0126476608187135, !- Field 33
+										
+    Until: 17:00,0.0148070175438597, !- Field 35
+										
+    Until: 18:00,0.0200511695906433, !- Field 37
+										
+    Until: 19:00,0.0231359649122807, !- Field 39
+										
+    Until: 20:00,0.0212850877192982, !- Field 41
+										
+    Until: 21:00,0.0175833333333333, !- Field 43
+										
+    Until: 22:00,0.0148070175438597, !- Field 45
+										
+    Until: 23:00,0.0123391812865497, !- Field 47
+										
+    Until: 24:00,0.00832894736842105; !- Field 49
+    
 
 Schedule:Compact,
     activity_sch,            !- Name
     any number,              !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 24:00,            !- Field 3
-    117.28;                  !- Field 4
+    Until: 24:00,117.28;     !- Field 3
 
 Schedule:Compact,
     inf_sch,                 !- Name
     any number,              !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 24:00,            !- Field 3
-    1;                       !- Field 4
+    Until: 24:00,1;          !- Field 3
 
 Schedule:Compact,
     zone_control_type,       !- Name
     control_type,            !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until 24:00,             !- Field 3
-    4;                       !- Field 4
+    Until 24:00,4;           !- Field 3
 
 Schedule:Compact,
     shading_2,               !- Name
     fraction,                !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until 24:00,             !- Field 3
-    0;                       !- Field 4
+    Until 24:00,0;           !- Field 3
 
 Schedule:Compact,
     shading_1,               !- Name
     any number,              !- Schedule Type Limits Name
     Through: 5/30,           !- Field 1
     For: AllDays,            !- Field 2
-    Until 24:00,             !- Field 3
-    0.85,                    !- Field 4
+    Until 24:00,0.85,        !- Field 3
     Through: 8/31,           !- Field 5
     For: AllDays,            !- Field 6
-    Until 24:00,             !- Field 7
-    0.7,                     !- Field 8
+    Until 24:00,0.7,         !- Field 7
+									   
     Through: 12/31,          !- Field 9
     For: AllDays,            !- Field 10
-    Until: 24:00,            !- Field 11
-    0.85;                    !- Field 12
+    Until: 24:00,0.85;       !- Field 11
 
 Schedule:Compact,
     dhw_setpt,               !- Name
     Temperature,             !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until 24:00,             !- Field 3
-    48;                      !- Field 4
+    Until 24:00,48;          !- Field 3
+    
 
 Schedule:Compact,
     dhw_setpt_hpwh,          !- Name
     Temperature,             !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until 24:00,             !- Field 3
-    44;                      !- Field 4
+    Until 24:00,44;          !- Field 3
+    
 
 Schedule:Compact,
     Supply-Air-Temp-Sch,     !- Name
     Temperature,             !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 24:00,            !- Field 3
-    12;                      !- Field 4
+    Until: 24:00,12;         !- Field 3
+    
 
 Schedule:Compact,
     always_avail,            !- Name
     On/Off,                  !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 24:00,            !- Field 3
-    1;                       !- Field 4
+    Until: 24:00,1;          !- Field 3
+    
 
 Schedule:Compact,
     always_off,              !- Name
     On/Off,                  !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 24:00,            !- Field 3
-    0;                       !- Field 4
+    Until: 24:00,0;          !- Field 3
+    
 
 Schedule:Compact,
     heating_sch_HRef,        !- Name
     Temperature,             !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 24:00,            !- Field 3
-    20;                      !- Field 4
+    Until: 24:00,20;         !- Field 3
+    
 
 Schedule:Compact,
     cooling_sch_HRef,        !- Name
     Temperature,             !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 24:00,            !- Field 3
-    25.55;                   !- Field 4
+    Until: 24:00, 25.55;     !- Field 3
+    
 
 Schedule:Compact,
     heating_sch,             !- Name
     Temperature,             !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 24:00,            !- Field 3
-    22.2222222222223;        !- Field 4
+    Until: 24:00,22.2222222222223; !- Field 3
+    
 
 Schedule:Compact,
     cooling_sch,             !- Name
     Temperature,             !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 24:00,            !- Field 3
-    23.888888888889;         !- Field 4
+    Until: 24:00,23.888888888889; !- Field 3
+    
 
 Schedule:Compact,
     fan_cycle,               !- Name
     any number,              !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 24:00,            !- Field 3
-    0;                       !- Field 4
+    Until: 24:00,0;          !- Field 3
+    
 
 
 
@@ -9065,204 +9056,158 @@ Schedule:Compact,
     fraction,                !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 6:00,             !- Field 3
-    0,                       !- Field 4
-    Until: 9:00,             !- Field 5
-    0,                       !- Field 6
-    Until: 17:00,            !- Field 7
-    0,                       !- Field 8
-    Until: 18:00,            !- Field 9
-    1,                       !- Field 10
-    Until: 24:00,            !- Field 11
-    0;                       !- Field 12
+    Until: 6:00,0,           !- Field 3
+    Until: 9:00,0,           !- Field 5
+    Until: 17:00,0,          !- Field 7
+    Until: 18:00,1,          !- Field 9
+    Until: 24:00,0;          !- Field 11
 
 Schedule:Compact,
     WHFan_sch,               !- Name
     On/Off,                  !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 6:00,             !- Field 3
-    0,                       !- Field 4
-    Until: 9:00,             !- Field 5
-    1,                       !- Field 6
-    Until: 17:00,            !- Field 7
-    1,                       !- Field 8
-    Until: 23:00,            !- Field 9
-    0,                       !- Field 10
-    Until: 24:00,            !- Field 11
-    0;                       !- Field 12
+    Until: 6:00,0,           !- Field 3
+    Until: 9:00,1,           !- Field 5
+    Until: 17:00,1,          !- Field 7
+    Until: 23:00,0,          !- Field 9
+    Until: 24:00,0;          !- Field 11
 
 Schedule:Compact,
     HVACTemplate-Always 4,   !- Name
     HVACTemplate Any Number, !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 24:00,            !- Field 3
-    4;                       !- Field 4
+    Until: 24:00,4;          !- Field 3
+    
 
 Schedule:Compact,
     HVACTemplate-Always 1,   !- Name
     HVACTemplate Any Number, !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 24:00,            !- Field 3
-    1;                       !- Field 4
+    Until: 24:00,1;          !- Field 3
+   
 
 Schedule:Compact,
     scheduleOSCSlabAverageSurfaceTemp,  !- Name
     Temperature,             !- Schedule Type Limits Name
     Through:   1/31,         !- Field 1
     For:AllDays,             !- Field 2
-    Until:24:00,             !- Field 3
-    20.905,                  !- Field 4
+    Until:24:00,20.905,      !- Field 3
     Through:   2/28,         !- Field 5
     For:AllDays,             !- Field 6
-    Until:24:00,             !- Field 7
-    20.949,                  !- Field 8
+    Until:24:00,20.949,      !- Field 7
     Through:   3/31,         !- Field 9
     For:AllDays,             !- Field 10
-    Until:24:00,             !- Field 11
-    21.295,                  !- Field 12
+    Until:24:00,21.295,      !- Field 11
     Through:   4/30,         !- Field 13
     For:AllDays,             !- Field 14
-    Until:24:00,             !- Field 15
-    21.540,                  !- Field 16
+    Until:24:00,21.540,      !- Field 15
     Through:   5/31,         !- Field 17
     For:AllDays,             !- Field 18
-    Until:24:00,             !- Field 19
-    21.948,                  !- Field 20
+    Until:24:00,21.948,      !- Field 19
     Through:   6/30,         !- Field 21
     For:AllDays,             !- Field 22
-    Until:24:00,             !- Field 23
-    23.754,                  !- Field 24
+    Until:24:00,23.754,      !- Field 23
     Through:   7/31,         !- Field 25
     For:AllDays,             !- Field 26
-    Until:24:00,             !- Field 27
-    24.208,                  !- Field 28
+    Until:24:00,24.208,      !- Field 27
     Through:   8/31,         !- Field 29
     For:AllDays,             !- Field 30
-    Until:24:00,             !- Field 31
-    24.397,                  !- Field 32
+    Until:24:00,24.397,      !- Field 31
     Through:   9/30,         !- Field 33
     For:AllDays,             !- Field 34
-    Until:24:00,             !- Field 35
-    24.223,                  !- Field 36
+    Until:24:00,24.223,      !- Field 35
     Through:  10/31,         !- Field 37
     For:AllDays,             !- Field 38
-    Until:24:00,             !- Field 39
-    22.606,                  !- Field 40
+    Until:24:00,22.606,      !- Field 39
     Through:  11/30,         !- Field 41
     For:AllDays,             !- Field 42
-    Until:24:00,             !- Field 43
-    21.855,                  !- Field 44
+    Until:24:00,21.855,      !- Field 43
     Through:  12/31,         !- Field 45
     For:AllDays,             !- Field 46
-    Until:24:00,             !- Field 47
-    21.175;                  !- Field 48
+    Until:24:00,21.175;      !- Field 47
 
 Schedule:Compact,
     scheduleOSCSlabPerimeterTemp,  !- Name
     Temperature,             !- Schedule Type Limits Name
     Through:   1/31,         !- Field 1
     For:AllDays,             !- Field 2
-    Until:24:00,             !- Field 3
-    20.275,                  !- Field 4
+    Until:24:00,20.275,      !- Field 3
     Through:   2/28,         !- Field 5
     For:AllDays,             !- Field 6
-    Until:24:00,             !- Field 7
-    20.411,                  !- Field 8
+    Until:24:00,20.411,      !- Field 7
     Through:   3/31,         !- Field 9
     For:AllDays,             !- Field 10
-    Until:24:00,             !- Field 11
-    21.006,                  !- Field 12
+    Until:24:00,21.006,      !- Field 11
     Through:   4/30,         !- Field 13
     For:AllDays,             !- Field 14
-    Until:24:00,             !- Field 15
-    21.407,                  !- Field 16
+    Until:24:00,21.407,      !- Field 15
     Through:   5/31,         !- Field 17
     For:AllDays,             !- Field 18
-    Until:24:00,             !- Field 19
-    22.048,                  !- Field 20
+    Until:24:00,22.048,      !- Field 19
     Through:   6/30,         !- Field 21
     For:AllDays,             !- Field 22
-    Until:24:00,             !- Field 23
-    24.148,                  !- Field 24
+    Until:24:00,24.148,      !- Field 23
     Through:   7/31,         !- Field 25
     For:AllDays,             !- Field 26
-    Until:24:00,             !- Field 27
-    24.688,                  !- Field 28
+    Until:24:00,24.688,      !- Field 27
     Through:   8/31,         !- Field 29
     For:AllDays,             !- Field 30
-    Until:24:00,             !- Field 31
-    24.907,                  !- Field 32
+    Until:24:00,24.907,      !- Field 31
     Through:   9/30,         !- Field 33
     For:AllDays,             !- Field 34
-    Until:24:00,             !- Field 35
-    24.564,                  !- Field 36
+    Until:24:00,24.564,      !- Field 35
     Through:  10/31,         !- Field 37
     For:AllDays,             !- Field 38
-    Until:24:00,             !- Field 39
-    22.726,                  !- Field 40
+    Until:24:00,22.726,      !- Field 39
     Through:  11/30,         !- Field 41
     For:AllDays,             !- Field 42
-    Until:24:00,             !- Field 43
-    21.639,                  !- Field 44
+    Until:24:00,21.639,      !- Field 43
     Through:  12/31,         !- Field 45
     For:AllDays,             !- Field 46
-    Until:24:00,             !- Field 47
-    20.623;                  !- Field 48
+    Until:24:00,20.623;      !- Field 47
 
 Schedule:Compact,
     scheduleOSCSlabCoreTemp, !- Name
     Temperature,             !- Schedule Type Limits Name
     Through:   1/31,         !- Field 1
     For:AllDays,             !- Field 2
-    Until:24:00,             !- Field 3
-    21.939,                  !- Field 4
+    Until:24:00,21.939,      !- Field 3
     Through:   2/28,         !- Field 5
     For:AllDays,             !- Field 6
-    Until:24:00,             !- Field 7
-    21.831,                  !- Field 8
+    Until:24:00,21.831,      !- Field 7
     Through:   3/31,         !- Field 9
     For:AllDays,             !- Field 10
-    Until:24:00,             !- Field 11
-    21.769,                  !- Field 12
+    Until:24:00,21.769,      !- Field 11
     Through:   4/30,         !- Field 13
     For:AllDays,             !- Field 14
-    Until:24:00,             !- Field 15
-    21.758,                  !- Field 16
+    Until:24:00,21.758,      !- Field 15
     Through:   5/31,         !- Field 17
     For:AllDays,             !- Field 18
-    Until:24:00,             !- Field 19
-    21.784,                  !- Field 20
+    Until:24:00,21.784,      !- Field 19
     Through:   6/30,         !- Field 21
     For:AllDays,             !- Field 22
-    Until:24:00,             !- Field 23
-    23.109,                  !- Field 24
+    Until:24:00,23.109,      !- Field 23
     Through:   7/31,         !- Field 25
     For:AllDays,             !- Field 26
-    Until:24:00,             !- Field 27
-    23.420,                  !- Field 28
+    Until:24:00,23.420,      !- Field 27
     Through:   8/31,         !- Field 29
     For:AllDays,             !- Field 30
-    Until:24:00,             !- Field 31
-    23.562,                  !- Field 32
+    Until:24:00,23.562,      !- Field 31
     Through:   9/30,         !- Field 33
     For:AllDays,             !- Field 34
-    Until:24:00,             !- Field 35
-    23.663,                  !- Field 36
+    Until:24:00,23.663,      !- Field 35
     Through:  10/31,         !- Field 37
     For:AllDays,             !- Field 38
-    Until:24:00,             !- Field 39
-    22.409,                  !- Field 40
+    Until:24:00,22.409,      !- Field 39
     Through:  11/30,         !- Field 41
     For:AllDays,             !- Field 42
-    Until:24:00,             !- Field 43
-    22.209,                  !- Field 44
+    Until:24:00,22.209,      !- Field 43
     Through:  12/31,         !- Field 45
     For:AllDays,             !- Field 46
-    Until:24:00,             !- Field 47
-    22.082;                  !- Field 48
+    Until:24:00,22.082;      !- Field 47
 
 
     Schedule:Compact,
@@ -9270,16 +9215,13 @@ Schedule:Compact,
         On/Off,                  !- Schedule Type Limits Name
         Through:   4/30,         !- Field 1
         For:AllDays,             !- Field 2
-        Until:24:00,             !- Field 3
-        1,                       !- Field 4
-        Through:   9/30,         !- Field 5
-        For:AllDays,             !- Field 6
-        Until:24:00,             !- Field 7
-        1,                       !- Field 8
-        Through:  12/31,         !- Field 9
-        For:AllDays,             !- Field 10
-        Until:24:00,             !- Field 11
-        1;                       !- Field 12
+        Until:24:00,1,           !- Field 3
+    Through:   9/30,         !- Field 5
+    For:AllDays,             !- Field 6
+    Until:24:00,1,           !- Field 7
+    Through:  12/31,         !- Field 9
+    For:AllDays,             !- Field 10
+    Until:24:00,1;           !- Field 11
 
 
 
@@ -9463,6 +9405,7 @@ Material,
     837.36;                  !- Specific Heat {J/kg-K}
 
 !Name
+
 Material,
     sheathing_consol_layer,  !- Name
     Rough,                   !- Roughness
@@ -9472,6 +9415,7 @@ Material,
     1172.332;                !- Specific Heat {J/kg-K}
 
 !Name
+
 Material,
     ceil_consol_layer,       !- Name
     Rough,                   !- Roughness
@@ -9481,6 +9425,7 @@ Material,
     776.25126;               !- Specific Heat {J/kg-K}
 
     !Name
+	
     Material,
         ceil_insul_layer,       !- Name
         Rough,                   !- Roughness
@@ -9490,6 +9435,7 @@ Material,
         776.25126;               !- Specific Heat {J/kg-K}
 
 !Name
+
 Material,
     floor_consol_layer,      !- Name
     Rough,                   !- Roughness
@@ -9499,6 +9445,7 @@ Material,
     776.251260736001;        !- Specific Heat {J/kg-K}
 
 !Name
+
 Material,
     bsmtwall_consol_layer,   !- Name
     Rough,                   !- Roughness
@@ -9508,6 +9455,7 @@ Material,
     1036.25775;              !- Specific Heat {J/kg-K}
 
 !Name
+
 Material,
     crawlwall_consol_layer,  !- Name
     Rough,                   !- Roughness
@@ -9517,6 +9465,7 @@ Material,
     1036.25775;              !- Specific Heat {J/kg-K}
 
 !Name
+
 Material,
     wall_consol_layer,       !- Name
     Rough,                   !- Roughness
@@ -9961,6 +9910,7 @@ WindowMaterial:Glazing,
 
 !*** Properties for blinds taken from E+ dataset for 'Blinds with Medium Reflectivity Slats'***
 !
+
 WindowMaterial:Blind,
     int_blind,               !- Name
     Horizontal,              !- Slat Orientation
@@ -10441,30 +10391,27 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL7 North Perim Zn (G.N2),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
     WindExposed,             !- Wind Exposure
     ,                        !- View Factor to Ground
     4,                       !- Number of Vertices
-    0.000000000000,          !- Vertex 1 X-coordinate {m}
-    41.465632080000,         !- Vertex 1 Y-coordinate {m}
-    0.000000000000,          !- Vertex 1 Z-coordinate {m}
-    0.000000000000,          !- Vertex 2 X-coordinate {m}
-    48.582712080000,         !- Vertex 2 Y-coordinate {m}
-    0.000000000000,          !- Vertex 2 Z-coordinate {m}
-    0.000000000000,          !- Vertex 3 X-coordinate {m}
-    48.582712080000,         !- Vertex 3 Y-coordinate {m}
-    2.590800000000,          !- Vertex 3 Z-coordinate {m}
-    0.000000000000,          !- Vertex 4 X-coordinate {m}
-    41.465632080000,         !- Vertex 4 Y-coordinate {m}
-    2.590800000000;          !- Vertex 4 Z-coordinate {m}
+    0.000000000000,41.465632080000,0.000000000000,  !- X,Y,Z ==> Vertex 1 {m}
+													   
+    0.000000000000,48.582712080000,0.000000000000,  !- X,Y,Z ==> Vertex 2 {m}
+													   
+    0.000000000000,48.582712080000,2.590800000000,  !- X,Y,Z ==> Vertex 3 {m}
+													   
+    0.000000000000,41.465632080000,2.590800000000;  !- X,Y,Z ==> Vertex 4 {m}
 
 BuildingSurface:Detailed,
     EL7 Flr (G.N2.U2),     !- Name
     Floor,                   !- Surface Type
     Exterior Floor Cons,  !- Construction Name
     EL7 North Perim Zn (G.N2),  !- Zone Name
+	,                        !- Space Name
     Foundation,                  !- Outside Boundary Condition
     Slab Foundation,                        !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -10489,6 +10436,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL7 North Perim Zn (G.N2),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -10513,6 +10461,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Int Wall,       !- Construction Name
     EL7 North Perim Zn (G.N2),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL7 North Wall (G.N2.I4)-mirror,  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -10537,6 +10486,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     EL1 IWall Construction,!- Construction Name
     EL7 North Perim Zn (G.N2),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL7 North Wall (G.S1.I1),  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -10561,6 +10511,7 @@ BuildingSurface:Detailed,
     Ceiling,                 !- Surface Type
     Interior Ceiling,        !- Construction Name
     EL7 North Perim Zn (G.N2),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL7 UnderRf (G.N2.I5)-mirror,  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -10585,6 +10536,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL7 North Perim Zn (G.N2),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -10609,6 +10561,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Ext Wall,       !- Construction Name
     EL7 North Perim Zn (G.N4),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -10633,6 +10586,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Exterior Floor Cons,  !- Construction Name
     EL7 North Perim Zn (G.N4),  !- Zone Name
+	,                        !- Space Name
     Foundation,                  !- Outside Boundary Condition
     Slab Foundation,                        !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -10657,6 +10611,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Int Wall-mirror,!- Construction Name
     EL7 North Perim Zn (G.N4),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL7 North Wall (G.N2.I4),  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -10681,6 +10636,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Ext Wall,       !- Construction Name
     EL7 North Perim Zn (G.N4),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -10705,6 +10661,7 @@ BuildingSurface:Detailed,
     Ceiling,                 !- Surface Type
     Interior Ceiling,        !- Construction Name
     EL7 North Perim Zn (G.N4),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL7 UnderRf (G.N4.I7)-mirror,  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -10729,6 +10686,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Ext Wall,       !- Construction Name
     EL7 North Perim Zn (G.N4),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -10753,6 +10711,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -10774,6 +10733,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -10795,6 +10755,7 @@ BuildingSurface:Detailed,
     Roof,                    !- Surface Type
     EL2 Roof Construction, !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -10822,6 +10783,7 @@ BuildingSurface:Detailed,
     Roof,                    !- Surface Type
     EL2 Roof Construction, !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -10846,6 +10808,7 @@ BuildingSurface:Detailed,
     Roof,                    !- Surface Type
     EL2 Roof Construction, !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -10870,6 +10833,7 @@ BuildingSurface:Detailed,
     Roof,                    !- Surface Type
     EL2 Roof Construction, !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -10897,6 +10861,7 @@ BuildingSurface:Detailed,
     Roof,                    !- Surface Type
     EL2 Roof Construction, !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -10921,6 +10886,7 @@ BuildingSurface:Detailed,
     Roof,                    !- Surface Type
     EL2 Roof Construction, !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -10945,6 +10911,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -10969,6 +10936,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -10993,6 +10961,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11017,6 +10986,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11041,6 +11011,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11065,6 +11036,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11089,6 +11061,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Interior Floor,          !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL7 UnderRf (G.N2.I5), !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -11113,6 +11086,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Interior Floor,          !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL7 UnderRf (G.N4.I7), !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -11137,6 +11111,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Interior Floor,          !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL7 UnderRf (G.S1.I3), !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -11161,6 +11136,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Interior Floor,          !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL7 UnderRf (G.S3.I6), !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -11185,6 +11161,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL7 South Perim Zn (G.S1),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11209,6 +11186,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Exterior Floor Cons,  !- Construction Name
     EL7 South Perim Zn (G.S1),  !- Zone Name
+	,                        !- Space Name
     Foundation,                  !- Outside Boundary Condition
     Slab Foundation,                        !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -11233,6 +11211,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     EL1 IWall Construction,!- Construction Name
     EL7 South Perim Zn (G.S1),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL7 North Wall (G.S1.I1)-mirror,  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -11257,6 +11236,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL7 South Perim Zn (G.S1),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11281,6 +11261,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Int Wall,       !- Construction Name
     EL7 South Perim Zn (G.S1),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL7 South Wall (G.S1.I2)-mirror,  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -11305,6 +11286,7 @@ BuildingSurface:Detailed,
     Ceiling,                 !- Surface Type
     Interior Ceiling,        !- Construction Name
     EL7 South Perim Zn (G.S1),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL7 UnderRf (G.S1.I3)-mirror,  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -11329,6 +11311,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL7 South Perim Zn (G.S1),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11353,6 +11336,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Ext Wall,       !- Construction Name
     EL7 South Perim Zn (G.S3),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11377,6 +11361,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Exterior Floor Cons,  !- Construction Name
     EL7 South Perim Zn (G.S3),  !- Zone Name
+	,                        !- Space Name
     Foundation,                  !- Outside Boundary Condition
     Slab Foundation,                        !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -11401,6 +11386,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Int Wall-mirror,!- Construction Name
     EL7 South Perim Zn (G.S3),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL7 South Wall (G.S1.I2),  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -11425,6 +11411,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Ext Wall,       !- Construction Name
     EL7 South Perim Zn (G.S3),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11449,6 +11436,7 @@ BuildingSurface:Detailed,
     Ceiling,                 !- Surface Type
     Interior Ceiling,        !- Construction Name
     EL7 South Perim Zn (G.S3),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL7 UnderRf (G.S3.I6)-mirror,  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -11473,6 +11461,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Ext Wall,       !- Construction Name
     EL7 South Perim Zn (G.S3),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11497,6 +11486,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL8 East Perim Zn (G.E2),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11521,6 +11511,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Int Wall,       !- Construction Name
     EL8 East Perim Zn (G.E2),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL8 East Wall (G.E2.I4)-mirror,  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -11545,6 +11536,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     EL1 IWall Construction,!- Construction Name
     EL8 East Perim Zn (G.E2),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL8 East Wall (G.W1.I1),  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -11569,6 +11561,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Exterior Floor Cons,  !- Construction Name
     EL8 East Perim Zn (G.E2),  !- Zone Name
+	,                        !- Space Name
     Foundation,                  !- Outside Boundary Condition
     Slab Foundation,                        !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -11593,6 +11586,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL8 East Perim Zn (G.E2),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11617,6 +11611,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL8 East Perim Zn (G.E2),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11641,6 +11636,7 @@ BuildingSurface:Detailed,
     Ceiling,                 !- Surface Type
     Interior Ceiling,        !- Construction Name
     EL8 East Perim Zn (G.E2),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL8 UnderRf (G.E2.I5)-mirror,  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -11665,6 +11661,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Int Wall-mirror,!- Construction Name
     EL8 East Perim Zn (G.E4),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL8 East Wall (G.E2.I4),  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -11689,6 +11686,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Ext Wall,       !- Construction Name
     EL8 East Perim Zn (G.E4),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11713,6 +11711,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Exterior Floor Cons,  !- Construction Name
     EL8 East Perim Zn (G.E4),  !- Zone Name
+	,                        !- Space Name
     Foundation,                  !- Outside Boundary Condition
     Slab Foundation,                        !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -11737,6 +11736,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Ext Wall,       !- Construction Name
     EL8 East Perim Zn (G.E4),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11761,6 +11761,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Ext Wall,       !- Construction Name
     EL8 East Perim Zn (G.E4),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11785,6 +11786,7 @@ BuildingSurface:Detailed,
     Ceiling,                 !- Surface Type
     Interior Ceiling,        !- Construction Name
     EL8 East Perim Zn (G.E4),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL8 UnderRf (G.E4.I7)-mirror,  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -11809,6 +11811,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11830,6 +11833,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11851,6 +11855,7 @@ BuildingSurface:Detailed,
     Roof,                    !- Surface Type
     EL2 Roof Construction, !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11878,6 +11883,7 @@ BuildingSurface:Detailed,
     Roof,                    !- Surface Type
     EL2 Roof Construction, !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11902,6 +11908,7 @@ BuildingSurface:Detailed,
     Roof,                    !- Surface Type
     EL2 Roof Construction, !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11926,6 +11933,7 @@ BuildingSurface:Detailed,
     Roof,                    !- Surface Type
     EL2 Roof Construction, !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11953,6 +11961,7 @@ BuildingSurface:Detailed,
     Roof,                    !- Surface Type
     EL2 Roof Construction, !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -11977,6 +11986,7 @@ BuildingSurface:Detailed,
     Roof,                    !- Surface Type
     EL2 Roof Construction, !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -12001,6 +12011,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -12025,6 +12036,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -12049,6 +12061,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -12073,6 +12086,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -12097,6 +12111,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -12121,6 +12136,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -12145,6 +12161,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Interior Floor,          !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL8 UnderRf (G.E2.I5), !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -12169,6 +12186,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Interior Floor,          !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL8 UnderRf (G.E4.I7), !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -12193,6 +12211,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Interior Floor,          !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL8 UnderRf (G.W1.I3), !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -12217,6 +12236,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Interior Floor,          !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL8 UnderRf (G.W3.I6), !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -12241,6 +12261,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     EL1 IWall Construction,!- Construction Name
     EL8 West Perim Zn (G.W1),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL8 East Wall (G.W1.I1)-mirror,  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -12265,6 +12286,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Exterior Floor Cons,  !- Construction Name
     EL8 West Perim Zn (G.W1),  !- Zone Name
+	,                        !- Space Name
     Foundation,                  !- Outside Boundary Condition
     Slab Foundation,                        !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -12289,6 +12311,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL8 West Perim Zn (G.W1),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -12313,6 +12336,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL8 West Perim Zn (G.W1),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -12337,6 +12361,7 @@ BuildingSurface:Detailed,
     Ceiling,                 !- Surface Type
     Interior Ceiling,        !- Construction Name
     EL8 West Perim Zn (G.W1),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL8 UnderRf (G.W1.I3)-mirror,  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -12361,6 +12386,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL8 West Perim Zn (G.W1),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -12385,6 +12411,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Int Wall,       !- Construction Name
     EL8 West Perim Zn (G.W1),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL8 West Wall (G.W1.I2)-mirror,  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -12409,6 +12436,7 @@ BuildingSurface:Detailed,
     Floor,                   !- Surface Type
     Exterior Floor Cons,  !- Construction Name
     EL8 West Perim Zn (G.W3),  !- Zone Name
+	,                        !- Space Name
     Foundation,                  !- Outside Boundary Condition
     Slab Foundation,                        !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -12433,6 +12461,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Ext Wall,       !- Construction Name
     EL8 West Perim Zn (G.W3),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -12457,6 +12486,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Ext Wall,       !- Construction Name
     EL8 West Perim Zn (G.W3),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -12481,6 +12511,7 @@ BuildingSurface:Detailed,
     Ceiling,                 !- Surface Type
     Interior Ceiling,        !- Construction Name
     EL8 West Perim Zn (G.W3),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL8 UnderRf (G.W3.I6)-mirror,  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -12505,6 +12536,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Int Wall-mirror,!- Construction Name
     EL8 West Perim Zn (G.W3),  !- Zone Name
+	,                        !- Space Name
     Surface,                 !- Outside Boundary Condition
     EL8 West Wall (G.W1.I2),  !- Outside Boundary Condition Object
     NoSun,                   !- Sun Exposure
@@ -12529,6 +12561,7 @@ BuildingSurface:Detailed,
     Wall,                    !- Surface Type
     Garage Ext Wall,       !- Construction Name
     EL8 West Perim Zn (G.W3),  !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -12555,6 +12588,7 @@ BuildingSurface:Detailed,
     Roof,                    !- Surface Type
     EL2 Roof Construction, !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -12579,6 +12613,7 @@ BuildingSurface:Detailed,
     Roof,                    !- Surface Type
     EL2 Roof Construction, !- Construction Name
     EL8 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -12603,6 +12638,7 @@ BuildingSurface:Detailed,
     Roof,                    !- Surface Type
     EL2 Roof Construction, !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -12627,6 +12663,7 @@ BuildingSurface:Detailed,
     Roof,                    !- Surface Type
     EL2 Roof Construction, !- Construction Name
     EL7 Roof Zone 1,       !- Zone Name
+	,                        !- Space Name
     Outdoors,                !- Outside Boundary Condition
     ,                        !- Outside Boundary Condition Object
     SunExposed,              !- Sun Exposure
@@ -14883,6 +14920,7 @@ BuildingSurface:Detailed,
 !     -2.371057799544,         !- Vertex 4 X-coordinate {m}
 !     29.471752080000,         !- Vertex 4 Y-coordinate {m}
 !     3.980703558267;          !- Vertex 4 Z-coordinate {m}
+
 FenestrationSurface:Detailed,
     EL7 East Win (G.N2.E4.W1),  !- Name
     Window,                  !- Surface Type
@@ -15912,7 +15950,7 @@ WindowShadingControl,
     ,                        !- Shading Device Material Name
     ,                        !- Type of Slat Angle Control for Blinds
     ,                        !- Slat Angle Schedule Name
-    ,                        !- Setpoint 2 {W/m2 or deg C}
+    ,                        !- Setpoint 2 {W/m2, deg C or cd/m2}
     ,                        !- Daylighting Control Object Name
     Sequential,              !- Multiple Surface Control Type
     EL7 East Win (G.N2.E4.W1),  !- Fenestration Surface 1 Name
@@ -15939,7 +15977,7 @@ WindowShadingControl,
     ,                        !- Shading Device Material Name
     ,                        !- Type of Slat Angle Control for Blinds
     ,                        !- Slat Angle Schedule Name
-    ,                        !- Setpoint 2 {W/m2 or deg C}
+    ,                        !- Setpoint 2 {W/m2, deg C or cd/m2}
     ,                        !- Daylighting Control Object Name
     Sequential,              !- Multiple Surface Control Type
     EL8 North Win (G.E2.E6.W1),  !- Fenestration Surface 1 Name
@@ -15966,7 +16004,7 @@ WindowShadingControl,
     ,                        !- Shading Device Material Name
     ,                        !- Type of Slat Angle Control for Blinds
     ,                        !- Slat Angle Schedule Name
-    ,                        !- Setpoint 2 {W/m2 or deg C}
+    ,                        !- Setpoint 2 {W/m2, deg C or cd/m2}
     ,                        !- Daylighting Control Object Name
     Sequential,              !- Multiple Surface Control Type
     EL8 North Win (G.W1.E2.W1),  !- Fenestration Surface 1 Name
@@ -15993,7 +16031,7 @@ WindowShadingControl,
     ,                        !- Shading Device Material Name
     ,                        !- Type of Slat Angle Control for Blinds
     ,                        !- Slat Angle Schedule Name
-    ,                        !- Setpoint 2 {W/m2 or deg C}
+    ,                        !- Setpoint 2 {W/m2, deg C or cd/m2}
     ,                        !- Daylighting Control Object Name
     Sequential,              !- Multiple Surface Control Type
     EL7 East Win (G.S1.E1.W1),  !- Fenestration Surface 1 Name
@@ -16013,12 +16051,14 @@ InternalMass,
     Internalmass_unit3,      !- Name
     InteriorFurnishings,     !- Construction Name
     living area-EL7,         !- Zone or ZoneList Name
+	,                        !- Space or SpaceList Name
     9.89591078066915;        !- Surface Area {m2}
 
 InternalMass,
     Internalmass_unit4,      !- Name
     InteriorFurnishings,     !- Construction Name
     living area-EL8,         !- Zone or ZoneList Name
+	,                        !- Space or SpaceList Name
     9.89591078066915;        !- Surface Area {m2}
 
 
@@ -16185,6 +16225,7 @@ Shading:Building:Detailed,
 !          10      22.61     22.73        22.41       22.22     -1.559      -2.045     -0.763
 !          11      21.86     21.64        22.21       22.22      1.205       1.918     3.535E-002
 !          12      21.18     20.62        22.08       22.22      3.451       5.276     0.457
+
 SurfaceProperty:OtherSideCoefficients,
     surfPropOthSdCoefSlabAverage,  !- Name
     0.0,                     !- Combined Convective/Radiative Film Coefficient {W/m2-K}
@@ -16480,74 +16521,75 @@ SurfaceProperty:OtherSideCoefficients,
 !     15,                      !- CLEARANCE: Distance from outside of wall to edge of 3-D ground domain {m}
 !     0.1,                     !- SlabDepth: Thickness of the floor slab {m}
 !     1.21914054350572;        !- BaseDepth: Depth of the basement wall below grade {m}
+
 People,
     People_EL7_Zn_GS1,       !- Name
-    EL7 South Perim Zn (G.S1),  !- Zone or ZoneList Name
+    EL7 South Perim Zn (G.S1),  !- Zone or ZoneList or Space or SpaceList Name
     EL2 Occ-2 Sch,         !- Number of People Schedule Name
     People,                  !- Number of People Calculation Method
     3,                       !- Number of People
-    ,                        !- People per Zone Floor Area {person/m2}
-    ,                        !- Zone Floor Area per Person {m2/person}
+    ,                        !- People per Floor Area {person/m2}
+    ,                        !- Floor Area per Person {m2/person}
     0.3,                     !- Fraction Radiant
     autocalculate,           !- Sensible Heat Fraction
     activity_sch,            !- Activity Level Schedule Name
     0,                       !- Carbon Dioxide Generation Rate {m3/s-W}
     No,                      !- Enable ASHRAE 55 Comfort Warnings
-    ZoneAveraged,            !- Mean Radiant Temperature Calculation Type
+    EnclosureAveraged,       !- Mean Radiant Temperature Calculation Type
     ,                        !- Surface Name/Angle Factor List Name
     ,                        !- Work Efficiency Schedule Name
     ClothingInsulationSchedule;  !- Clothing Insulation Calculation Method
 
 People,
     People_EL7_Zn_GN2,       !- Name
-    EL7 North Perim Zn (G.N2),  !- Zone or ZoneList Name
+    EL7 North Perim Zn (G.N2),  !- Zone or ZoneList or Space or SpaceList Name
     EL2 Occ-1 Sch,         !- Number of People Schedule Name
     People,                  !- Number of People Calculation Method
     3,                       !- Number of People
-    ,                        !- People per Zone Floor Area {person/m2}
-    ,                        !- Zone Floor Area per Person {m2/person}
+    ,                        !- People per Floor Area {person/m2}
+    ,                        !- Floor Area per Person {m2/person}
     0.3,                     !- Fraction Radiant
     autocalculate,           !- Sensible Heat Fraction
     activity_sch,            !- Activity Level Schedule Name
     0,                       !- Carbon Dioxide Generation Rate {m3/s-W}
     No,                      !- Enable ASHRAE 55 Comfort Warnings
-    ZoneAveraged,            !- Mean Radiant Temperature Calculation Type
+    EnclosureAveraged,       !- Mean Radiant Temperature Calculation Type
     ,                        !- Surface Name/Angle Factor List Name
     ,                        !- Work Efficiency Schedule Name
     ClothingInsulationSchedule;  !- Clothing Insulation Calculation Method
 
 People,
     People_EL8_Zn_GW1,       !- Name
-    EL8 West Perim Zn (G.W1),  !- Zone or ZoneList Name
+    EL8 West Perim Zn (G.W1),  !- Zone or ZoneList or Space or SpaceList Name
     EL2 Occ-2 Sch,         !- Number of People Schedule Name
     People,                  !- Number of People Calculation Method
     3,                       !- Number of People
-    ,                        !- People per Zone Floor Area {person/m2}
-    ,                        !- Zone Floor Area per Person {m2/person}
+    ,                        !- People per Floor Area {person/m2}
+    ,                        !- Floor Area per Person {m2/person}
     0.3,                     !- Fraction Radiant
     autocalculate,           !- Sensible Heat Fraction
     activity_sch,            !- Activity Level Schedule Name
     0,                       !- Carbon Dioxide Generation Rate {m3/s-W}
     No,                      !- Enable ASHRAE 55 Comfort Warnings
-    ZoneAveraged,            !- Mean Radiant Temperature Calculation Type
+    EnclosureAveraged,       !- Mean Radiant Temperature Calculation Type
     ,                        !- Surface Name/Angle Factor List Name
     ,                        !- Work Efficiency Schedule Name
     ClothingInsulationSchedule;  !- Clothing Insulation Calculation Method
 
 People,
     People_EL8_Zn_GE2,       !- Name
-    EL8 East Perim Zn (G.E2),  !- Zone or ZoneList Name
+    EL8 East Perim Zn (G.E2),  !- Zone or ZoneList or Space or SpaceList Name
     EL2 Occ-1 Sch,         !- Number of People Schedule Name
     People,                  !- Number of People Calculation Method
     3,                       !- Number of People
-    ,                        !- People per Zone Floor Area {person/m2}
-    ,                        !- Zone Floor Area per Person {m2/person}
+    ,                        !- People per Floor Area {person/m2}
+    ,                        !- Floor Area per Person {m2/person}
     0.3,                     !- Fraction Radiant
     autocalculate,           !- Sensible Heat Fraction
     activity_sch,            !- Activity Level Schedule Name
     0,                       !- Carbon Dioxide Generation Rate {m3/s-W}
     No,                      !- Enable ASHRAE 55 Comfort Warnings
-    ZoneAveraged,            !- Mean Radiant Temperature Calculation Type
+    EnclosureAveraged,       !- Mean Radiant Temperature Calculation Type
     ,                        !- Surface Name/Angle Factor List Name
     ,                        !- Work Efficiency Schedule Name
     ClothingInsulationSchedule;  !- Clothing Insulation Calculation Method
@@ -16557,11 +16599,11 @@ People,
 
 Lights,
     EL7_GS1_Light,           !- Name
-    EL7 South Perim Zn (G.S1),  !- Zone or ZoneList Name
+    EL7 South Perim Zn (G.S1),  !- Zone or ZoneList or Space or SpaceList Name
     InteriorLightingHE,      !- Schedule Name
     Watts/Area,              !- Design Level Calculation Method
     ,                        !- Lighting Level {W}
-    1.75,                    !- Watts per Zone Floor Area {W/m2}
+    1.75,                    !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0,                       !- Return Air Fraction
     0.6,                     !- Fraction Radiant
@@ -16572,11 +16614,11 @@ Lights,
 
 Lights,
     EL7_GN2_Light,           !- Name
-    EL7 North Perim Zn (G.N2),  !- Zone or ZoneList Name
+    EL7 North Perim Zn (G.N2),  !- Zone or ZoneList or Space or SpaceList Name
     InteriorLightingHE,      !- Schedule Name
     Watts/Area,              !- Design Level Calculation Method
     ,                        !- Lighting Level {W}
-    1.75,                    !- Watts per Zone Floor Area {W/m2}
+    1.75,                    !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0,                       !- Return Air Fraction
     0.6,                     !- Fraction Radiant
@@ -16587,11 +16629,11 @@ Lights,
 
 Lights,
     EL7_GS3_Light,           !- Name
-    EL7 South Perim Zn (G.S3),  !- Zone or ZoneList Name
+    EL7 South Perim Zn (G.S3),  !- Zone or ZoneList or Space or SpaceList Name
     InteriorLightingHE,      !- Schedule Name
     LightingLevel,           !- Design Level Calculation Method
     8.65509143,              !- Lighting Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0,                       !- Return Air Fraction
     0.6,                     !- Fraction Radiant
@@ -16602,11 +16644,11 @@ Lights,
 
 Lights,
     EL7_GN4_Light,           !- Name
-    EL7 North Perim Zn (G.N4),  !- Zone or ZoneList Name
+    EL7 North Perim Zn (G.N4),  !- Zone or ZoneList or Space or SpaceList Name
     InteriorLightingHE,      !- Schedule Name
     LightingLevel,           !- Design Level Calculation Method
     8.65509143,              !- Lighting Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0,                       !- Return Air Fraction
     0.6,                     !- Fraction Radiant
@@ -16617,11 +16659,11 @@ Lights,
 
 Lights,
     EL8_GW1_Light,           !- Name
-    EL8 West Perim Zn (G.W1),  !- Zone or ZoneList Name
+    EL8 West Perim Zn (G.W1),  !- Zone or ZoneList or Space or SpaceList Name
     InteriorLightingHE,      !- Schedule Name
     Watts/Area,              !- Design Level Calculation Method
     ,                        !- Lighting Level {W}
-    1.75,                    !- Watts per Zone Floor Area {W/m2}
+    1.75,                    !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0,                       !- Return Air Fraction
     0.6,                     !- Fraction Radiant
@@ -16632,11 +16674,11 @@ Lights,
 
 Lights,
     EL8_GE2_Light,           !- Name
-    EL8 East Perim Zn (G.E2),  !- Zone or ZoneList Name
+    EL8 East Perim Zn (G.E2),  !- Zone or ZoneList or Space or SpaceList Name
     InteriorLightingHE,      !- Schedule Name
     Watts/Area,              !- Design Level Calculation Method
     ,                        !- Lighting Level {W}
-    1.75,                    !- Watts per Zone Floor Area {W/m2}
+    1.75,                    !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0,                       !- Return Air Fraction
     0.6,                     !- Fraction Radiant
@@ -16647,11 +16689,11 @@ Lights,
 
 Lights,
     EL8_GW3_Light,           !- Name
-    EL8 West Perim Zn (G.W3),  !- Zone or ZoneList Name
+    EL8 West Perim Zn (G.W3),  !- Zone or ZoneList or Space or SpaceList Name
     InteriorLightingHE,      !- Schedule Name
     LightingLevel,           !- Design Level Calculation Method
     8.65509143,              !- Lighting Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0,                       !- Return Air Fraction
     0.6,                     !- Fraction Radiant
@@ -16662,11 +16704,11 @@ Lights,
 
 Lights,
     EL8_GE4_Light,           !- Name
-    EL8 East Perim Zn (G.E4),  !- Zone or ZoneList Name
+    EL8 East Perim Zn (G.E4),  !- Zone or ZoneList or Space or SpaceList Name
     InteriorLightingHE,      !- Schedule Name
     LightingLevel,           !- Design Level Calculation Method
     8.65509143,              !- Lighting Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0,                       !- Return Air Fraction
     0.6,                     !- Fraction Radiant
@@ -16680,11 +16722,11 @@ Lights,
 
 ElectricEquipment,
     dishwasher1,             !- Name
-    Main Living Area,        !- Zone or ZoneList Name
+    Main Living Area,        !- Zone or ZoneList or Space or SpaceList Name
     Dishwasher,              !- Schedule Name
     EquipmentLevel,          !- Design Level Calculation Method
     65.6987875,              !- Design Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0.15,                    !- Fraction Latent
     0.6,                     !- Fraction Radiant
@@ -16693,11 +16735,11 @@ ElectricEquipment,
 
 ElectricEquipment,
     refrigerator1,           !- Name
-    Main Living Area,        !- Zone or ZoneList Name
+    Main Living Area,        !- Zone or ZoneList or Space or SpaceList Name
     Refrigerator,            !- Schedule Name
     EquipmentLevel,          !- Design Level Calculation Method
     <%= refgfrzr_power_level %>,              !- Design Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     ,                        !- Fraction Latent
     1,                       !- Fraction Radiant
@@ -16706,11 +16748,11 @@ ElectricEquipment,
 
 ElectricEquipment,
     clotheswasher1,          !- Name
-    Main Living Area,        !- Zone or ZoneList Name
+    Main Living Area,        !- Zone or ZoneList or Space or SpaceList Name
     ClothesWasher,           !- Schedule Name
     EquipmentLevel,          !- Design Level Calculation Method
     28.4784378,              !- Design Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     ,                        !- Fraction Latent
     0.8,                     !- Fraction Radiant
@@ -16719,11 +16761,11 @@ ElectricEquipment,
 
 ElectricEquipment,
     gas_dryer1,              !- Name
-    Main Living Area,        !- Zone or ZoneList Name
+    Main Living Area,        !- Zone or ZoneList or Space or SpaceList Name
     ClothesDryer,            !- Schedule Name
     EquipmentLevel,          !- Design Level Calculation Method
     19.4182189,              !- Design Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     ,                        !- Fraction Latent
     1,                       !- Fraction Radiant
@@ -16732,11 +16774,11 @@ ElectricEquipment,
 
 ElectricEquipment,
     Elec_Misc_Main,          !- Name
-    Main Living Area,        !- Zone or ZoneList Name
+    Main Living Area,        !- Zone or ZoneList or Space or SpaceList Name
     MiscPlugLoad,            !- Schedule Name
     EquipmentLevel,          !- Design Level Calculation Method
     260,                     !- Design Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0.05,                    !- Fraction Latent
     0.7,                     !- Fraction Radiant
@@ -16745,11 +16787,11 @@ ElectricEquipment,
 
 ElectricEquipment,
     Elec_Misc_Sec,           !- Name
-    Secondary Area,          !- Zone or ZoneList Name
+    Secondary Area,          !- Zone or ZoneList or Space or SpaceList Name
     MiscPlugLoad,            !- Schedule Name
     EquipmentLevel,          !- Design Level Calculation Method
     260,                     !- Design Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0.05,                    !- Fraction Latent
     0.7,                     !- Fraction Radiant
@@ -16761,11 +16803,11 @@ ElectricEquipment,
 
 GasEquipment,
     gas_dryer1,              !- Name
-    Main Living Area,        !- Zone or ZoneList Name
+    Main Living Area,        !- Zone or ZoneList or Space or SpaceList Name
     ClothesDryer,            !- Schedule Name
     EquipmentLevel,          !- Design Level Calculation Method
     142.5830126,             !- Design Level {W}
-    ,                        !- Power per Zone Floor Area {W/m2}
+    ,                        !- Power per Floor Area {W/m2}
     ,                        !- Power per Person {W/person}
     0.05,                    !- Fraction Latent
     0.1,                     !- Fraction Radiant
@@ -16775,11 +16817,11 @@ GasEquipment,
 
 GasEquipment,
     gas_range1,              !- Name
-    Main Living Area,        !- Zone or ZoneList Name
+    Main Living Area,        !- Zone or ZoneList or Space or SpaceList Name
     CookingRange,            !- Schedule Name
     EquipmentLevel,          !- Design Level Calculation Method
     194.969281,              !- Design Level {W}
-    ,                        !- Power per Zone Floor Area {W/m2}
+    ,                        !- Power per Floor Area {W/m2}
     ,                        !- Power per Person {W/person}
     0.06,                    !- Fraction Latent
     0.69,                    !- Fraction Radiant
@@ -17242,6 +17284,7 @@ Exterior:Lights,
 !     500,                     !- Return Fan Delta Pressure {Pa}
 !     0.9,                     !- Return Fan Motor Efficiency
 !     1;                       !- Return Fan Motor in Air Stream Fraction
+
 Sizing:Parameters,
     <%= sizing_parameter %>,                     !- Heating Sizing Factor
     <%= sizing_parameter %>;                     !- Cooling Sizing Factor
@@ -17276,7 +17319,14 @@ Sizing:Zone,
     ,                        !- Account for Dedicated Outdoor Air System
     ,                        !- Dedicated Outdoor Air System Control Strategy
     ,                        !- Dedicated Outdoor Air Low Setpoint Temperature for Design {C}
-    ;                        !- Dedicated Outdoor Air High Setpoint Temperature for Design {C}
+    ,                        !- Dedicated Outdoor Air High Setpoint Temperature for Design {C}
+	Sensible Load Only No Latent Load,  !- Zone Load Sizing Method
+    HumidityRatioDifference, !- Zone Latent Cooling Design Supply Air Humidity Ratio Input Method
+    ,                        !- Zone Dehumidification Design Supply Air Humidity Ratio {kgWater/kgDryAir}
+    0.005,                   !- Zone Cooling Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
+    HumidityRatioDifference, !- Zone Latent Heating Design Supply Air Humidity Ratio Input Method
+    ,                        !- Zone Humidification Design Supply Air Humidity Ratio {kgWater/kgDryAir}
+    0.005;                   !- Zone Humidification Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
 
 Sizing:Zone,
     EL7 North Perim Zn (G.N2),  !- Zone or ZoneList Name
@@ -17305,7 +17355,14 @@ Sizing:Zone,
     ,                        !- Account for Dedicated Outdoor Air System
     ,                        !- Dedicated Outdoor Air System Control Strategy
     ,                        !- Dedicated Outdoor Air Low Setpoint Temperature for Design {C}
-    ;                        !- Dedicated Outdoor Air High Setpoint Temperature for Design {C}
+    ,                        !- Dedicated Outdoor Air High Setpoint Temperature for Design {C}
+	Sensible Load Only No Latent Load,  !- Zone Load Sizing Method
+    HumidityRatioDifference, !- Zone Latent Cooling Design Supply Air Humidity Ratio Input Method
+    ,                        !- Zone Dehumidification Design Supply Air Humidity Ratio {kgWater/kgDryAir}
+    0.005,                   !- Zone Cooling Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
+    HumidityRatioDifference, !- Zone Latent Heating Design Supply Air Humidity Ratio Input Method
+    ,                        !- Zone Humidification Design Supply Air Humidity Ratio {kgWater/kgDryAir}
+    0.005;                   !- Zone Humidification Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
 
 Sizing:Zone,
     EL8 West Perim Zn (G.W1),  !- Zone or ZoneList Name
@@ -17334,7 +17391,14 @@ Sizing:Zone,
     ,                        !- Account for Dedicated Outdoor Air System
     ,                        !- Dedicated Outdoor Air System Control Strategy
     ,                        !- Dedicated Outdoor Air Low Setpoint Temperature for Design {C}
-    ;                        !- Dedicated Outdoor Air High Setpoint Temperature for Design {C}
+    ,                        !- Dedicated Outdoor Air High Setpoint Temperature for Design {C}
+	Sensible Load Only No Latent Load,  !- Zone Load Sizing Method
+    HumidityRatioDifference, !- Zone Latent Cooling Design Supply Air Humidity Ratio Input Method
+    ,                        !- Zone Dehumidification Design Supply Air Humidity Ratio {kgWater/kgDryAir}
+    0.005,                   !- Zone Cooling Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
+    HumidityRatioDifference, !- Zone Latent Heating Design Supply Air Humidity Ratio Input Method
+    ,                        !- Zone Humidification Design Supply Air Humidity Ratio {kgWater/kgDryAir}
+    0.005;                   !- Zone Humidification Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
 
 Sizing:Zone,
     EL8 East Perim Zn (G.E2),  !- Zone or ZoneList Name
@@ -17363,7 +17427,14 @@ Sizing:Zone,
     ,                        !- Account for Dedicated Outdoor Air System
     ,                        !- Dedicated Outdoor Air System Control Strategy
     ,                        !- Dedicated Outdoor Air Low Setpoint Temperature for Design {C}
-    ;                        !- Dedicated Outdoor Air High Setpoint Temperature for Design {C}
+    ,                        !- Dedicated Outdoor Air High Setpoint Temperature for Design {C}
+	Sensible Load Only No Latent Load,  !- Zone Load Sizing Method
+    HumidityRatioDifference, !- Zone Latent Cooling Design Supply Air Humidity Ratio Input Method
+    ,                        !- Zone Dehumidification Design Supply Air Humidity Ratio {kgWater/kgDryAir}
+    0.005,                   !- Zone Cooling Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
+    HumidityRatioDifference, !- Zone Latent Heating Design Supply Air Humidity Ratio Input Method
+    ,                        !- Zone Humidification Design Supply Air Humidity Ratio {kgWater/kgDryAir}
+    0.005;                   !- Zone Humidification Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
 
 
 !-   ===========  ALL OBJECTS IN CLASS: SIZING:SYSTEM ===========
@@ -17500,6 +17571,7 @@ ZoneControl:Thermostat,
 ! New objects created from ExpandObjects
 ! -------------------------------------------------------------
 !
+
 ThermostatSetpoint:DualSetpoint,
     thermostat_living Dual SP Control Dual SP Control,  !- Name
     heating_sch_DEER,        !- Heating Setpoint Temperature Schedule Name
@@ -19678,23 +19750,23 @@ Output:Table:Monthly,
 Output:Table:Monthly,
     CoilLoads,               !- Name
     2,                       !- Digits After Decimal
-    Heating Coil Heating Rate ,  !- Variable or Meter 1 Name
+    Heating Coil Heating Rate,  !- Variable or Meter 1 Name
     SumOrAverage,            !- Aggregation Type for Variable or Meter 1
-    Heating Coil Air Heating Rate ,  !- Variable or Meter 2 Name
+    Heating Coil Air Heating Rate,  !- Variable or Meter 2 Name
     SumOrAverage,            !- Aggregation Type for Variable or Meter 2
-    Cooling Coil Total Cooling Rate ,  !- Variable or Meter 3 Name
+    Cooling Coil Total Cooling Rate,  !- Variable or Meter 3 Name
     SumOrAverage;            !- Aggregation Type for Variable or Meter 3
 
 Output:Table:Monthly,
     Water Heater: Loads,     !- Name
     2,                       !- Digits After Decimal
-    Water Heater Total Demand Rate ,  !- Variable or Meter 1 Name
+    Water Heater Total Demand Rate,  !- Variable or Meter 1 Name
     SumOrAverage,            !- Aggregation Type for Variable or Meter 1
-    Water Heater Total Demand Energy ,  !- Variable or Meter 2 Name
+    Water Heater Total Demand Energy,  !- Variable or Meter 2 Name
     SumOrAverage,            !- Aggregation Type for Variable or Meter 2
-    Water Heater Heating Rate ,  !- Variable or Meter 3 Name
+    Water Heater Heating Rate,  !- Variable or Meter 3 Name
     SumOrAverage,            !- Aggregation Type for Variable or Meter 3
-    Water Heater Heating Energy ,  !- Variable or Meter 4 Name
+    Water Heater Heating Energy,  !- Variable or Meter 4 Name
     SumOrAverage;            !- Aggregation Type for Variable or Meter 4
 
 Output:Table:Monthly,
@@ -19708,9 +19780,9 @@ Output:Table:Monthly,
 Output:Table:Monthly,
     Lighting Loads,          !- Name
     2,                       !- Digits After Decimal
-    Zone Lights Electric Consumption ,  !- Variable or Meter 1 Name
+    Zone Lights Electric Consumption,  !- Variable or Meter 1 Name
     SumOrAverage,            !- Aggregation Type for Variable or Meter 1
-    Exterior Lights Electric Consumption ,  !- Variable or Meter 2 Name
+    Exterior Lights Electric Consumption,  !- Variable or Meter 2 Name
     SumOrAverage;            !- Aggregation Type for Variable or Meter 2
 
 Output:Table:Monthly,
