@@ -16004,7 +16004,7 @@ WindowShadingControl,
     ,                        !- Shading Device Material Name
     ,                        !- Type of Slat Angle Control for Blinds
     ,                        !- Slat Angle Schedule Name
-    ,                        !- Setpoint 2 {W/m2 or deg C}
+    ,                        !- Setpoint 2 {W/m2, deg C or cd/m2}
     ,                        !- Daylighting Control Object Name
     Sequential,              !- Multiple Surface Control Type
     EL7 East Win (G.N2.E4.W1),  !- Fenestration Surface 1 Name
@@ -16031,7 +16031,7 @@ WindowShadingControl,
     ,                        !- Shading Device Material Name
     ,                        !- Type of Slat Angle Control for Blinds
     ,                        !- Slat Angle Schedule Name
-    ,                        !- Setpoint 2 {W/m2 or deg C}
+    ,                        !- Setpoint 2 {W/m2, deg C or cd/m2}
     ,                        !- Daylighting Control Object Name
     Sequential,              !- Multiple Surface Control Type
     EL8 North Win (G.E2.E6.W1),  !- Fenestration Surface 1 Name
@@ -16058,7 +16058,7 @@ WindowShadingControl,
     ,                        !- Shading Device Material Name
     ,                        !- Type of Slat Angle Control for Blinds
     ,                        !- Slat Angle Schedule Name
-    ,                        !- Setpoint 2 {W/m2 or deg C}
+    ,                        !- Setpoint 2 {W/m2, deg C or cd/m2}
     ,                        !- Daylighting Control Object Name
     Sequential,              !- Multiple Surface Control Type
     EL8 North Win (G.W1.E2.W1),  !- Fenestration Surface 1 Name
@@ -16085,7 +16085,7 @@ WindowShadingControl,
     ,                        !- Shading Device Material Name
     ,                        !- Type of Slat Angle Control for Blinds
     ,                        !- Slat Angle Schedule Name
-    ,                        !- Setpoint 2 {W/m2 or deg C}
+    ,                        !- Setpoint 2 {W/m2, deg C or cd/m2}
     ,                        !- Daylighting Control Object Name
     Sequential,              !- Multiple Surface Control Type
     EL7 East Win (G.S1.E1.W1),  !- Fenestration Surface 1 Name
@@ -16576,12 +16576,12 @@ SurfaceProperty:OtherSideCoefficients,
 !     1.21914054350572;        !- BaseDepth: Depth of the basement wall below grade {m}
 People,
     People_EL7_Zn_GS1,       !- Name
-    EL7 South Perim Zn (G.S1),  !- Zone or ZoneList Name
+    EL7 South Perim Zn (G.S1),  !- Zone or ZoneList or Space or SpaceList Name
     EL2 Occ-2 Sch,         !- Number of People Schedule Name
     People,                  !- Number of People Calculation Method
     3,                       !- Number of People
-    ,                        !- People per Zone Floor Area {person/m2}
-    ,                        !- Zone Floor Area per Person {m2/person}
+    ,                        !- People per Floor Area {person/m2}
+    ,                        !- Floor Area per Person {m2/person}
     0.3,                     !- Fraction Radiant
     autocalculate,           !- Sensible Heat Fraction
     activity_sch,            !- Activity Level Schedule Name
@@ -16594,12 +16594,12 @@ People,
 
 People,
     People_EL7_Zn_GN2,       !- Name
-    EL7 North Perim Zn (G.N2),  !- Zone or ZoneList Name
+    EL7 North Perim Zn (G.N2),  !- Zone or ZoneList or Space or SpaceList Name
     EL2 Occ-1 Sch,         !- Number of People Schedule Name
     People,                  !- Number of People Calculation Method
     3,                       !- Number of People
-    ,                        !- People per Zone Floor Area {person/m2}
-    ,                        !- Zone Floor Area per Person {m2/person}
+    ,                        !- People per Floor Area {person/m2}
+    ,                        !- Floor Area per Person {m2/person}
     0.3,                     !- Fraction Radiant
     autocalculate,           !- Sensible Heat Fraction
     activity_sch,            !- Activity Level Schedule Name
@@ -16612,12 +16612,12 @@ People,
 
 People,
     People_EL8_Zn_GW1,       !- Name
-    EL8 West Perim Zn (G.W1),  !- Zone or ZoneList Name
+    EL8 West Perim Zn (G.W1),  !- Zone or ZoneList or Space or SpaceList Name
     EL2 Occ-2 Sch,         !- Number of People Schedule Name
     People,                  !- Number of People Calculation Method
     3,                       !- Number of People
-    ,                        !- People per Zone Floor Area {person/m2}
-    ,                        !- Zone Floor Area per Person {m2/person}
+    ,                        !- People per Floor Area {person/m2}
+    ,                        !- Floor Area per Person {m2/person}
     0.3,                     !- Fraction Radiant
     autocalculate,           !- Sensible Heat Fraction
     activity_sch,            !- Activity Level Schedule Name
@@ -16630,12 +16630,12 @@ People,
 
 People,
     People_EL8_Zn_GE2,       !- Name
-    EL8 East Perim Zn (G.E2),  !- Zone or ZoneList Name
+    EL8 East Perim Zn (G.E2),  !- Zone or ZoneList or Space or SpaceList Name
     EL2 Occ-1 Sch,         !- Number of People Schedule Name
     People,                  !- Number of People Calculation Method
     3,                       !- Number of People
-    ,                        !- People per Zone Floor Area {person/m2}
-    ,                        !- Zone Floor Area per Person {m2/person}
+    ,                        !- People per Floor Area {person/m2}
+    ,                        !- Floor Area per Person {m2/person}
     0.3,                     !- Fraction Radiant
     autocalculate,           !- Sensible Heat Fraction
     activity_sch,            !- Activity Level Schedule Name
@@ -16651,11 +16651,11 @@ People,
 
 Lights,
     EL7_GS1_Light,           !- Name
-    EL7 South Perim Zn (G.S1),  !- Zone or ZoneList Name
+    EL7 South Perim Zn (G.S1),  !- Zone or ZoneList or Space or SpaceList Name
     InteriorLightingHE,      !- Schedule Name
     Watts/Area,              !- Design Level Calculation Method
     ,                        !- Lighting Level {W}
-    1.75,                    !- Watts per Zone Floor Area {W/m2}
+    1.75,                    !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0,                       !- Return Air Fraction
     0.6,                     !- Fraction Radiant
@@ -16666,11 +16666,11 @@ Lights,
 
 Lights,
     EL7_GN2_Light,           !- Name
-    EL7 North Perim Zn (G.N2),  !- Zone or ZoneList Name
+    EL7 North Perim Zn (G.N2),  !- Zone or ZoneList or Space or SpaceList Name
     InteriorLightingHE,      !- Schedule Name
     Watts/Area,              !- Design Level Calculation Method
     ,                        !- Lighting Level {W}
-    1.75,                    !- Watts per Zone Floor Area {W/m2}
+    1.75,                    !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0,                       !- Return Air Fraction
     0.6,                     !- Fraction Radiant
@@ -16681,11 +16681,11 @@ Lights,
 
 Lights,
     EL7_GS3_Light,           !- Name
-    EL7 South Perim Zn (G.S3),  !- Zone or ZoneList Name
+    EL7 South Perim Zn (G.S3),  !- Zone or ZoneList or Space or SpaceList Name
     InteriorLightingHE,      !- Schedule Name
     LightingLevel,           !- Design Level Calculation Method
     8.65509143,              !- Lighting Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0,                       !- Return Air Fraction
     0.6,                     !- Fraction Radiant
@@ -16696,11 +16696,11 @@ Lights,
 
 Lights,
     EL7_GN4_Light,           !- Name
-    EL7 North Perim Zn (G.N4),  !- Zone or ZoneList Name
+    EL7 North Perim Zn (G.N4),  !- Zone or ZoneList or Space or SpaceList Name
     InteriorLightingHE,      !- Schedule Name
     LightingLevel,           !- Design Level Calculation Method
     8.65509143,              !- Lighting Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0,                       !- Return Air Fraction
     0.6,                     !- Fraction Radiant
@@ -16711,11 +16711,11 @@ Lights,
 
 Lights,
     EL8_GW1_Light,           !- Name
-    EL8 West Perim Zn (G.W1),  !- Zone or ZoneList Name
+    EL8 West Perim Zn (G.W1),  !- Zone or ZoneList or Space or SpaceList Name
     InteriorLightingHE,      !- Schedule Name
     Watts/Area,              !- Design Level Calculation Method
     ,                        !- Lighting Level {W}
-    1.75,                    !- Watts per Zone Floor Area {W/m2}
+    1.75,                    !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0,                       !- Return Air Fraction
     0.6,                     !- Fraction Radiant
@@ -16726,11 +16726,11 @@ Lights,
 
 Lights,
     EL8_GE2_Light,           !- Name
-    EL8 East Perim Zn (G.E2),  !- Zone or ZoneList Name
+    EL8 East Perim Zn (G.E2),  !- Zone or ZoneList or Space or SpaceList Name
     InteriorLightingHE,      !- Schedule Name
     Watts/Area,              !- Design Level Calculation Method
     ,                        !- Lighting Level {W}
-    1.75,                    !- Watts per Zone Floor Area {W/m2}
+    1.75,                    !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0,                       !- Return Air Fraction
     0.6,                     !- Fraction Radiant
@@ -16741,11 +16741,11 @@ Lights,
 
 Lights,
     EL8_GW3_Light,           !- Name
-    EL8 West Perim Zn (G.W3),  !- Zone or ZoneList Name
+    EL8 West Perim Zn (G.W3),  !- Zone or ZoneList or Space or SpaceList Name
     InteriorLightingHE,      !- Schedule Name
     LightingLevel,           !- Design Level Calculation Method
     8.65509143,              !- Lighting Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0,                       !- Return Air Fraction
     0.6,                     !- Fraction Radiant
@@ -16756,11 +16756,11 @@ Lights,
 
 Lights,
     EL8_GE4_Light,           !- Name
-    EL8 East Perim Zn (G.E4),  !- Zone or ZoneList Name
+    EL8 East Perim Zn (G.E4),  !- Zone or ZoneList or Space or SpaceList Name
     InteriorLightingHE,      !- Schedule Name
     LightingLevel,           !- Design Level Calculation Method
     8.65509143,              !- Lighting Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0,                       !- Return Air Fraction
     0.6,                     !- Fraction Radiant
@@ -16774,11 +16774,11 @@ Lights,
 
 ElectricEquipment,
     dishwasher1,             !- Name
-    Main Living Area,        !- Zone or ZoneList Name
+    Main Living Area,        !- Zone or ZoneList or Space or SpaceList Name
     Dishwasher,              !- Schedule Name
     EquipmentLevel,          !- Design Level Calculation Method
     65.6987875,              !- Design Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0.15,                    !- Fraction Latent
     0.6,                     !- Fraction Radiant
@@ -16787,11 +16787,11 @@ ElectricEquipment,
 
 ElectricEquipment,
     refrigerator1,           !- Name
-    Main Living Area,        !- Zone or ZoneList Name
+    Main Living Area,        !- Zone or ZoneList or Space or SpaceList Name
     Refrigerator,            !- Schedule Name
     EquipmentLevel,          !- Design Level Calculation Method
     <%= refgfrzr_power_level %>,              !- Design Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     ,                        !- Fraction Latent
     1,                       !- Fraction Radiant
@@ -16800,11 +16800,11 @@ ElectricEquipment,
 
 ElectricEquipment,
     clotheswasher1,          !- Name
-    Main Living Area,        !- Zone or ZoneList Name
+    Main Living Area,        !- Zone or ZoneList or Space or SpaceList Name
     ClothesWasher,           !- Schedule Name
     EquipmentLevel,          !- Design Level Calculation Method
     28.4784378,              !- Design Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     ,                        !- Fraction Latent
     0.8,                     !- Fraction Radiant
@@ -16813,11 +16813,11 @@ ElectricEquipment,
 
 ElectricEquipment,
     gas_dryer1,              !- Name
-    Main Living Area,        !- Zone or ZoneList Name
+    Main Living Area,        !- Zone or ZoneList or Space or SpaceList Name
     ClothesDryer,            !- Schedule Name
     EquipmentLevel,          !- Design Level Calculation Method
     19.4182189,              !- Design Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     ,                        !- Fraction Latent
     1,                       !- Fraction Radiant
@@ -16826,11 +16826,11 @@ ElectricEquipment,
 
 ElectricEquipment,
     Elec_Misc_Main,          !- Name
-    Main Living Area,        !- Zone or ZoneList Name
+    Main Living Area,        !- Zone or ZoneList or Space or SpaceList Name
     MiscPlugLoad,            !- Schedule Name
     EquipmentLevel,          !- Design Level Calculation Method
     260,                     !- Design Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0.05,                    !- Fraction Latent
     0.7,                     !- Fraction Radiant
@@ -16839,11 +16839,11 @@ ElectricEquipment,
 
 ElectricEquipment,
     Elec_Misc_Sec,           !- Name
-    Secondary Area,          !- Zone or ZoneList Name
+    Secondary Area,          !- Zone or ZoneList or Space or SpaceList Name
     MiscPlugLoad,            !- Schedule Name
     EquipmentLevel,          !- Design Level Calculation Method
     260,                     !- Design Level {W}
-    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Floor Area {W/m2}
     ,                        !- Watts per Person {W/person}
     0.05,                    !- Fraction Latent
     0.7,                     !- Fraction Radiant
@@ -16855,11 +16855,11 @@ ElectricEquipment,
 
 GasEquipment,
     gas_dryer1,              !- Name
-    Main Living Area,        !- Zone or ZoneList Name
+    Main Living Area,        !- Zone or ZoneList or Space or SpaceList Name
     ClothesDryer,            !- Schedule Name
     EquipmentLevel,          !- Design Level Calculation Method
     142.5830126,             !- Design Level {W}
-    ,                        !- Power per Zone Floor Area {W/m2}
+    ,                        !- Power per Floor Area {W/m2}
     ,                        !- Power per Person {W/person}
     0.05,                    !- Fraction Latent
     0.1,                     !- Fraction Radiant
@@ -16869,11 +16869,11 @@ GasEquipment,
 
 GasEquipment,
     gas_range1,              !- Name
-    Main Living Area,        !- Zone or ZoneList Name
+    Main Living Area,        !- Zone or ZoneList or Space or SpaceList Name
     CookingRange,            !- Schedule Name
     EquipmentLevel,          !- Design Level Calculation Method
     194.969281,              !- Design Level {W}
-    ,                        !- Power per Zone Floor Area {W/m2}
+    ,                        !- Power per Floor Area {W/m2}
     ,                        !- Power per Person {W/person}
     0.06,                    !- Fraction Latent
     0.69,                    !- Fraction Radiant
