@@ -236,9 +236,7 @@ ScheduleTypeLimits,
 ScheduleTypeLimits,
     HVACTemplate Any Number; !- Name
 
-
 !-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:DAY:HOURLY ===========
-
 !
 !
 
@@ -9282,6 +9280,156 @@ Schedule:Compact,
         Until:24:00,             !- Field 11
         1;                       !- Field 12
 
+ Schedule:Compact,
+    Ambient Varying Zone Temperature,  !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 1:00,16.8,        !- Field 3
+    Until: 2:00,16.2,        !- Field 5
+    Until: 3:00,15.7,        !- Field 7
+    Until: 4:00,15.1,        !- Field 9
+    Until: 5:00,14.6,        !- Field 11
+    Until: 6:00,14,          !- Field 13
+    Until: 7:00,15.1,        !- Field 15
+    Until: 8:00,18.4,        !- Field 17
+    Until: 9:00,22.3,        !- Field 19
+    Until: 10:00,23.1,       !- Field 21
+    Until: 11:00,24.6,       !- Field 23
+    Until: 12:00,25.8,       !- Field 25
+    Until: 13:00,26.9,       !- Field 27
+    Until: 14:00,27.4,       !- Field 29
+    Until: 15:00,28.9,       !- Field 31
+    Until: 16:00,29.1,       !- Field 33
+    Until: 17:00,28.5,       !- Field 35
+    Until: 18:00,27.6,       !- Field 37
+    Until: 19:00,26.5,       !- Field 39
+    Until: 20:00,25.1,       !- Field 41
+    Until: 21:00,22.3,       !- Field 43
+    Until: 22:00,19.6,       !- Field 45
+    Until: 23:00,18.4,       !- Field 47
+    Until: 24:00,17.3;       !- Field 49
+
+  Schedule:Compact,
+    Ambient Temperature Constant,  !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,41;         !- Field 3
+
+  Schedule:Compact,
+    DH Load Profile Constant Flow Frac Schedule,  !- Name
+    any number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,0.034;      !- Field 3
+
+  Schedule:Compact,
+    ReheatCoilAvailSched,    !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 3/31,           !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,1.0,        !- Field 3
+    Through: 9/30,           !- Field 5
+    For: WeekDays,           !- Field 6
+    Until: 7:00,0.0,         !- Field 7
+    Until: 17:00,1.0,        !- Field 9
+    Until: 24:00,0.0,        !- Field 11
+    For: SummerDesignDay WinterDesignDay, !- Field 13
+    Until: 24:00,1.0,        !- Field 14
+    For: AllOtherDays,       !- Field 16
+    Until: 24:00,0.0,        !- Field 17
+    Through: 12/31,          !- Field 19
+    For: AllDays,            !- Field 20
+    Until: 24:00,1.0;        !- Field 21
+
+  Schedule:Compact,
+    DHSupplySetpoint,        !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,57;         !- Field 3
+
+  Schedule:Compact,
+    DH Fractional Sch-Water Fixture,  !- Name
+    any number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 1:00,0.011,       !- Field 3
+    Until: 2:00,0.006,       !- Field 5
+    Until: 3:00,0.004,       !- Field 7
+    Until: 4:00,0.005,       !- Field 9
+    Until: 5:00,0.008,       !- Field 11
+    Until: 6:00,0.022,       !- Field 13
+    Until: 7:00,0.05,        !- Field 15
+    Until: 8:00,0.064,       !- Field 17
+    Until: 9:00,0.07,        !- Field 19
+    Until: 10:00,0.066,      !- Field 21
+    Until: 11:00,0.058,      !- Field 23
+    Until: 12:00,0.05,       !- Field 25
+    Until: 13:00,0.045,      !- Field 27
+    Until: 14:00,0.04,       !- Field 29
+    Until: 15:00,0.037,      !- Field 31
+    Until: 16:00,0.035,      !- Field 33
+    Until: 17:00,0.04,       !- Field 35
+    Until: 18:00,0.049,      !- Field 37
+    Until: 19:00,0.059,      !- Field 39
+    Until: 20:00,0.061,      !- Field 41
+    Until: 21:00,0.056,      !- Field 43
+    Until: 22:00,0.048,      !- Field 45
+    Until: 23:00,0.036,      !- Field 47
+    Until: 24:00,0.023;      !- Field 49
+
+  Schedule:Compact,
+    DH Load Profile Varying Flow Frac Schedule,  !- Name
+    any number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 1:00,0.00472,     !- Field 3
+    Until: 2:00,0.00547,     !- Field 5
+    Until: 3:00,0.00602,     !- Field 7
+    Until: 4:00,0.00591,     !- Field 9
+    Until: 5:00,0.00547,     !- Field 11
+    Until: 6:00,0.00465,     !- Field 13
+    Until: 7:00,0.00412,     !- Field 15
+    Until: 8:00,0.00363,     !- Field 17
+    Until: 9:00,0.00311,     !- Field 19
+    Until: 10:00,0.00301,    !- Field 21
+    Until: 11:00,0.00283,    !- Field 23
+    Until: 12:00,0.00269,    !- Field 25
+    Until: 13:00,0.00256,    !- Field 27
+    Until: 14:00,0.00251,    !- Field 29
+    Until: 15:00,0.00231,    !- Field 31
+    Until: 16:00,0.00229,    !- Field 33
+    Until: 17:00,0.00236,    !- Field 35
+    Until: 18:00,0.00246,    !- Field 37
+    Until: 19:00,0.00256,    !- Field 39
+    Until: 20:00,0.00276,    !- Field 41
+    Until: 21:00,0.00314,    !- Field 43
+    Until: 22:00,0.00353,    !- Field 45
+    Until: 23:00,0.00377,    !- Field 47
+    Until: 24:00,0.00412;    !- Field 49
+
+  Schedule:Compact,
+    DH Load Profile Load Schedule,  !- Name
+    any number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,0;          !- Field 3
+
+  Schedule:Compact,
+    Ambient Air Velocity,    !- Name
+    any number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,2.38;       !- Field 3
+
+  Schedule:Compact,
+    Central Boiler Setpoint, !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,90;         !- Field 3
 
 
 
@@ -17588,6 +17736,19 @@ Sizing:Plant,
     48.8888888888889,        !- Design Loop Exit Temperature {C}
     5.55555555555556;        !- Loop Design Temperature Difference {deltaC}
 
+Sizing:Plant,
+    Hot Water Loop,          !- Plant or Condenser Loop Name
+    Heating,                 !- Loop Type
+    82.2222222222222,        !- Design Loop Exit Temperature {C}
+    5.55555555555556,        !- Loop Design Temperature Difference {deltaC}
+    NonCoincident,           !- Sizing Option
+    1;                       !- Zone Timesteps in Averaging Window
+
+  Sizing:Plant,
+    DH Loop_unit1,           !- Plant or Condenser Loop Name
+    Heating,                 !- Loop Type
+    57.2222222222222,        !- Design Loop Exit Temperature {C}
+    5.55555555555556;        !- Loop Design Temperature Difference {deltaC}
 
 !-   ===========  ALL OBJECTS IN CLASS: ZONECONTROL:THERMOSTAT ===========
 
@@ -17796,6 +17957,41 @@ Fan:OnOff,
     DXGF EL8 Supply Fan Outlet,  !- Air Outlet Node Name
     <%= vfd_curve_name %>; !-fan power ratio function of speed ratio curve name
 
+!-   ===========  ALL OBJECTS IN CLASS: COIL:HEATING:WATER ===========
+
+  Coil:Heating:Water,
+    DXGF EL7 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXGF EL7 Zone Coil Water In Node,  !- Water Inlet Node Name
+    DXGF EL7 Zone Coil Water Out Node,  !- Water Outlet Node Name
+    DXGF EL7 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXGF EL7 Air Loop Outlet,!- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+  Coil:Heating:Water,
+    DXGF EL8 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXGF EL8 Zone Coil Water In Node,  !- Water Inlet Node Name
+    DXGF EL8 Zone Coil Water Out Node,  !- Water Outlet Node Name
+    DXGF EL8 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXGF EL8 Air Loop Outlet,!- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
 
     !-   ===========  ALL OBJECTS IN CLASS: COIL:HEATING:FUEL ===========
 
@@ -17831,8 +18027,8 @@ Fan:OnOff,
             Fan:OnOff,               !- Supply Fan Object Type
             DXGF EL7 Supply Fan,     !- Supply Fan Name
             BlowThrough,             !- Fan Placement
-            Coil:Heating:Fuel,   !- Heating Coil Object Type
-            DXGF EL7 Heating Coil;   !- Heating Coil Name
+            Coil:Heating:Water,   !- Heating Coil Object Type
+            DXGF EL7 Water Heating Coil;   !- Heating Coil Name
 
         AirLoopHVAC:UnitaryHeatOnly,
             NCGF EL8,                !- Name
@@ -18058,6 +18254,154 @@ Branch,
         DXGF EL8 Mixed Air Outlet,  !- Component 1 Inlet Node Name
         DXGF EL8 Air Loop Outlet;!- Component 1 Outlet Node Name
 
+Branch,
+    Central Boiler Branch,   !- Name
+    ,                        !- Pressure Drop Curve Name
+    Boiler:HotWater,         !- Component 1 Object Type
+    CentralBoiler,           !- Component 1 Name
+    Boiler Water Inlet Node, !- Component 1 Inlet Node Name
+    Boiler Water Oulet Node; !- Component 1 Outlet Node Name
+
+  Branch,
+    DXGF EL7 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXGF EL7 Water Heating Coil,  !- Component 1 Name
+    DXGF EL7 Zone Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXGF EL7 Zone Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+  Branch,
+    DXGF EL8 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXGF EL8 Water Heating Coil,  !- Component 1 Name
+    DXGF EL8 Zone Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXGF EL8 Zone Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+  Branch,
+    Heating Supply Inlet Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pump:VariableSpeed,      !- Component 1 Object Type
+    HW Circ Pump,            !- Component 1 Name
+    HW Supply Inlet Node,    !- Component 1 Inlet Node Name
+    HW Pump Oulet Node;      !- Component 1 Outlet Node Name
+
+  Branch,
+    Heating Supply Outlet Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Adiabatic,          !- Component 1 Object Type
+    Heating Supply Outlet,   !- Component 1 Name
+    Heating Supply Exit Pipe Inlet Node,  !- Component 1 Inlet Node Name
+    HW Supply Outlet Node;   !- Component 1 Outlet Node Name
+
+  Branch,
+    Heating Demand Inlet Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Adiabatic,          !- Component 1 Object Type
+    Heating Demand Inlet Pipe,  !- Component 1 Name
+    HW Demand Inlet Node,    !- Component 1 Inlet Node Name
+    HW Demand Entrance Pipe Outlet Node;  !- Component 1 Outlet Node Name
+
+  Branch,
+    Heating Demand Outlet Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Adiabatic,          !- Component 1 Object Type
+    Heating Demand Outlet Pipe,  !- Component 1 Name
+    HW Demand Exit Pipe Inlet Node,  !- Component 1 Inlet Node Name
+    HW Demand Outlet Node;   !- Component 1 Outlet Node Name
+
+  Branch,
+    Heating Supply Side Bypass Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Adiabatic,          !- Component 1 Object Type
+    Heating Supply Side Bypass,  !- Component 1 Name
+    Heating Supply Bypass Inlet Node,  !- Component 1 Inlet Node Name
+    Heating Supply Bypass Outlet Node;  !- Component 1 Outlet Node Name
+
+  Branch,
+    Heating Demand Side Bypass Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Adiabatic,          !- Component 1 Object Type
+    Heating Demand Side Bypass,  !- Component 1 Name
+    Heating Demand Bypass Inlet Node,  !- Component 1 Inlet Node Name
+    Heating Demand Bypass Outlet Node;  !- Component 1 Outlet Node Name
+
+  Branch,
+    DH Heating Supply Inlet Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Adiabatic,          !- Component 1 Object Type
+    DH Heating Supply Inlet_unit1,  !- Component 1 Name
+    DH Supply Inlet Node,    !- Component 1 Inlet Node Name
+    DH Supply Inlet Pipe Outlet Node_unit1;  !- Component 1 Outlet Node Name
+
+  Branch,
+    DH Demand Inlet Branch_unit 1,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Adiabatic,          !- Component 1 Object Type
+    DH Demand Inlet Pipe_unit1,  !- Component 1 Name
+    DH Demand Inlet Node_unit1,  !- Component 1 Inlet Node Name
+    DH Demand Inlet Pipe Outlet Node_unit1;  !- Component 1 Outlet Node Name
+
+  Branch,
+    DH Demand Outlet Branch_unit1,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Adiabatic,          !- Component 1 Object Type
+    DH Demand Outlet Pipe_unit1,  !- Component 1 Name
+    DH Demand Exit Pipe Inlet Node_unit1,  !- Component 1 Inlet Node Name
+    DH Demand Outlet Node_unit1;  !- Component 1 Outlet Node Name
+
+  Branch,
+    DH Supply Outlet Branch_unit1,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Indoor,             !- Component 1 Object Type
+    DH Supply Outlet Pipe_unit1,  !- Component 1 Name
+    DH Supply Outlet Pipe Inlet Node_unit1,  !- Component 1 Inlet Node Name
+    DH Supply Outlet Node_unit1;  !- Component 1 Outlet Node Name
+
+  Branch,
+    DH Water Bath Branch_unit1,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    WaterUse:Connections,    !- Component 1 Object Type
+    DH Baths_unit1,          !- Component 1 Name
+    DH Water Bath Inlet Node_unit1,  !- Component 1 Inlet Node Name
+    DH Water Bath Outlet Node_unit1,  !- Component 1 Outlet Node Name
+    Pump:VariableSpeed,      !- Component 2 Object Type
+    DH Water Fixture Pump,   !- Component 2 Name
+    DH Water Bath Outlet Node_unit1,  !- Component 2 Inlet Node Name
+    DH Water Fixture Pump Outlet Node;  !- Component 2 Outlet Node Name
+
+  Branch,
+    DH Water Heater Branch_unit1,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    WaterHeater:Mixed,       !- Component 1 Object Type
+    DH Water Heater_unit1,   !- Component 1 Name
+    DH Water Heater Use Inlet Node_unit1,  !- Component 1 Inlet Node Name
+    DH Water Heater Use Outlet Node_unit1;  !- Component 1 Outlet Node Name
+
+  Branch,
+    DH Load Profile Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    LoadProfile:Plant,       !- Component 1 Object Type
+    DH Load Profile,         !- Component 1 Name
+    DH Demand Load Profile Inlet Node,  !- Component 1 Inlet Node Name
+    DH Demand Load Profile Outlet Node,  !- Component 1 Outlet Node Name
+    Pump:VariableSpeed,      !- Component 2 Object Type
+    DH Load Profile Pump,    !- Component 2 Name
+    DH Demand Load Profile Outlet Node,  !- Component 2 Inlet Node Name
+    DH Load Profile Pump Oulet Node,  !- Component 2 Outlet Node Name
+    Pipe:Indoor,             !- Component 3 Object Type
+    DH LoadProfile Non-Adiabatic Outlet Pipe_unit1,  !- Component 3 Name
+    DH Load Profile Pump Oulet Node,  !- Component 3 Inlet Node Name
+    DH LoadProfile Non-Adiabatic Outlet Node;  !- Component 3 Outlet Node Name
+
+  Branch,
+    DH Indirect Water Heater Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    WaterHeater:Mixed,       !- Component 1 Object Type
+    DH Water Heater_unit1,   !- Component 1 Name
+    DH Water Heater Source Side Inlet Node,  !- Component 1 Inlet Node Name
+    DH Water Heater Source Side Outlet Node;  !- Component 1 Outlet Node Name
+	
 !-   ===========  ALL OBJECTS IN CLASS: BRANCHLIST ===========
 
 BranchList,
@@ -18100,6 +18444,34 @@ BranchList,
     DXGF EL8 Branches,       !- Name
     DXGF EL8 Main Branch;    !- Branch 1 Name
 
+  BranchList,
+    Heating Supply Side Branches,  !- Name
+    Heating Supply Inlet Branch,  !- Branch 1 Name
+    Central Boiler Branch,   !- Branch 2 Name
+    Heating Supply Side Bypass Branch,  !- Branch 3 Name
+    Heating Supply Outlet Branch;  !- Branch 4 Name
+
+  BranchList,
+    Heating Demand Side Branches,  !- Name
+    Heating Demand Inlet Branch,  !- Branch 1 Name
+    DXGF EL7 Water Main Branch,  !- Branch 2 Name
+    DXGF EL8 Water Main Branch,  !- Branch 3 Name
+    Heating Demand Side Bypass Branch,  !- Branch 4 Name
+    DH Indirect Water Heater Branch,  !- Branch 5 Name
+    Heating Demand Outlet Branch;  !- Branch 6 Name
+
+  BranchList,
+    DH Supply Side Branches_unit1,  !- Name
+    DH Heating Supply Inlet Branch,  !- Branch 1 Name
+    DH Water Heater Branch_unit1,  !- Branch 2 Name
+    DH Supply Outlet Branch_unit1;  !- Branch 3 Name
+
+  BranchList,
+    DH Demand Side Branches_unit1,  !- Name
+    DH Demand Inlet Branch_unit 1,  !- Branch 1 Name
+    DH Water Bath Branch_unit1,  !- Branch 2 Name
+    DH Load Profile Branch,  !- Branch 3 Name
+    DH Demand Outlet Branch_unit1;  !- Branch 4 Name
 
 !-   ===========  ALL OBJECTS IN CLASS: CONNECTOR:SPLITTER ===========
 
@@ -18131,7 +18503,31 @@ Connector:Splitter,
     Mains Inlet Branch_unit4,!- Inlet Branch Name
     Water Heater Branch_unit4;  !- Outlet Branch 1 Name
 
+Connector:Splitter,
+    Heating Supply Splitter, !- Name
+    Heating Supply Inlet Branch,  !- Inlet Branch Name
+    Central Boiler Branch,   !- Outlet Branch 1 Name
+    Heating Supply Side Bypass Branch;  !- Outlet Branch 2 Name
 
+  Connector:Splitter,
+    Heating Demand Splitter, !- Name
+    Heating Demand Inlet Branch,  !- Inlet Branch Name
+    DXGF EL7 Water Main Branch,  !- Outlet Branch 1 Name
+    DXGF EL8 Water Main Branch,  !- Outlet Branch 2 Name
+    Heating Demand Side Bypass Branch,  !- Outlet Branch 3 Name
+    DH Indirect Water Heater Branch;  !- Outlet Branch 4 Name
+
+  Connector:Splitter,
+    DH Demand Splitter_unit1,!- Name
+    DH Demand Inlet Branch_unit 1,  !- Inlet Branch Name
+    DH Water Bath Branch_unit1,  !- Outlet Branch 1 Name
+    DH Load Profile Branch;  !- Outlet Branch 2 Name
+
+  Connector:Splitter,
+    DH Supply Splitter_unit1,!- Name
+    DH Heating Supply Inlet Branch,  !- Inlet Branch Name
+    DH Water Heater Branch_unit1;  !- Outlet Branch 1 Name
+	
 !-   ===========  ALL OBJECTS IN CLASS: CONNECTOR:MIXER ===========
 
 Connector:Mixer,
@@ -18162,7 +18558,31 @@ Connector:Mixer,
     DHW Supply Outlet Branch_unit4,  !- Outlet Branch Name
     Water Heater Branch_unit4;  !- Inlet Branch 1 Name
 
+Connector:Mixer,
+    Heating Supply Mixer,    !- Name
+    Heating Supply Outlet Branch,  !- Outlet Branch Name
+    Central Boiler Branch,   !- Inlet Branch 1 Name
+    Heating Supply Side Bypass Branch;  !- Inlet Branch 2 Name
 
+  Connector:Mixer,
+    Heating Demand Mixer,    !- Name
+    Heating Demand Outlet Branch,  !- Outlet Branch Name
+    DXGF EL7 Water Main Branch,  !- Inlet Branch 1 Name
+    DXGF EL8 Water Main Branch,  !- Inlet Branch 2 Name
+    Heating Demand Side Bypass Branch,  !- Inlet Branch 3 Name
+    DH Indirect Water Heater Branch;  !- Inlet Branch 4 Name
+
+  Connector:Mixer,
+    DH Demand Mixer_unit1,   !- Name
+    DH Demand Outlet Branch_unit1,  !- Outlet Branch Name
+    DH Water Bath Branch_unit1,  !- Inlet Branch 1 Name
+    DH Load Profile Branch;  !- Inlet Branch 2 Name
+
+  Connector:Mixer,
+    DH Supply Mixer_unit1,   !- Name
+    DH Supply Outlet Branch_unit1,  !- Outlet Branch Name
+    DH Water Heater Branch_unit1;  !- Inlet Branch 1 Name
+	
 !-   ===========  ALL OBJECTS IN CLASS: CONNECTORLIST ===========
 
 ConnectorList,
@@ -18192,6 +18612,34 @@ ConnectorList,
     DHW Supply Splitter_unit4,  !- Connector 1 Name
     Connector:Mixer,         !- Connector 2 Object Type
     DHW Supply Mixer_unit4;  !- Connector 2 Name
+
+ConnectorList,
+    Heating Supply Side Connectors,  !- Name
+    Connector:Splitter,      !- Connector 1 Object Type
+    Heating Supply Splitter, !- Connector 1 Name
+    Connector:Mixer,         !- Connector 2 Object Type
+    Heating Supply Mixer;    !- Connector 2 Name
+
+  ConnectorList,
+    Heating Demand Side Connectors,  !- Name
+    Connector:Splitter,      !- Connector 1 Object Type
+    Heating Demand Splitter, !- Connector 1 Name
+    Connector:Mixer,         !- Connector 2 Object Type
+    Heating Demand Mixer;    !- Connector 2 Name
+
+  ConnectorList,
+    DH Demand Connectors_unit1,  !- Name
+    Connector:Splitter,      !- Connector 1 Object Type
+    DH Demand Splitter_unit1,!- Connector 1 Name
+    Connector:Mixer,         !- Connector 2 Object Type
+    DH Demand Mixer_unit1;   !- Connector 2 Name
+
+  ConnectorList,
+    DH Supply Connectors_unit1,  !- Name
+    Connector:Splitter,      !- Connector 1 Object Type
+    DH Supply Splitter_unit1,!- Connector 1 Name
+    Connector:Mixer,         !- Connector 2 Object Type
+    DH Supply Mixer_unit1;   !- Connector 2 Name
 
 
 !-   ===========  ALL OBJECTS IN CLASS: OUTDOORAIR:NODE ===========
@@ -18246,6 +18694,72 @@ Pipe:Adiabatic,
     DHW Demand Inlet Node_unit4,  !- Inlet Node Name
     DHW Demand Inlet Pipe Outlet Node_unit4;  !- Outlet Node Name
 
+Pipe:Adiabatic,
+    Heating Supply Outlet,   !- Name
+    Heating Supply Exit Pipe Inlet Node,  !- Inlet Node Name
+    HW Supply Outlet Node;   !- Outlet Node Name
+
+  Pipe:Adiabatic,
+    Heating Demand Inlet Pipe,  !- Name
+    HW Demand Inlet Node,    !- Inlet Node Name
+    HW Demand Entrance Pipe Outlet Node;  !- Outlet Node Name
+
+  Pipe:Adiabatic,
+    Heating Demand Outlet Pipe,  !- Name
+    HW Demand Exit Pipe Inlet Node,  !- Inlet Node Name
+    HW Demand Outlet Node;   !- Outlet Node Name
+
+  Pipe:Adiabatic,
+    Heating Supply Side Bypass,  !- Name
+    Heating Supply Bypass Inlet Node,  !- Inlet Node Name
+    Heating Supply Bypass Outlet Node;  !- Outlet Node Name
+
+  Pipe:Adiabatic,
+    Heating Demand Side Bypass,  !- Name
+    Heating Demand Bypass Inlet Node,  !- Inlet Node Name
+    Heating Demand Bypass Outlet Node;  !- Outlet Node Name
+
+  Pipe:Adiabatic,
+    DH Demand Outlet Pipe_unit1,  !- Name
+    DH Demand Exit Pipe Inlet Node_unit1,  !- Inlet Node Name
+    DH Demand Outlet Node_unit1;  !- Outlet Node Name
+
+  Pipe:Adiabatic,
+    DH Demand Inlet Pipe_unit1,  !- Name
+    DH Demand Inlet Node_unit1,  !- Inlet Node Name
+    DH Demand Inlet Pipe Outlet Node_unit1;  !- Outlet Node Name
+
+  Pipe:Adiabatic,
+    DH Heating Supply Inlet_unit1,  !- Name
+    DH Supply Inlet Node,    !- Inlet Node Name
+    DH Supply Inlet Pipe Outlet Node_unit1;  !- Outlet Node Name
+
+!-   ===========  ALL OBJECTS IN CLASS: PIPE:INDOOR ===========
+
+  Pipe:Indoor,
+    DH Supply Outlet Pipe_unit1,  !- Name
+    Insulated Pipe,          !- Construction Name
+    DH Supply Outlet Pipe Inlet Node_unit1,  !- Fluid Inlet Node Name
+    DH Supply Outlet Node_unit1,  !- Fluid Outlet Node Name
+    Schedule,                !- Environment Type
+    ,                        !- Ambient Temperature Zone Name
+    Ambient Varying Zone Temperature,  !- Ambient Temperature Schedule Name
+    Ambient Air Velocity,    !- Ambient Air Velocity Schedule Name
+    0.0254,                  !- Pipe Inside Diameter {m}
+    304.8;                   !- Pipe Length {m}
+
+  Pipe:Indoor,
+    DH LoadProfile Non-Adiabatic Outlet Pipe_unit1,  !- Name
+    Insulated Pipe,          !- Construction Name
+    DH Load Profile Pump Oulet Node,  !- Fluid Inlet Node Name
+    DH LoadProfile Non-Adiabatic Outlet Node,  !- Fluid Outlet Node Name
+    Schedule,                !- Environment Type
+    ,                        !- Ambient Temperature Zone Name
+    Ambient Varying Zone Temperature,  !- Ambient Temperature Schedule Name
+    Ambient Air Velocity,    !- Ambient Air Velocity Schedule Name
+    0.0254,                  !- Pipe Inside Diameter {m}
+    304.8;                   !- Pipe Length {m}
+
 
 !-   ===========  ALL OBJECTS IN CLASS: PUMP:VARIABLESPEED ===========
 
@@ -18281,7 +18795,134 @@ Pump:VariableSpeed,
     0,                       !- Design Minimum Flow Rate {m3/s}
     Intermittent;            !- Pump Control Type
 
+Pump:VariableSpeed,
+    HW Circ Pump,            !- Name
+    HW Supply Inlet Node,    !- Inlet Node Name
+    HW Pump Oulet Node,      !- Outlet Node Name
+    autosize,                !- Design Maximum Flow Rate {m3/s}
+    179352,                  !- Design Pump Head {Pa}
+    autosize,                !- Design Power Consumption {W}
+    0.9,                     !- Motor Efficiency
+    ,                        !- Fraction of Motor Inefficiencies to Fluid Stream
+    ,                        !- Coefficient 1 of the Part Load Performance Curve
+    1,                       !- Coefficient 2 of the Part Load Performance Curve
+    ,                        !- Coefficient 3 of the Part Load Performance Curve
+    ,                        !- Coefficient 4 of the Part Load Performance Curve
+    autosize,                !- Design Minimum Flow Rate {m3/s}
+    Intermittent,            !- Pump Control Type
+    ,                        !- Pump Flow Rate Schedule Name
+    ,                        !- Pump Curve Name
+    ,                        !- Impeller Diameter {m}
+    ,                        !- VFD Control Type
+    ,                        !- Pump RPM Schedule Name
+    ,                        !- Minimum Pressure Schedule
+    ,                        !- Maximum Pressure Schedule
+    ,                        !- Minimum RPM Schedule
+    ,                        !- Maximum RPM Schedule
+    ,                        !- Zone Name
+    ,                        !- Skin Loss Radiative Fraction
+    PowerPerFlowPerPressure, !- Design Power Sizing Method
+    348701.1,                !- Design Electric Power per Unit Flow Rate {W/(m3/s)}
+    1.282051282,             !- Design Shaft Power per Unit Flow Rate per Unit Head {W/((m3/s)-Pa)}
+    ,                        !- Design Minimum Flow Rate Fraction
+    General;                 !- End-Use Subcategory
 
+  Pump:VariableSpeed,
+    DH Load Profile Pump,    !- Name
+    DH Demand Load Profile Outlet Node,  !- Inlet Node Name
+    DH Load Profile Pump Oulet Node,  !- Outlet Node Name
+    autosize,                !- Design Maximum Flow Rate {m3/s}
+    179345.389328949,        !- Design Pump Head {Pa}
+    autosize,                !- Design Power Consumption {W}
+    0.9,                     !- Motor Efficiency
+    ,                        !- Fraction of Motor Inefficiencies to Fluid Stream
+    ,                        !- Coefficient 1 of the Part Load Performance Curve
+    1,                       !- Coefficient 2 of the Part Load Performance Curve
+    ,                        !- Coefficient 3 of the Part Load Performance Curve
+    ,                        !- Coefficient 4 of the Part Load Performance Curve
+    0,                       !- Design Minimum Flow Rate {m3/s}
+    Intermittent,            !- Pump Control Type
+    ,                        !- Pump Flow Rate Schedule Name
+    ,                        !- Pump Curve Name
+    ,                        !- Impeller Diameter {m}
+    ,                        !- VFD Control Type
+    ,                        !- Pump RPM Schedule Name
+    ,                        !- Minimum Pressure Schedule
+    ,                        !- Maximum Pressure Schedule
+    ,                        !- Minimum RPM Schedule
+    ,                        !- Maximum RPM Schedule
+    ,                        !- Zone Name
+    ,                        !- Skin Loss Radiative Fraction
+    PowerPerFlowPerPressure, !- Design Power Sizing Method
+    348701.1,                !- Design Electric Power per Unit Flow Rate {W/(m3/s)}
+    1.282051282,             !- Design Shaft Power per Unit Flow Rate per Unit Head {W/((m3/s)-Pa)}
+    ,                        !- Design Minimum Flow Rate Fraction
+    General;                 !- End-Use Subcategory
+
+  Pump:VariableSpeed,
+    DH Water Fixture Pump,   !- Name
+    DH Water Bath Outlet Node_unit1,  !- Inlet Node Name
+    DH Water Fixture Pump Outlet Node,  !- Outlet Node Name
+    autosize,                !- Design Maximum Flow Rate {m3/s}
+    179345.389328949,        !- Design Pump Head {Pa}
+    autosize,                !- Design Power Consumption {W}
+    0.9,                     !- Motor Efficiency
+    ,                        !- Fraction of Motor Inefficiencies to Fluid Stream
+    ,                        !- Coefficient 1 of the Part Load Performance Curve
+    1,                       !- Coefficient 2 of the Part Load Performance Curve
+    ,                        !- Coefficient 3 of the Part Load Performance Curve
+    ,                        !- Coefficient 4 of the Part Load Performance Curve
+    0,                       !- Design Minimum Flow Rate {m3/s}
+    Intermittent,            !- Pump Control Type
+    ,                        !- Pump Flow Rate Schedule Name
+    ,                        !- Pump Curve Name
+    ,                        !- Impeller Diameter {m}
+    ,                        !- VFD Control Type
+    ,                        !- Pump RPM Schedule Name
+    ,                        !- Minimum Pressure Schedule
+    ,                        !- Maximum Pressure Schedule
+    ,                        !- Minimum RPM Schedule
+    ,                        !- Maximum RPM Schedule
+    ,                        !- Zone Name
+    ,                        !- Skin Loss Radiative Fraction
+    PowerPerFlowPerPressure, !- Design Power Sizing Method
+    348701.1,                !- Design Electric Power per Unit Flow Rate {W/(m3/s)}
+    1.282051282,             !- Design Shaft Power per Unit Flow Rate per Unit Head {W/((m3/s)-Pa)}
+    ,                        !- Design Minimum Flow Rate Fraction
+    General;                 !- End-Use Subcategory
+
+!-   ===========  ALL OBJECTS IN CLASS: LOADPROFILE:PLANT ===========
+
+  LoadProfile:Plant,
+    DH Load Profile,         !- Name
+    DH Demand Load Profile Inlet Node,  !- Inlet Node Name
+    DH Demand Load Profile Outlet Node,  !- Outlet Node Name
+    DH Load Profile Load Schedule,  !- Load Schedule Name
+    0.0001261804,            !- Peak Flow Rate {m3/s}
+    DH Load Profile Constant Flow Frac Schedule,  !- Flow Rate Fraction Schedule Name
+    Water;                   !- Plant Loop Fluid Type
+
+!-   ===========  ALL OBJECTS IN CLASS: BOILER:HOTWATER ===========
+
+  Boiler:HotWater,
+    CentralBoiler,           !- Name
+    NaturalGas,              !- Fuel Type
+    autosize,                !- Nominal Capacity {W}
+    0.84,                    !- Nominal Thermal Efficiency
+    LeavingBoiler,           !- Efficiency Curve Temperature Evaluation Variable
+    NonCond_Boiler_Eff,      !- Normalized Boiler Efficiency Curve Name
+    autosize,                !- Design Water Flow Rate {m3/s}
+    0.2,                     !- Minimum Part Load Ratio
+    1,                       !- Maximum Part Load Ratio
+    1,                       !- Optimum Part Load Ratio
+    Boiler Water Inlet Node, !- Boiler Water Inlet Node Name
+    Boiler Water Oulet Node, !- Boiler Water Outlet Node Name
+    99.9,                    !- Water Outlet Upper Temperature Limit {C}
+    LeavingSetpointModulated,!- Boiler Flow Mode
+    ,                        !- On Cycle Parasitic Electric Load {W}
+    1,                       !- Sizing Factor
+    General;                 !- End-Use Subcategory
+	
 !-   ===========  ALL OBJECTS IN CLASS: WATERHEATER:MIXED ===========
 
 WaterHeater:Mixed,
@@ -18291,7 +18932,7 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
@@ -18321,7 +18962,7 @@ WaterHeater:Mixed,
     ,                        !- Source Side Inlet Node Name
     ,                        !- Source Side Outlet Node Name
     1,                       !- Source Side Effectiveness
-    autosize,                !- Use Side Design Flow Rate {m3/s}
+    0,                !- Use Side Design Flow Rate {m3/s}
     0,                       !- Source Side Design Flow Rate {m3/s}
     1.5;                     !- Indirect Water Heating Recovery Time {hr}
 
@@ -18332,7 +18973,7 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
@@ -18362,10 +19003,50 @@ WaterHeater:Mixed,
     ,                        !- Source Side Inlet Node Name
     ,                        !- Source Side Outlet Node Name
     1,                       !- Source Side Effectiveness
-    autosize,                !- Use Side Design Flow Rate {m3/s}
+    0,                !- Use Side Design Flow Rate {m3/s}
     0,                       !- Source Side Design Flow Rate {m3/s}
     1.5;                     !- Indirect Water Heating Recovery Time {hr}
 
+WaterHeater:Mixed,
+    DH Water Heater_unit1,   !- Name
+    autosize,                !- Tank Volume {m3}
+    DHSupplySetpoint,        !- Setpoint Temperature Schedule Name
+    0.555555555555556,       !- Deadband Temperature Difference {deltaC}
+    82.2222222222222,        !- Maximum Temperature Limit {C}
+    Cycle,                   !- Heater Control Type
+    0,                       !- Heater Maximum Capacity {W}
+    0,                       !- Heater Minimum Capacity {W}
+    0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
+    ,                        !- Heater Ignition Delay {s}
+    NaturalGas,              !- Heater Fuel Type
+    0.9,                     !- Heater Thermal Efficiency
+    ,                        !- Part Load Factor Curve Name
+    ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
+    ,                        !- Off Cycle Parasitic Fuel Type
+    ,                        !- Off Cycle Parasitic Heat Fraction to Tank
+    ,                        !- On Cycle Parasitic Fuel Consumption Rate {W}
+    ,                        !- On Cycle Parasitic Fuel Type
+    ,                        !- On Cycle Parasitic Heat Fraction to Tank
+    Zone,                    !- Ambient Temperature Indicator
+    ,                        !- Ambient Temperature Schedule Name
+    EL8 West Perim Zn (G.W1),!- Ambient Temperature Zone Name
+    ,                        !- Ambient Temperature Outdoor Air Node Name
+    1.27317402855191,        !- Off Cycle Loss Coefficient to Ambient Temperature {W/K}
+    1,                       !- Off Cycle Loss Fraction to Zone
+    1.27317402855191,        !- On Cycle Loss Coefficient to Ambient Temperature {W/K}
+    1,                       !- On Cycle Loss Fraction to Zone
+    0,                       !- Peak Use Flow Rate {m3/s}
+    ,                        !- Use Flow Rate Fraction Schedule Name
+    ,                        !- Cold Water Supply Temperature Schedule Name
+    DH Water Heater Use Inlet Node_unit1,  !- Use Side Inlet Node Name
+    DH Water Heater Use Outlet Node_unit1,  !- Use Side Outlet Node Name
+    1,                       !- Use Side Effectiveness
+    DH Water Heater Source Side Inlet Node,  !- Source Side Inlet Node Name
+    DH Water Heater Source Side Outlet Node,  !- Source Side Outlet Node Name
+    1,                       !- Source Side Effectiveness
+    autosize,                !- Use Side Design Flow Rate {m3/s}
+    autosize,                !- Source Side Design Flow Rate {m3/s}
+    1.5;                     !- Indirect Water Heating Recovery Time {hr}
 
 !-   ===========  ALL OBJECTS IN CLASS: WATERHEATER:SIZING ===========
 
@@ -18387,7 +19068,13 @@ WaterHeater:Sizing,
     3,                       !- Number of Bedrooms
     3;                       !- Number of Bathrooms
 
-
+ WaterHeater:Sizing,
+    DH Water Heater_unit1,   !- WaterHeater Name
+    PeakDraw,                !- Design Mode
+    1,                       !- Time Storage Can Meet Peak Draw {hr}
+    0,                       !- Time for Tank Recovery {hr}
+    0.450464027999999;       !- Nominal Tank Volume for Autosizing Plant Connections {m3}
+	
 !-   ===========  ALL OBJECTS IN CLASS: PLANTLOOP ===========
 
 PlantLoop,
@@ -18432,6 +19119,57 @@ PlantLoop,
     DHW Demand Connectors_unit4,  !- Demand Side Connector List Name
     Optimal;                 !- Load Distribution Scheme
 
+PlantLoop,
+    Hot Water Loop,          !- Name
+    Water,                   !- Fluid Type
+    ,                        !- User Defined Fluid Type
+    Hot Loop Operation,      !- Plant Equipment Operation Scheme Name
+    HW Supply Outlet Node,   !- Loop Temperature Setpoint Node Name
+    100,                     !- Maximum Loop Temperature {C}
+    0,                       !- Minimum Loop Temperature {C}
+    autosize,                !- Maximum Loop Flow Rate {m3/s}
+    0,                       !- Minimum Loop Flow Rate {m3/s}
+    autocalculate,           !- Plant Loop Volume {m3}
+    HW Supply Inlet Node,    !- Plant Side Inlet Node Name
+    HW Supply Outlet Node,   !- Plant Side Outlet Node Name
+    Heating Supply Side Branches,  !- Plant Side Branch List Name
+    Heating Supply Side Connectors,  !- Plant Side Connector List Name
+    HW Demand Inlet Node,    !- Demand Side Inlet Node Name
+    HW Demand Outlet Node,   !- Demand Side Outlet Node Name
+    Heating Demand Side Branches,  !- Demand Side Branch List Name
+    Heating Demand Side Connectors,  !- Demand Side Connector List Name
+    SequentialLoad,          !- Load Distribution Scheme
+    ,                        !- Availability Manager List Name
+    SingleSetpoint,          !- Plant Loop Demand Calculation Scheme
+    None,                    !- Common Pipe Simulation
+    None,                    !- Pressure Simulation Type
+    2;                       !- Loop Circulation Time {minutes}
+
+  PlantLoop,
+    DH Loop_unit1,           !- Name
+    Water,                   !- Fluid Type
+    ,                        !- User Defined Fluid Type
+    DH Loop Operation_unit1, !- Plant Equipment Operation Scheme Name
+    DH Supply Outlet Node_unit1,  !- Loop Temperature Setpoint Node Name
+    100,                     !- Maximum Loop Temperature {C}
+    4.44444444444444,        !- Minimum Loop Temperature {C}
+    autosize,                !- Maximum Loop Flow Rate {m3/s}
+    0,                       !- Minimum Loop Flow Rate {m3/s}
+    autocalculate,           !- Plant Loop Volume {m3}
+    DH Supply Inlet Node,    !- Plant Side Inlet Node Name
+    DH Supply Outlet Node_unit1,  !- Plant Side Outlet Node Name
+    DH Supply Side Branches_unit1,  !- Plant Side Branch List Name
+    DH Supply Connectors_unit1,  !- Plant Side Connector List Name
+    DH Demand Inlet Node_unit1,  !- Demand Side Inlet Node Name
+    DH Demand Outlet Node_unit1,  !- Demand Side Outlet Node Name
+    DH Demand Side Branches_unit1,  !- Demand Side Branch List Name
+    DH Demand Connectors_unit1,  !- Demand Side Connector List Name
+    Optimal,                 !- Load Distribution Scheme
+    ,                        !- Availability Manager List Name
+    ,                        !- Plant Loop Demand Calculation Scheme
+    ,                        !- Common Pipe Simulation
+    ,                        !- Pressure Simulation Type
+    0;                       !- Loop Circulation Time {minutes}
 
 !-   ===========  ALL OBJECTS IN CLASS: PLANTEQUIPMENTLIST ===========
 
@@ -18445,7 +19183,16 @@ PlantEquipmentList,
     WaterHeater:Mixed,       !- Equipment 1 Object Type
     Water Heater_unit4;      !- Equipment 1 Name
 
+PlantEquipmentList,
+    Heating Plant,           !- Name
+    Boiler:HotWater,         !- Equipment 1 Object Type
+    CentralBoiler;           !- Equipment 1 Name
 
+  PlantEquipmentList,
+    DH Plant Equipment_unit1,!- Name
+    WaterHeater:Mixed,       !- Equipment 1 Object Type
+    DH Water Heater_unit1;   !- Equipment 1 Name
+	
 !-   ===========  ALL OBJECTS IN CLASS: PLANTEQUIPMENTOPERATION:HEATINGLOAD ===========
 
 PlantEquipmentOperation:HeatingLoad,
@@ -18460,7 +19207,18 @@ PlantEquipmentOperation:HeatingLoad,
     1000000000000000,        !- Load Range 1 Upper Limit {W}
     DHW Plant Equipment_unit4;  !- Range 1 Equipment List Name
 
+ PlantEquipmentOperation:HeatingLoad,
+    Central Boiler Only,     !- Name
+    0,                       !- Load Range 1 Lower Limit {W}
+    999372450999999,         !- Load Range 1 Upper Limit {W}
+    Heating Plant;           !- Range 1 Equipment List Name
 
+  PlantEquipmentOperation:HeatingLoad,
+    DH Operation Scheme,     !- Name
+    0,                       !- Load Range 1 Lower Limit {W}
+    1.00000000121572E+15,    !- Load Range 1 Upper Limit {W}
+    DH Plant Equipment_unit1;!- Range 1 Equipment List Name
+	
 !-   ===========  ALL OBJECTS IN CLASS: PLANTEQUIPMENTOPERATIONSCHEMES ===========
 
 PlantEquipmentOperationSchemes,
@@ -18475,6 +19233,17 @@ PlantEquipmentOperationSchemes,
     DHW Control Scheme_unit4,!- Control Scheme 1 Name
     always_avail;            !- Control Scheme 1 Schedule Name
 
+  PlantEquipmentOperationSchemes,
+    Hot Loop Operation,      !- Name
+    PlantEquipmentOperation:HeatingLoad,  !- Control Scheme 1 Object Type
+    Central Boiler Only,     !- Control Scheme 1 Name
+    heating_sch_DEER;        !- Control Scheme 1 Schedule Name
+
+  PlantEquipmentOperationSchemes,
+    DH Loop Operation_unit1, !- Name
+    PlantEquipmentOperation:HeatingLoad,  !- Control Scheme 1 Object Type
+    DH Operation Scheme,     !- Control Scheme 1 Name
+    always_avail;            !- Control Scheme 1 Schedule Name
 
 !-   ===========  ALL OBJECTS IN CLASS: AVAILABILITYMANAGER:SCHEDULED ===========
 
@@ -18536,6 +19305,17 @@ SetpointManager:Scheduled,
     DHWSupplySetpoint,       !- Schedule Name
     DHW Supply Outlet Node_unit4;  !- Setpoint Node or NodeList Name
 
+SetpointManager:Scheduled,
+    DH Loop Setpoint Manager_unit1,  !- Name
+    Temperature,             !- Control Variable
+    DHSupplySetpoint,        !- Schedule Name
+    DH Supply Outlet Node_unit1;  !- Setpoint Node or NodeList Name
+
+  SetpointManager:Scheduled,
+    Boiler SetPoint Manager, !- Name
+    Temperature,             !- Control Variable
+    Central Boiler Setpoint, !- Schedule Name
+    HW Supply Outlet Node;   !- Setpoint Node or NodeList Name
 
 !-   ===========  ALL OBJECTS IN CLASS: SETPOINTMANAGER:SINGLEZONE:COOLING ===========
 
@@ -18649,6 +19429,13 @@ WaterUse:Equipment,
     Domestic Hot Water,      !- End-Use Subcategory
     0.00027764,              !- Peak Flow Rate {m3/s}
     BA_bath_sch,             !- Flow Rate Fraction Schedule Name
+    SSBWaterTempSchedule;    !- Target Temperature Schedule Name
+
+ WaterUse:Equipment,
+    DH Baths_unit1,          !- Name
+    Domestic Hot Water,      !- End-Use Subcategory
+    0.0001261804,            !- Peak Flow Rate {m3/s}
+    DH Fractional Sch-Water Fixture,  !- Flow Rate Fraction Schedule Name
     SSBWaterTempSchedule;    !- Target Temperature Schedule Name
 
 
@@ -18784,6 +19571,18 @@ WaterUse:Connections,
     ,                        !- Drain Water Heat Exchanger U-Factor Times Area {W/K}
     Baths_unit4;             !- Water Use Equipment 1 Name
 
+WaterUse:Connections,
+    DH Baths_unit1,          !- Name
+    DH Water Bath Inlet Node_unit1,  !- Inlet Node Name
+    DH Water Bath Outlet Node_unit1,  !- Outlet Node Name
+    ,                        !- Supply Water Storage Tank Name
+    ,                        !- Reclamation Water Storage Tank Name
+    ,                        !- Hot Water Supply Temperature Schedule Name
+    ,                        !- Cold Water Supply Temperature Schedule Name
+    None,                    !- Drain Water Heat Exchanger Type
+    ,                        !- Drain Water Heat Exchanger Destination
+    ,                        !- Drain Water Heat Exchanger U-Factor Times Area {W/K}
+    DH Baths_unit1;          !- Water Use Equipment 1 Name
 
 !-   ===========  ALL OBJECTS IN CLASS: CURVE:QUADRATIC ===========
 
@@ -19223,7 +20022,30 @@ Curve:Cubic,
     0,                       !- Minimum Value of x
     1;                       !- Maximum Value of x
 
+!-   ===========  ALL OBJECTS IN CLASS: CURVE:BICUBIC ===========
 
+  Curve:Bicubic,
+    NonCond_Boiler_Eff,      !- Name
+    1.111720116,             !- Coefficient1 Constant
+    0.078614078,             !- Coefficient2 x
+    -.400425756,             !- Coefficient3 x**2
+    0,                       !- Coefficient4 y
+    -.000156783,             !- Coefficient5 y**2
+    0.009384599,             !- Coefficient6 x*y
+    0.234257955,             !- Coefficient7 x**3
+    0.00000132927,           !- Coefficient8 y**3
+    -.004446701,             !- Coefficient9 x**2*y
+    -.0000122498,            !- Coefficient10 x*y**2
+    0.1,                     !- Minimum Value of x
+    1,                       !- Maximum Value of x
+    20,                      !- Minimum Value of y
+    80,                      !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Dimensionless,           !- Input Unit Type for X
+    Dimensionless,           !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
+	
 !-   ===========  ALL OBJECTS IN CLASS: CURVE:BIQUADRATIC ===========
 
 !
@@ -19885,11 +20707,21 @@ Output:Variable,
     Zone Mean Air Temperature ,  !- Variable Name
     Hourly;                  !- Reporting Frequency
 
-Output:Variable,
-    *,                       !- Key Value
-    Cooling Coil Total Cooling Energy ,  !- Variable Name
-    Hourly;                  !- Reporting Frequency
+Output:Variable,*,Boiler Outlet Temperature,Hourly;
 
+  Output:Variable,DH Load Profile Pump Oulet Node,System Node Mass Flow Rate,Hourly;
+
+  Output:Variable,DH Water Fixture Pump Outlet Node,System Node Mass Flow Rate,Hourly;
+
+  Output:Variable,DH Water Heater_unit1,Water Heater Use Side Outlet Temperature,Hourly;
+
+  Output:Variable,*,Boiler Mass Flow Rate,Hourly;
+
+!-   ===========  ALL OBJECTS IN CLASS: OUTPUT:DIAGNOSTICS ===========
+
+  Output:Diagnostics,
+    DisplayExtraWarnings;    !- Key 1
+	
 !-   ===========  ALL OBJECTS IN CLASS: OUTPUT:PREPROCESSORMESSAGE ===========
 
 Output:PreprocessorMessage,
