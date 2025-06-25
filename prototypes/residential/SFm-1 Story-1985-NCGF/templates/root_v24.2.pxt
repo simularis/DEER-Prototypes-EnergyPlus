@@ -177,7 +177,7 @@ SurfaceConvectionAlgorithm:Inside,
 !-   ===========  ALL OBJECTS IN CLASS: TIMESTEP ===========
 
 Timestep,
-    6;                       !- Number of Timesteps per Hour
+    10;                       !- Number of Timesteps per Hour
 
 
 
@@ -17741,7 +17741,6 @@ Sizing:Plant,
     Heating,                 !- Loop Type
     57.2222222222222,        !- Design Loop Exit Temperature {C}
     5.55555555555556;        !- Loop Design Temperature Difference {deltaC}
-
 Sizing:Plant,
     Hot Water Loop,          !- Plant or Condenser Loop Name
     Heating,                 !- Loop Type
@@ -18673,7 +18672,7 @@ OutdoorAir:Node,
 
 OutdoorAir:Node,
     GAHP Outdoor Air Node,   !- Name
-    0;                       !- Height Above Ground {m}
+    -1;                       !- Height Above Ground {m}
 
 !-   ===========  ALL OBJECTS IN CLASS: OUTDOORAIR:NODELIST ===========
 
@@ -18756,6 +18755,15 @@ Pipe:Adiabatic,
     DH Supply Inlet Node,    !- Inlet Node Name
     DH Supply Inlet Pipe Outlet Node_unit1;  !- Outlet Node Name
 
+ Pipe:Adiabatic,
+    Heating Supply Side Bypass,  !- Name
+    Heating Supply Bypass Inlet Node,  !- Inlet Node Name
+    Heating Supply Bypass Outlet Node;  !- Outlet Node Name
+
+  Pipe:Adiabatic,
+    Heating Demand Side Bypass,  !- Name
+    Heating Demand Bypass Inlet Node,  !- Inlet Node Name
+    Heating Demand Bypass Outlet Node;  !- Outlet Node Name
 !-   ===========  ALL OBJECTS IN CLASS: PIPE:INDOOR ===========
 
   Pipe:Indoor,
@@ -19084,7 +19092,7 @@ WaterHeater:Mixed,
     1,                       !- Source Side Effectiveness
     autosize,                !- Use Side Design Flow Rate {m3/s}
     autosize,                !- Source Side Design Flow Rate {m3/s}
-    1.5;                     !- Indirect Water Heating Recovery Time {hr}
+    1;                     !- Indirect Water Heating Recovery Time {hr}
 
 !-   ===========  ALL OBJECTS IN CLASS: WATERHEATER:SIZING ===========
 
@@ -19176,12 +19184,7 @@ PlantLoop,
     HW Demand Outlet Node,   !- Demand Side Outlet Node Name
     Heating Demand Side Branches,  !- Demand Side Branch List Name
     Heating Demand Side Connectors,  !- Demand Side Connector List Name
-    Optimal,          !- Load Distribution Scheme
-    ,                        !- Availability Manager List Name
-    SingleSetpoint,          !- Plant Loop Demand Calculation Scheme
-    None,                    !- Common Pipe Simulation
-    None,                    !- Pressure Simulation Type
-    2;                       !- Loop Circulation Time {minutes}
+    SequentialLoad;          !- Load Distribution Scheme
 
   PlantLoop,
     DH Loop_unit1,           !- Name
@@ -19202,12 +19205,7 @@ PlantLoop,
     DH Demand Outlet Node_unit1,  !- Demand Side Outlet Node Name
     DH Demand Side Branches_unit1,  !- Demand Side Branch List Name
     DH Demand Connectors_unit1,  !- Demand Side Connector List Name
-    Optimal,                 !- Load Distribution Scheme
-    ,                        !- Availability Manager List Name
-    ,                        !- Plant Loop Demand Calculation Scheme
-    ,                        !- Common Pipe Simulation
-    ,                        !- Pressure Simulation Type
-    0;                       !- Loop Circulation Time {minutes}
+    Optimal;                 !- Load Distribution Scheme
 
 !-   ===========  ALL OBJECTS IN CLASS: PLANTEQUIPMENTLIST ===========
 
