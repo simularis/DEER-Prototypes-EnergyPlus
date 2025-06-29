@@ -9263,7 +9263,10 @@ Schedule:Compact,
     Until:24:00,             !- Field 47
     22.082;                  !- Field 48
 
-
+! Solaris Technical 2024-2025.
+! Ambient temperature reference for recirculation pipe heat losses.
+! Based on an arbitrary average temperature profile.
+  
     Schedule:Compact,
         DEER Res Nat Vent On Sch,!- Name
         On/Off,                  !- Schedule Type Limits Name
@@ -9311,7 +9314,7 @@ Schedule:Compact,
     Until: 24:00,17.3;       !- Field 49
 
   Schedule:Compact,
-    Ambient Temperature Constant,  !- Name
+    !- Ambient Temperature Constant,  !- Name
     Temperature,             !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
@@ -9322,33 +9325,16 @@ Schedule:Compact,
     any number,              !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 24:00,0.034;      !- Field 3
-
-  Schedule:Compact,
-    ReheatCoilAvailSched,    !- Name
-    Fraction,                !- Schedule Type Limits Name
-    Through: 3/31,           !- Field 1
-    For: AllDays,            !- Field 2
-    Until: 24:00,1.0,        !- Field 3
-    Through: 9/30,           !- Field 5
-    For: WeekDays,           !- Field 6
-    Until: 7:00,0.0,         !- Field 7
-    Until: 17:00,1.0,        !- Field 9
-    Until: 24:00,0.0,        !- Field 11
-    For: SummerDesignDay WinterDesignDay, !- Field 13
-    Until: 24:00,1.0,        !- Field 14
-    For: AllOtherDays,       !- Field 16
-    Until: 24:00,0.0,        !- Field 17
-    Through: 12/31,          !- Field 19
-    For: AllDays,            !- Field 20
-    Until: 24:00,1.0;        !- Field 21
+    Until: 24:00,            !- Field 3
+	0.034;                   !- Field 4
 
   Schedule:Compact,
     DHSupplySetpoint,        !- Name
     Temperature,             !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 24:00,57;         !- Field 3
+    Until: 24:00,            !- Field 3
+	57;                      !- Field 4
 
   Schedule:Compact,
     DH Fractional Sch-Water Fixture,  !- Name
@@ -9381,7 +9367,7 @@ Schedule:Compact,
     Until: 24:00,0.023;      !- Field 49
 
   Schedule:Compact,
-    DH Load Profile Varying Flow Frac Schedule,  !- Name
+    !- DH Load Profile Varying Flow Frac Schedule,  !- Name
     any number,              !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
@@ -9410,26 +9396,32 @@ Schedule:Compact,
     Until: 23:00,0.00377,    !- Field 47
     Until: 24:00,0.00412;    !- Field 49
 
+ ! Required input for LoadProfile:Plant object controlling flow in the recirculation loop.
+  ! This schedule represents heating load on the loop (kW).
+  ! The LoadProfile:Plant is used only to control flow rate, so the heating load is zero.
   Schedule:Compact,
     DH Load Profile Load Schedule,  !- Name
     any number,              !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 24:00,0;          !- Field 3
+    Until: 24:00,            !- Field 3
+	0;                       !- Field 4
 
   Schedule:Compact,
     Ambient Air Velocity,    !- Name
     any number,              !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 24:00,2.38;       !- Field 3
+    Until: 24:00,            !- Field 3
+	2.38;                    !- Field 4
 
   Schedule:Compact,
     Central Boiler Setpoint, !- Name
     Temperature,             !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
-    Until: 24:00,90;         !- Field 3
+    Until: 24:00,            !- Field 3
+	90;                      !- Field 4
 
 
 
