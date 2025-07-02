@@ -9328,12 +9328,12 @@ Schedule:Compact,
     Until: 23:00,18.4,       !- Field 47
     Until: 24:00,17.3;       !- Field 49
 
-  Schedule:Compact,
+ !- Schedule:Compact,
     !- Ambient Temperature Constant,  !- Name
-    Temperature,             !- Schedule Type Limits Name
-    Through: 12/31,          !- Field 1
-    For: AllDays,            !- Field 2
-    Until: 24:00,41;         !- Field 3
+ !-   Temperature,             !- Schedule Type Limits Name
+ !-   Through: 12/31,          !- Field 1
+ !-   For: AllDays,            !- Field 2
+ !-   Until: 24:00,41;         !- Field 3
 
   Schedule:Compact,
     DH Load Profile Constant Flow Frac Schedule,  !- Name
@@ -9381,35 +9381,35 @@ Schedule:Compact,
     Until: 23:00,0.036,      !- Field 47
     Until: 24:00,0.023;      !- Field 49
 
-  Schedule:Compact,
+ !- Schedule:Compact,
     !- DH Load Profile Varying Flow Frac Schedule,  !- Name
-    any number,              !- Schedule Type Limits Name
-    Through: 12/31,          !- Field 1
-    For: AllDays,            !- Field 2
-    Until: 1:00,0.00472,     !- Field 3
-    Until: 2:00,0.00547,     !- Field 5
-    Until: 3:00,0.00602,     !- Field 7
-    Until: 4:00,0.00591,     !- Field 9
-    Until: 5:00,0.00547,     !- Field 11
-    Until: 6:00,0.00465,     !- Field 13
-    Until: 7:00,0.00412,     !- Field 15
-    Until: 8:00,0.00363,     !- Field 17
-    Until: 9:00,0.00311,     !- Field 19
-    Until: 10:00,0.00301,    !- Field 21
-    Until: 11:00,0.00283,    !- Field 23
-    Until: 12:00,0.00269,    !- Field 25
-    Until: 13:00,0.00256,    !- Field 27
-    Until: 14:00,0.00251,    !- Field 29
-    Until: 15:00,0.00231,    !- Field 31
-    Until: 16:00,0.00229,    !- Field 33
-    Until: 17:00,0.00236,    !- Field 35
-    Until: 18:00,0.00246,    !- Field 37
-    Until: 19:00,0.00256,    !- Field 39
-    Until: 20:00,0.00276,    !- Field 41
-    Until: 21:00,0.00314,    !- Field 43
-    Until: 22:00,0.00353,    !- Field 45
-    Until: 23:00,0.00377,    !- Field 47
-    Until: 24:00,0.00412;    !- Field 49
+ !-   any number,              !- Schedule Type Limits Name
+ !-   Through: 12/31,          !- Field 1
+ !-   For: AllDays,            !- Field 2
+ !-   Until: 1:00,0.00472,     !- Field 3
+ !-   Until: 2:00,0.00547,     !- Field 5
+ !-   Until: 3:00,0.00602,     !- Field 7
+ !-   Until: 4:00,0.00591,     !- Field 9
+ !-   Until: 5:00,0.00547,     !- Field 11
+ !-   Until: 6:00,0.00465,     !- Field 13
+ !-   Until: 7:00,0.00412,     !- Field 15
+ !-   Until: 8:00,0.00363,     !- Field 17
+ !-   Until: 9:00,0.00311,     !- Field 19
+ !-   Until: 10:00,0.00301,    !- Field 21
+ !-   Until: 11:00,0.00283,    !- Field 23
+ !-   Until: 12:00,0.00269,    !- Field 25
+ !-   Until: 13:00,0.00256,    !- Field 27
+ !-   Until: 14:00,0.00251,    !- Field 29
+ !-   Until: 15:00,0.00231,    !- Field 31
+ !-   Until: 16:00,0.00229,    !- Field 33
+ !-   Until: 17:00,0.00236,    !- Field 35
+ !-   Until: 18:00,0.00246,    !- Field 37
+ !-   Until: 19:00,0.00256,    !- Field 39
+ !-   Until: 20:00,0.00276,    !- Field 41
+ !-   Until: 21:00,0.00314,    !- Field 43
+ !-   Until: 22:00,0.00353,    !- Field 45
+ !-   Until: 23:00,0.00377,    !- Field 47
+ !-   Until: 24:00,0.00412;    !- Field 49
 
  ! Required input for LoadProfile:Plant object controlling flow in the recirculation loop.
   ! This schedule represents heating load on the loop (kW).
