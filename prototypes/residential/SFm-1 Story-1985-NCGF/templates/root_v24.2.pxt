@@ -77,8 +77,8 @@ parameter "shading_control", :default=>'AlwaysOn'
 #Door Infiltration Reduction measures-cases-parameters
 parameter "infiltration_reduction", :default=>0.0  # TRC SWBE013-01, SWBE014-01; default is no reduction from base case (ACH)
 # Solaris Technical 2025: Hydronic loop and DHW loop temperature setpoints for sizing
-parameter "boiler_loop_sept", :default => 180.0 ['F']
-parameter "dhw_loop_sept", :default => 135.0 ['F']
+parameter "boiler_loop_setp", :default => 180.0 ['F']
+parameter "dhw_loop_setp", :default => 135.0 ['F']
 
 # Pipe Length
 parameter "dhw_pipe_length", :default=>1000['ft']
@@ -87,10 +87,13 @@ parameter "dhw_pipe_length", :default=>1000['ft']
 parameter "dhw_recirc_peak_flow", :default=> 2['gpm']
 
 # water heater nominal tank volume
-parameter dhw_tank_volume, :default => 119['gal']
+parameter "dhw_tank_volume", :default => 119['gal']
 
 # water use peak flow rate
 parameter "dhw_agg_peak_flow", :default=>2['gpm']
+
+# Nominal Heating Capacity
+parameter "nominal_capacity", :default => 123['MBH']
 %>
 
 <%
@@ -18925,7 +18928,7 @@ HeatPump:AirToWater:FuelFired:Heating,
     ,                        !- Companion Cooling Heat Pump Name
     NaturalGas,              !- Fuel Type
     General,                 !- End-Use Subcategory
-    36047.7452999999,        !- Nominal Heating Capacity {W}
+    <%= nominal_capacity %>,        !- Nominal Heating Capacity {W}
     1.3,                     !- Nominal COP {W/W}
     autosize,                !- Design Flow Rate {m3/s}
     57.2222222222222,        !- Design Supply Temperature {C}
