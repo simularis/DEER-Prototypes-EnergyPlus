@@ -18411,21 +18411,6 @@ Branch,
     DH GAHP Water Inlet Node,!- Component 1 Inlet Node Name
     DH GAHP Water Outlet Node;  !- Component 1 Outlet Node Name
 
-Branch,
-    Heating Supply Side Bypass Branch,  !- Name
-    ,                        !- Pressure Drop Curve Name
-    Pipe:Adiabatic,          !- Component 1 Object Type
-    Heating Supply Side Bypass,  !- Component 1 Name
-    Heating Supply Bypass Inlet Node,  !- Component 1 Inlet Node Name
-    Heating Supply Bypass Outlet Node;  !- Component 1 Outlet Node Name
-
-  Branch,
-    Heating Demand Side Bypass Branch,  !- Name
-    ,                        !- Pressure Drop Curve Name
-    Pipe:Adiabatic,          !- Component 1 Object Type
-    Heating Demand Side Bypass,  !- Component 1 Name
-    Heating Demand Bypass Inlet Node,  !- Component 1 Inlet Node Name
-    Heating Demand Bypass Outlet Node;  !- Component 1 Outlet Node Name
 
 !-   ===========  ALL OBJECTS IN CLASS: BRANCHLIST ===========
 
@@ -18762,15 +18747,6 @@ Pipe:Adiabatic,
     DH Supply Inlet Node,    !- Inlet Node Name
     DH Supply Inlet Pipe Outlet Node_unit1;  !- Outlet Node Name
 
- Pipe:Adiabatic,
-    Heating Supply Side Bypass,  !- Name
-    Heating Supply Bypass Inlet Node,  !- Inlet Node Name
-    Heating Supply Bypass Outlet Node;  !- Outlet Node Name
-
-  Pipe:Adiabatic,
-    Heating Demand Side Bypass,  !- Name
-    Heating Demand Bypass Inlet Node,  !- Inlet Node Name
-    Heating Demand Bypass Outlet Node;  !- Outlet Node Name
 !-   ===========  ALL OBJECTS IN CLASS: PIPE:INDOOR ===========
 
   Pipe:Indoor,
