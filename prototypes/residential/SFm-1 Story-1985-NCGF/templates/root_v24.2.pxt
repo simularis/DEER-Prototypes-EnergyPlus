@@ -9431,12 +9431,12 @@ Schedule:Compact,
 	2.38;                    !- Field 4
 
   Schedule:Compact,
-    Central Boiler Setpoint, !- Name
+    GAHP Setpoint,           !- Name
     Temperature,             !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
     Until: 24:00,            !- Field 3
-	90;                      !- Field 4
+    80;                      !- Field 4
 
 
 
