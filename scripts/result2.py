@@ -24,6 +24,8 @@ Changelog
 
 # Select columns from hourly files to apply DEER peak calculation
 DEERPEAK_COLUMNS = ["Electricity:Facility [J](Hourly)"]
+# Do you want to append "(units)"" in the column name, if available?
+APPEND_UNITS = False
 
 ##STEP 0: Setup (import all necessary libraries)
 import re
@@ -416,17 +418,35 @@ def get_sim_peak_and_tabular(queryfile: Path,
             # Don't separate "groups" of queries but group them all together.
             # sim_data_detail, sim_data_agg = [], []
             for resultspec, user_column_name in list_query_path_and_name:
+                # 2025-01-22 Updated Nicholas Fette
+                # Default to the column name from the result query without attempting to append unit symbol from results.
+                # This avoids errors due to mismatched column names when a file is missing one or more results.
+                # Useful for concatenating results in a wide-format table.
+                output_column_name = user_column_name
+
+                if APPEND_UNITS:
+                    # For consistency between files, do not append "(units)" in the column name for wildcard queries.
+                    if "*" not in resultspec.to_string() and sim_data_detail1 is not None:
+                        units = sim_data_detail1['Units'].iloc[0]
+                        output_column_name = f"{user_column_name} ({units})"
+
                 sim_data_detail1, sim_data_agg1 = get_sim_tabular(conn, resultspec)
                 if sim_data_detail1 is None:
-                    # No data found matching the result spec. Skip this and go to next.
+                    # No data found matching the result spec.
+                    # 2025-01-22 Updated Nicholas Fette
+                    # For consistency between files, store a None/NULL result for this column.
+                    # To-do: In sqlite output mode, pandas may not be able to guess the dtype.
+                    # As a workaround, user may manually alter the sim_data table column types, then run the script.
+                    sim_data.update({output_column_name: None})
                     continue
-                units = sim_data_detail1['Units'].iloc[0]
+                # This script does not compile detail of all rows included in wildcard queries:
                 #sim_data_detail.append(sim_data_detail1)
                 if sim_data_agg1 is not None:
-                    sim_data.update({f"{user_column_name} ({units})": sim_data_agg1})
+                    sim_data.update({output_column_name: sim_data_agg1})
             #sim_data_agg.append(sizing_agg_row)
 
         # Now get the DEER Peak values from hourly data
+        # Column name(s) for DEER Peak average values are taken directly from hourly output column name.
         deer_peak_values = get_sim_deer_peak(conn, bldgloc)
         if deer_peak_values is not None:
             sim_data.update(deer_peak_values)
