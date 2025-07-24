@@ -7,6 +7,7 @@ Features:
 * Read from instance-out.sql files using result spec format like modelkit
 * Apply DEER peak period calculation to hourly results and include those.
 * Requires python >= 3.7.1 and additional package "tqdm"
+* Note that given two queries with the same output name, the behavior is undefined.
 
 Usage:
     Prerequisite: running models, select a query file, path to DEER peak period definitions
@@ -16,6 +17,8 @@ Usage:
 Changelog
     * 2024-05-01 Adapted result.py for DEER Peak period calculation
     * 2024-05-15 Filename patterns updated to match folders like runs1, runs-Asm, etc.
+    * 2025-01-07 Apply DEER Peak calculation more selectively
+    * 2025-07-24 Filename pattern matching revised for better consistency between different conventions
 
 @Author: Nicholas Fette <nfette@solaris-technical.com>
 @Date: 2024-05-01
@@ -504,17 +507,31 @@ def get_runs_instances(study: Path, search_pattern = '**/instance*-out.sql', exc
         #metadata['File Name'] = re.sub(*pathsub, relstr, 1)
         metadata['File Name'] = relstr
         metadata['BldgLoc'] = bldgloc
+        metadata['BldgType'] = None
+        metadata['Story'] = None
+        metadata['BldgHVAC'] = None
+        metadata['BldgVint'] = None
+        metadata['TechGroup'] = None
+        metadata['TechType'] = None
+        metadata['TechID'] = None
+        metadata['Cohort'] = None
+        metadata['Case'] = None
 
         # Try to get additional metadata, but don't fail if it doesn't match.
         patterns = [
-            r'.*/runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>\w+)&(?P<TechGroup>\w+)__(?P<TechType>\w+)/(?P<TechID>[^/]+)/instance.*',
-            r'.*/runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<Cohort>[^/]+)/(?P<Case>[^/]+)/instance.*'
+            r'(.*/)?runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<Cohort>[^/]+)/(?P<Case>[^/]+)/instance.*',
+            r'(.*/)?runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>[\w\-]+)&(?P<TechGroup>[\w\-]+)__(?P<TechType>[\w\-]+)/(?P<TechID>[^/]+)/instance.*',
+            r'(.*/)?runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>[\w\-]+)&(?P<TechGroupUnused>[\w\-]+)__(?P<TechTypeUnused>[\w\-]+)&(?P<TechGroup>[\w\-]+)__(?P<TechType>[\w\-]+)/(?P<TechID>[^/]+)/instance.*',
         ]
         for pattern in patterns:
             m2 = re.match(pattern, relstr)
             if m2:
-                metadata.update(m2.groupdict())
-                break
+                sim_metadata = m2.groupdict()
+                if 'TechGroupUnused' in sim_metadata:
+                    del sim_metadata['TechGroupUnused']
+                if 'TechTypeUnused' in sim_metadata:
+                    del sim_metadata['TechTypeUnused']
+                metadata.update(sim_metadata)
 
         yield (sqlfile, bldgloc, metadata)
 
