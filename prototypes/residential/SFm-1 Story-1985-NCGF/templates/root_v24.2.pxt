@@ -9447,7 +9447,7 @@ Schedule:Compact,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>
 
@@ -18051,7 +18051,7 @@ Fan:OnOff,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>
         
@@ -18419,7 +18419,7 @@ Branch,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>	
 
@@ -18476,7 +18476,7 @@ BranchList,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>	
  
@@ -18543,7 +18543,7 @@ Connector:Splitter,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>	
 
@@ -18606,7 +18606,7 @@ Connector:Mixer,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %>
 ! Code specific to gas furnace (blank for now)
 <% end %>	
 
@@ -18705,7 +18705,7 @@ OutdoorAir:Node,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>	
 
@@ -18996,7 +18996,7 @@ HeatPump:AirToWater:FuelFired:Heating,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %>
 ! Code specific to gas furnace (blank for now)
 <% end %>	
 
@@ -19223,7 +19223,7 @@ PlantLoop,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %>
 ! Code specific to gas furnace (blank for now)
 <% end %>	
 
@@ -19252,7 +19252,7 @@ PlantLoop,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>	
 
@@ -19277,7 +19277,7 @@ PlantEquipmentList,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>	
 
@@ -19310,7 +19310,7 @@ PlantEquipmentOperation:HeatingLoad,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>	
 
@@ -19344,7 +19344,7 @@ PlantEquipmentOperationSchemes,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %>
 ! Code specific to gas furnace (blank for now)
 <% end %>
  
@@ -19430,7 +19430,7 @@ SetpointManager:Scheduled,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>
 
@@ -20159,7 +20159,7 @@ Curve:Exponent,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>
 
@@ -20213,7 +20213,7 @@ Curve:Bicubic,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %>
 ! Code specific to gas furnace (blank for now)
 <% end %>
 
@@ -20780,7 +20780,7 @@ Curve:Biquadratic,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>
 
@@ -20914,7 +20914,7 @@ Output:Variable,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>
 
@@ -20928,7 +20928,7 @@ Output:Variable,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>
 
@@ -20942,7 +20942,7 @@ Output:Variable,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>
 
@@ -20956,7 +20956,7 @@ Output:Variable,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>
 
@@ -20969,7 +20969,7 @@ Output:Variable,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>
 
@@ -20982,7 +20982,7 @@ Output:Variable,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>
 
@@ -20995,7 +20995,7 @@ Output:Variable,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>
 
@@ -21008,7 +21008,7 @@ Output:Variable,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>
 
@@ -21021,7 +21021,7 @@ Output:Variable,
 	
 <% elsif :heating_system_type == "BOILER" %>
 ! Code specific to boiler (blank for now)
-<% else %> # GAS_FURNACE
+<% else %> 
 ! Code specific to gas furnace (blank for now)
 <% end %>
 
