@@ -94,6 +94,9 @@ parameter "dhw_agg_peak_flow", :default=>2['gpm']
 
 # Nominal Heating Capacity
 parameter "nominal_capacity", :default => 123['MBH']
+
+parameter "heating_system_type", :default=>"GAS_FURNACE"
+
 %>
 
 <%
@@ -9433,6 +9436,7 @@ Schedule:Compact,
     Until: 24:00,            !- Field 3
 	2.38;                    !- Field 4
 
+<% if :heating_system_type == "GAHP_COMBI" %>
   Schedule:Compact,
     GAHP Setpoint,           !- Name
     Temperature,             !- Schedule Type Limits Name
@@ -9440,6 +9444,14 @@ Schedule:Compact,
     For: AllDays,            !- Field 2
     Until: 24:00,            !- Field 3
     80;                      !- Field 4
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>
+
+
 
 
 
@@ -18003,25 +18015,6 @@ Fan:OnOff,
     32.2,                    !- Rated Outlet Air Temperature {C}
     0.5;                     !- Rated Ratio for Air and Water Convection
 
-    !-   ===========  ALL OBJECTS IN CLASS: COIL:HEATING:FUEL ===========
-
-    Coil:Heating:Fuel,
-        DXGF EL7 Heating Coil,   !- Name
-        always_avail,            !- Availability Schedule Name
-        NaturalGas,              !- Fuel Type
-        <%= burner_eff %>,                     !- Burner Efficiency
-        autosize,                !- Nominal Capacity {W}
-        DXGF EL7 Supply Fan Outlet,  !- Air Inlet Node Name
-        DXGF EL7 Air Loop Outlet;  !- Air Outlet Node Name
-
-    Coil:Heating:Fuel,
-        DXGF EL8 Heating Coil,   !- Name
-        always_avail,            !- Availability Schedule Name
-        NaturalGas,              !- Fuel Type
-        <%= burner_eff %>,                     !- Burner Efficiency
-        autosize,                !- Nominal Capacity {W}
-        DXGF EL8 Supply Fan Outlet,  !- Air Inlet Node Name
-        DXGF EL8 Air Loop Outlet;  !- Air Outlet Node Name
 
         !-   ===========  ALL OBJECTS IN CLASS: AIRLOOPHVAC:UNITARYHEATONLY ===========
 
@@ -18040,7 +18033,8 @@ Fan:OnOff,
             Coil:Heating:Water,   !- Heating Coil Object Type
             DXGF EL7 Water Heating Coil;   !- Heating Coil Name
 
-        AirLoopHVAC:UnitaryHeatOnly,
+<% if :heating_system_type == "GAHP_COMBI" %>
+ AirLoopHVAC:UnitaryHeatOnly,
             NCGF EL8,                !- Name
             ,                        !- Availability Schedule Name
             DXGF EL8 Mixed Air Outlet,  !- Unitary System Air Inlet Node Name
@@ -18052,8 +18046,15 @@ Fan:OnOff,
             Fan:OnOff,               !- Supply Fan Object Type
             DXGF EL8 Supply Fan,     !- Supply Fan Name
             BlowThrough,             !- Fan Placement
-            Coil:Heating:Fuel,   !- Heating Coil Object Type
-            DXGF EL8 Heating Coil;   !- Heating Coil Name
+            Coil:Heating:Water,   !- Heating Coil Object Type
+            DXGF EL8 Water Heating Coil;   !- Heating Coil Name
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>
+        
 
 
 !-   ===========  ALL OBJECTS IN CLASS: AIRLOOPHVAC:ZONESPLITTER ===========
@@ -18405,14 +18406,22 @@ Branch,
     DH Water Heater_unit1,   !- Component 1 Name
     DH Water Heater Source Side Inlet Node,  !- Component 1 Inlet Node Name
     DH Water Heater Source Side Outlet Node;  !- Component 1 Outlet Node Name
-	
-Branch,
+
+<% if :heating_system_type == "GAHP_COMBI" %>
+ Branch,
     DH GAHP Branch,          !- Name
     ,                        !- Pressure Drop Curve Name
     HeatPump:AirToWater:FuelFired:Heating,  !- Component 1 Object Type
     GAHP,                    !- Component 1 Name
     DH GAHP Water Inlet Node,!- Component 1 Inlet Node Name
     DH GAHP Water Outlet Node;  !- Component 1 Outlet Node Name
+
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>	
 
 
 !-   ===========  ALL OBJECTS IN CLASS: BRANCHLIST ===========
@@ -18457,12 +18466,21 @@ BranchList,
     DXGF EL8 Branches,       !- Name
     DXGF EL8 Main Branch;    !- Branch 1 Name
 
-  BranchList,
+<% if :heating_system_type == "GAHP_COMBI" %>
+ BranchList,
     Heating Supply Side Branches,  !- Name
     Heating Supply Inlet Branch,  !- Branch 1 Name
     DH GAHP Branch,   !- Branch 2 Name
     Heating Supply Side Bypass Branch,  !- Branch 3 Name
     Heating Supply Outlet Branch;  !- Branch 4 Name
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>	
+ 
+
 
   BranchList,
     Heating Demand Side Branches,  !- Name
@@ -18516,11 +18534,19 @@ Connector:Splitter,
     Mains Inlet Branch_unit4,!- Inlet Branch Name
     Water Heater Branch_unit4;  !- Outlet Branch 1 Name
 
-Connector:Splitter,
+<% if :heating_system_type == "GAHP_COMBI" %>
+ Connector:Splitter,
     Heating Supply Splitter, !- Name
     Heating Supply Inlet Branch,  !- Inlet Branch Name
     DH GAHP Branch,   !- Outlet Branch 1 Name
     Heating Supply Side Bypass Branch;  !- Outlet Branch 2 Name
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>	
+
 
   Connector:Splitter,
     Heating Demand Splitter, !- Name
@@ -18571,11 +18597,18 @@ Connector:Mixer,
     DHW Supply Outlet Branch_unit4,  !- Outlet Branch Name
     Water Heater Branch_unit4;  !- Inlet Branch 1 Name
 
-Connector:Mixer,
+<% if :heating_system_type == "GAHP_COMBI" %>
+ Connector:Mixer,
     Heating Supply Mixer,    !- Name
     Heating Supply Outlet Branch,  !- Outlet Branch Name
     DH GAHP Branch,   !- Inlet Branch 1 Name
     Heating Supply Side Bypass Branch;  !- Inlet Branch 2 Name
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>	
 
   Connector:Mixer,
     Heating Demand Mixer,    !- Name
@@ -18665,9 +18698,16 @@ OutdoorAir:Node,
     DXGF EL8 Cooling Coil Condenser Inlet,  !- Name
     -1;                      !- Height Above Ground {m}
 
-OutdoorAir:Node,
+<% if :heating_system_type == "GAHP_COMBI" %>
+ OutdoorAir:Node,
     GAHP Outdoor Air Node,   !- Name
     -1;                       !- Height Above Ground {m}
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>	
 
 !-   ===========  ALL OBJECTS IN CLASS: OUTDOORAIR:NODELIST ===========
 
@@ -18918,7 +18958,8 @@ Pump:VariableSpeed,
     DH Load Profile Constant Flow Frac Schedule,  !- Flow Rate Fraction Schedule Name
     Water;                   !- Plant Loop Fluid Type
 
-!-   ===========  ALL OBJECTS IN CLASS: HEATPUMP:AIRTOWATER:FUELFIRED:HEATING ===========
+<% if :heating_system_type == "GAHP_COMBI" %>
+ !-   ===========  ALL OBJECTS IN CLASS: HEATPUMP:AIRTOWATER:FUELFIRED:HEATING ===========
 
 HeatPump:AirToWater:FuelFired:Heating,
     GAHP,                    !- Name
@@ -18952,6 +18993,13 @@ HeatPump:AirToWater:FuelFired:Heating,
     ,                        !- Auxiliary Electric Energy Input Ratio Function of Temperature Curve Name
     ,                        !- Auxiliary Electric Energy Input Ratio Function of PLR Curve Name
     ;                        !- Standby Electric Power {W}
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>	
+
 
 
 	
@@ -19151,6 +19199,7 @@ PlantLoop,
     DHW Demand Connectors_unit4,  !- Demand Side Connector List Name
     Optimal;                 !- Load Distribution Scheme
 
+<% if :heating_system_type == "GAHP_COMBI" %>
 PlantLoop,
     Hot Water Loop,          !- Name
     Water,                   !- Fluid Type
@@ -19171,6 +19220,14 @@ PlantLoop,
     Heating Demand Side Branches,  !- Demand Side Branch List Name
     Heating Demand Side Connectors,  !- Demand Side Connector List Name
     SequentialLoad;          !- Load Distribution Scheme
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>	
+
+<% if :heating_system_type == "GAHP_COMBI" %>
 
   PlantLoop,
     DH Loop_unit1,           !- Name
@@ -19192,6 +19249,13 @@ PlantLoop,
     DH Demand Side Branches_unit1,  !- Demand Side Branch List Name
     DH Demand Connectors_unit1,  !- Demand Side Connector List Name
     Optimal;                 !- Load Distribution Scheme
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>	
+
 
 !-   ===========  ALL OBJECTS IN CLASS: PLANTEQUIPMENTLIST ===========
 
@@ -19205,10 +19269,18 @@ PlantEquipmentList,
     WaterHeater:Mixed,       !- Equipment 1 Object Type
     Water Heater_unit4;      !- Equipment 1 Name
 
+<% if :heating_system_type == "GAHP_COMBI" %>
 PlantEquipmentList,
     Heating Plant,           !- Name
     HeatPump:AirToWater:FuelFired:Heating,  !- Equipment 1 Object Type
     GAHP;                    !- Equipment 1 Name
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>	
+
 
   PlantEquipmentList,
     DH Plant Equipment_unit1,!- Name
@@ -19229,11 +19301,19 @@ PlantEquipmentOperation:HeatingLoad,
     1000000000000000,        !- Load Range 1 Upper Limit {W}
     DHW Plant Equipment_unit4;  !- Range 1 Equipment List Name
 
- PlantEquipmentOperation:HeatingLoad,
+<% if :heating_system_type == "GAHP_COMBI" %>
+PlantEquipmentOperation:HeatingLoad,
     GAHP Only,     !- Name
     0,                       !- Load Range 1 Lower Limit {W}
     999372450999999,         !- Load Range 1 Upper Limit {W}
     Heating Plant;           !- Range 1 Equipment List Name
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>	
+
 
   PlantEquipmentOperation:HeatingLoad,
     DH Operation Scheme,     !- Name
@@ -19255,11 +19335,19 @@ PlantEquipmentOperationSchemes,
     DHW Control Scheme_unit4,!- Control Scheme 1 Name
     always_avail;            !- Control Scheme 1 Schedule Name
 
-  PlantEquipmentOperationSchemes,
+<% if :heating_system_type == "GAHP_COMBI" %>
+PlantEquipmentOperationSchemes,
     Hot Loop Operation,      !- Name
     PlantEquipmentOperation:HeatingLoad,  !- Control Scheme 1 Object Type
     GAHP Only,               !- Control Scheme 1 Name
     heating_sch_DEER;            !- Control Scheme 1 Schedule Name
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>
+ 
 
   PlantEquipmentOperationSchemes,
     DH Loop Operation_unit1, !- Name
@@ -19333,11 +19421,20 @@ SetpointManager:Scheduled,
     DHSupplySetpoint,        !- Schedule Name
     DH Supply Outlet Node_unit1;  !- Setpoint Node or NodeList Name
 
+ <% if :heating_system_type == "GAHP_COMBI" %>
   SetpointManager:Scheduled,
     GAHP SetPoint Manager, !- Name
     Temperature,             !- Control Variable
     GAHP Setpoint, !- Schedule Name
     HW Supply Outlet Node;   !- Setpoint Node or NodeList Name
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>
+
+
 
 !-   ===========  ALL OBJECTS IN CLASS: SETPOINTMANAGER:SINGLEZONE:COOLING ===========
 
@@ -20045,6 +20142,7 @@ Curve:Cubic,
     1;                       !- Maximum Value of x
 
 
+ <% if :heating_system_type == "GAHP_COMBI" %>
 !-   ===========  ALL OBJECTS IN CLASS: CURVE:EXPONENT ===========
 
 Curve:Exponent,
@@ -20058,6 +20156,12 @@ Curve:Exponent,
     ,                        !- Maximum Curve Output
     Dimensionless,           !- Input Unit Type for X
     Dimensionless;           !- Output Unit Type
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>
 
 
 !-   ===========  ALL OBJECTS IN CLASS: CURVE:BICUBIC ===========
@@ -20084,6 +20188,7 @@ Curve:Exponent,
     Dimensionless,           !- Input Unit Type for Y
     Dimensionless;           !- Output Unit Type
 	
+ <% if :heating_system_type == "GAHP_COMBI" %>
 Curve:Bicubic,
     CapCurveFuncTemp-Robur,  !- Name
     -53.9921516732004,       !- Coefficient1 Constant
@@ -20105,6 +20210,14 @@ Curve:Bicubic,
     Temperature,             !- Input Unit Type for X
     Temperature,             !- Input Unit Type for Y
     Dimensionless;           !- Output Unit Type
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>
+
+
 
 
 !-   ===========  ALL OBJECTS IN CLASS: CURVE:BIQUADRATIC ===========
@@ -20646,6 +20759,7 @@ Curve:Biquadratic,
     18.0,                    !- Minimum Value of y
     46.11111;                !- Maximum Value of y
 
+<% if :heating_system_type == "GAHP_COMBI" %>
 Curve:Biquadratic,
     EIRCurveFuncTemp-Robur,  !- Name
     0.520548352,             !- Coefficient1 Constant
@@ -20663,6 +20777,12 @@ Curve:Biquadratic,
     Temperature,             !- Input Unit Type for X
     Temperature,             !- Input Unit Type for Y
     Dimensionless;           !- Output Unit Type
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>
 
 
 !-   ===========  ALL OBJECTS IN CLASS: OUTPUT:VARIABLEDICTIONARY ===========
@@ -20786,50 +20906,125 @@ Output:Variable,
     Zone Mean Air Temperature,  !- Variable Name
     Hourly;                  !- Reporting Frequency
 
+<% if :heating_system_type == "GAHP_COMBI" %>
 Output:Variable,
     DH Load Profile Pump Oulet Node,  !- Key Value
     System Node Mass Flow Rate,  !- Variable Name
     Hourly;                  !- Reporting Frequency
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>
 
+
+
+<% if :heating_system_type == "GAHP_COMBI" %>
 Output:Variable,
     DH Water Fixture Pump Outlet Node,  !- Key Value
     System Node Mass Flow Rate,  !- Variable Name
     Hourly;                  !- Reporting Frequency
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>
 
+
+
+<% if :heating_system_type == "GAHP_COMBI" %>
 Output:Variable,
     DH Water Heater_unit1,   !- Key Value
     Water Heater Use Side Outlet Temperature,  !- Variable Name
     Hourly;                  !- Reporting Frequency
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>
 
+
+
+<% if :heating_system_type == "GAHP_COMBI" %>
 Output:Variable,
     DH GAHP Water Outlet Node,  !- Key Value
     System Node Temperature ,!- Variable Name
     Hourly;                  !- Reporting Frequency
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>
 
+
+<% if :heating_system_type == "GAHP_COMBI" %>
 Output:Variable,
     DH GAHP Water Inlet Node,!- Key Value
     System Node Temperature ,!- Variable Name
     Hourly;                  !- Reporting Frequency
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>
 
+
+<% if :heating_system_type == "GAHP_COMBI" %>
 Output:Variable,
     CapCurveFuncTemp-Robur,  !- Key Value
     Performance Curve Input Variable 1 Value ,  !- Variable Name
     Hourly;                  !- Reporting Frequency
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>
 
+
+<% if :heating_system_type == "GAHP_COMBI" %>
 Output:Variable,
     CapCurveFuncTemp-Robur,  !- Key Value
     Performance Curve Input Variable 2 Value ,  !- Variable Name
     Hourly;                  !- Reporting Frequency
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>
 
+
+<% if :heating_system_type == "GAHP_COMBI" %>
 Output:Variable,
     CapCurveFuncTemp-Robur,  !- Key Value
     Performance Curve Output Value ,  !- Variable Name
     Hourly;                  !- Reporting Frequency
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>
 
+
+<% if :heating_system_type == "GAHP_COMBI" %>
 Output:Variable,
     *,                       !- Key Value
     Cooling Coil Total Cooling Energy ,  !- Variable Name
     Hourly;                  !- Reporting Frequency
+	
+<% elsif :heating_system_type == "BOILER" %>
+! Code specific to boiler (blank for now)
+<% else %> # GAS_FURNACE
+! Code specific to gas furnace (blank for now)
+<% end %>
+
 
 !-   ===========  ALL OBJECTS IN CLASS: OUTPUT:DIAGNOSTICS ===========
 
