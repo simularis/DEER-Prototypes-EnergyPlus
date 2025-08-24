@@ -176,6 +176,12 @@
 ! ElectricEIRChiller York YS 1554kW/9.31COP/Valve      Screw         1554 (442)  9.31   Slide Valve
 ! ElectricEIRChiller York YS 1758kW/5.84COP/Valve      Screw         1758 (500)  5.84   Slide Valve
 ! ElectricEIRChiller Trane CGWD 207kW/3.99COP/None     Scroll        207 (59)    3.99   None
+
+! 2025-08-23 Nicholas Fette
+! Using EnergyPlus workflow Transition-22.2.0, confirmed that no objects changed from prior version.
+! Note that transition log included the warning: "** Severe  ** Out of "range" values and/or blank required fields found in input".
+  Version,22.2;
+
 ! ElectricEIRChiller McQuay WSC 471kW/5.89COP/Vanes
 ! Manufacturer = McQuay, Model Line = WSC
 ! Reference Capacity = 471 kW (134 tons)
@@ -184,8 +190,6 @@
 ! Unloading Mechanism = Inlet Vanes
 ! The objects and syntax in this dataset comply with EnergyPlus, Version 8.4.0 and above, unless otherwise noted.
 
-  Version,
-    9.0;                    !- Version Identifier
 
   Chiller:Electric:EIR,
     ElectricEIRChiller McQuay WSC 471kW/5.89COP/Vanes,  !- Name
