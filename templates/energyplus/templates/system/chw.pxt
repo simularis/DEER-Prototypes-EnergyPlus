@@ -580,8 +580,13 @@ Branch,
 <% if (chiller_condenser == "WATERCOOLED") %>
   <% if (wc_option == "EIR") %>
     <% if library_chiller_model != nil %>
+! Calling library chiller template with parameters (<%= library_chiller_model %>, <%= name+" Chiller "+i.to_s %>)
       <%
-      insert "Chillers.pxt", :library_chiller_model => :library_chiller_model, :chiller_name => name+" Chiller "+i
+        insert "Chillers.pxt",
+          :library_chiller_model => library_chiller_model,
+          :chiller_name => name+" Chiller "+i.to_s,
+          :name => name,
+          :i => i
       %>
     <% else %>
 Chiller:Electric:EIR,
@@ -624,8 +629,13 @@ Branch,
 
   <% else # wc_option not "EIR" %>
     <% if library_chiller_model != nil %>
+! Calling library chiller template with parameters (<%= library_chiller_model %>, <%= name+" Chiller "+i.to_s %>)
       <%
-      insert "Chillers.pxt", :library_chiller_model => :library_chiller_model, :chiller_name => name+" Chiller "+i
+        insert "Chillers.pxt",
+          :library_chiller_model => library_chiller_model,
+          :chiller_name => name+" Chiller "+i.to_s,
+          :name => name,
+          :i => i
       %>
     <% else %>
 Chiller:Electric:ReformulatedEIR,
