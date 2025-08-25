@@ -102,6 +102,8 @@ parameter "chiller_eir_fplr_type", :default=>"LeavingCondenserWaterTemperature" 
 
 parameter "operation_schedule", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
 
+parameter "library_chiller_model", :default => nil
+
 %>
 
 <% if loop_config == "PRIMARY-SECONDARY" %>
@@ -577,6 +579,16 @@ Branch,
 
 <% if (chiller_condenser == "WATERCOOLED") %>
   <% if (wc_option == "EIR") %>
+    <% if library_chiller_model != nil %>
+! Calling library chiller template with parameters (<%= library_chiller_model %>, <%= name+" Chiller "+i.to_s %>)
+      <%
+        insert "Chillers.pxt",
+          :library_chiller_model => library_chiller_model,
+          :chiller_name => name+" Chiller "+i.to_s,
+          :name => name,
+          :i => i
+      %>
+    <% else %>
 Chiller:Electric:EIR,
   <%= name %> Chiller <%= i %>,  !- Name
   Autosize,                !- Reference Capacity {W}
@@ -605,6 +617,7 @@ Chiller:Electric:EIR,
   ,                        !- Heat Recovery Inlet Node Name
   ,                        !- Heat Recovery Outlet Node Name
   <%= chiller_sizing %>;  !- Sizing Factor
+    <% end # library_chiller_model %>
 
 Branch,
   <%= name %> <%= i %> HR Demand Branch,  !- Name
@@ -615,6 +628,16 @@ Branch,
   <%= name %> Chiller <%= i %> Water Outlet Node;  !- Component 1 Outlet Node Name
 
   <% else # wc_option not "EIR" %>
+    <% if library_chiller_model != nil %>
+! Calling library chiller template with parameters (<%= library_chiller_model %>, <%= name+" Chiller "+i.to_s %>)
+      <%
+        insert "Chillers.pxt",
+          :library_chiller_model => library_chiller_model,
+          :chiller_name => name+" Chiller "+i.to_s,
+          :name => name,
+          :i => i
+      %>
+    <% else %>
 Chiller:Electric:ReformulatedEIR,
   <%= name %> Chiller <%= i %>,  !- Name
   Autosize,                !- Reference Capacity {W}
@@ -644,6 +667,7 @@ Chiller:Electric:ReformulatedEIR,
   ,                        !- Heat Recovery Inlet Node Name
   ,                        !- Heat Recovery Outlet Node Name
   <%= chiller_sizing %>;  !- Sizing Factor
+  <% end # library_chiller_model %>
 
 Branch,
   <%= name %> <%= i %> HR Demand Branch,  !- Name
