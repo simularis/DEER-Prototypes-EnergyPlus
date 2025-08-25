@@ -1,6 +1,11 @@
-ComponentSizingSummary/Entire Facility/Chiller:Electric:EIR/Design Size Reference Capacity/*, Chiller Cooling Capacity
-ComponentSizingSummary/Entire Facility/Chiller:Electric:ReformulatedEIR/Design Size Reference Capacity/*, Chiller Cooling Capacity
-EquipmentSummary/Entire Facility/Central Plant/IPLV in SI Units/*, IPLV in SI Units
+EquipmentSummary/Entire Facility/Central Plant/Type/CHW CHILLER 1
+EquipmentSummary/Entire Facility/Central Plant/Reference Capacity/CHW CHILLER 1
+EquipmentSummary/Entire Facility/Central Plant/Reference Efficiency/CHW CHILLER 1
+EquipmentSummary/Entire Facility/Central Plant/Rated Capacity/CHW CHILLER 1
+EquipmentSummary/Entire Facility/Central Plant/Rated Efficiency/CHW CHILLER 1
+EquipmentSummary/Entire Facility/Central Plant/IPLV in SI Units/CHW CHILLER 1
+ComponentSizingSummary/Entire Facility/Chiller:Electric:EIR/Design Size Reference Capacity/CHW CHILLER 1, Chiller Cooling Capacity
+ComponentSizingSummary/Entire Facility/Chiller:Electric:ReformulatedEIR/Design Size Reference Capacity/CHW CHILLER 1, Chiller Cooling Capacity
 SystemSummary/Entire Facility/Time Setpoint Not Met/During Occupied Heating/, Occupied unmet heating hour
 SystemSummary/Entire Facility/Time Setpoint Not Met/During Occupied Cooling/, Occupied unmet cooling hour	
 InputVerificationandResultsSummary/Entire Facility/General/Value/Program Version and Build
