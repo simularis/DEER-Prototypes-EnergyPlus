@@ -1,3 +1,14 @@
+<%#INITIALIZE
+require "modelkit/energyplus"
+
+parameter "library_chiller_model", :default => nil
+parameter "chiller_name"
+
+# 2025-08-24 converted to template format via regular expression replace:
+# Replace from (! (ElectricEIRChiller.{1,34}$))
+# Replace to <% elsif library_chiller_model == "$2" %>\n$1
+
+=begin
 !===============================================================================
 ! Chillers.idf
 !
@@ -181,7 +192,10 @@
 ! Using EnergyPlus workflow Transition-22.2.0, confirmed that no objects changed from prior version.
 ! Note that transition log included the warning: "** Severe  ** Out of "range" values and/or blank required fields found in input".
   Version,22.2;
+=end
+%>
 
+<% if library_chiller_model == "ElectricEIRChiller McQuay WSC 471kW/5.89COP/Vanes" %>
 ! ElectricEIRChiller McQuay WSC 471kW/5.89COP/Vanes
 ! Manufacturer = McQuay, Model Line = WSC
 ! Reference Capacity = 471 kW (134 tons)
@@ -192,7 +206,8 @@
 
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay WSC 471kW/5.89COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay WSC 471kW/5.89COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     471200,                  !- Reference Capacity {W}
     5.89,                    !- Reference COP {W/W}
     8.89,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -265,6 +280,7 @@
     0.10,                    !- Minimum Value of x
     1.15;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 563kW/10.61COP/Vanes" %>
 ! ElectricEIRChiller York YT 563kW/10.61COP/Vanes
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 563 kW (160 tons)
@@ -274,7 +290,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 563kW/10.61COP/Vanes,  !- Name
+!   ElectricEIRChiller York YT 563kW/10.61COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     562600,                  !- Reference Capacity {W}
     10.61,                   !- Reference COP {W/W}
     6.11,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -347,6 +364,7 @@
     0.09,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller McQuay PEH 703kW/7.03COP/Vanes" %>
 ! ElectricEIRChiller McQuay PEH 703kW/7.03COP/Vanes
 ! Manufacturer = McQuay, Model Line = PEH
 ! Reference Capacity = 703 kW (200 tons)
@@ -356,7 +374,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay PEH 703kW/7.03COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay PEH 703kW/7.03COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     703300,                  !- Reference Capacity {W}
     7.03,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -429,6 +448,7 @@
     0.10,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 23XL 724kW/6.04COP/Vanes" %>
 ! ElectricEIRChiller Carrier 23XL 724kW/6.04COP/Vanes
 ! Manufacturer = Carrier, Model Line = 23XL
 ! Reference Capacity = 724 kW (206 tons)
@@ -438,7 +458,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 23XL 724kW/6.04COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 23XL 724kW/6.04COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     724400,                  !- Reference Capacity {W}
     6.04,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -511,6 +532,7 @@
     0.19,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 742kW/5.42COP/VSD" %>
 ! ElectricEIRChiller Carrier 19XR 742kW/5.42COP/VSD
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 742 kW (211 tons)
@@ -520,7 +542,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 742kW/5.42COP/VSD,  !- Name
+!   ElectricEIRChiller Carrier 19XR 742kW/5.42COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     742000,                  !- Reference Capacity {W}
     5.42,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -593,6 +616,7 @@
     0.19,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller McQuay WSC 816kW/6.74COP/Vanes" %>
 ! ElectricEIRChiller McQuay WSC 816kW/6.74COP/Vanes
 ! Manufacturer = McQuay, Model Line = WSC
 ! Reference Capacity = 816 kW (232 tons)
@@ -602,7 +626,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay WSC 816kW/6.74COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay WSC 816kW/6.74COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     815800,                  !- Reference Capacity {W}
     6.74,                    !- Reference COP {W/W}
     8.89,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -675,6 +700,7 @@
     0.09,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller McQuay PEH 819kW/8.11COP/Vanes" %>
 ! ElectricEIRChiller McQuay PEH 819kW/8.11COP/Vanes
 ! Manufacturer = McQuay, Model Line = PEH
 ! Reference Capacity = 819 kW (233 tons)
@@ -684,7 +710,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay PEH 819kW/8.11COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay PEH 819kW/8.11COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     819300,                  !- Reference Capacity {W}
     8.11,                    !- Reference COP {W/W}
     4.44,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -757,6 +784,7 @@
     0.09,                    !- Minimum Value of x
     1.05;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 823kW/6.28COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19XR 823kW/6.28COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 823 kW (234 tons)
@@ -766,7 +794,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 823kW/6.28COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19XR 823kW/6.28COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     822900,                  !- Reference Capacity {W}
     6.28,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -839,6 +868,7 @@
     0.10,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 869kW/5.57COP/VSD" %>
 ! ElectricEIRChiller Carrier 19XR 869kW/5.57COP/VSD
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 869 kW (247 tons)
@@ -848,7 +878,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 869kW/5.57COP/VSD,  !- Name
+!   ElectricEIRChiller Carrier 19XR 869kW/5.57COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     868600,                  !- Reference Capacity {W}
     5.57,                    !- Reference COP {W/W}
     8.89,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -921,6 +952,7 @@
     0.18,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 897kW/7.23COP/VSD" %>
 ! ElectricEIRChiller Carrier 19XR 897kW/7.23COP/VSD
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 897 kW (255 tons)
@@ -930,7 +962,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 897kW/7.23COP/VSD,  !- Name
+!   ElectricEIRChiller Carrier 19XR 897kW/7.23COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     896700,                  !- Reference Capacity {W}
     7.23,                    !- Reference COP {W/W}
     9.82,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -1003,6 +1036,7 @@
     0.20,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 897kW/6.50COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19XR 897kW/6.50COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 897 kW (255 tons)
@@ -1012,7 +1046,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 897kW/6.50COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19XR 897kW/6.50COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     896700,                  !- Reference Capacity {W}
     6.50,                    !- Reference COP {W/W}
     9.82,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -1085,6 +1120,7 @@
     0.20,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 897kW/7.60COP/VSD" %>
 ! ElectricEIRChiller York YT 897kW/7.60COP/VSD
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 897 kW (255 tons)
@@ -1094,7 +1130,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 897kW/7.60COP/VSD,  !- Name
+!   ElectricEIRChiller York YT 897kW/7.60COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     896700,                  !- Reference Capacity {W}
     7.60,                    !- Reference COP {W/W}
     9.83,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -1167,6 +1204,7 @@
     0.10,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 897kW/6.27COP/VSD" %>
 ! ElectricEIRChiller York YT 897kW/6.27COP/VSD
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 897 kW (255 tons)
@@ -1176,7 +1214,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 897kW/6.27COP/VSD,  !- Name
+!   ElectricEIRChiller York YT 897kW/6.27COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     896700,                  !- Reference Capacity {W}
     6.27,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -1249,6 +1288,7 @@
     0.10,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 897kW/6.23COP/VSD" %>
 ! ElectricEIRChiller Carrier 19XR 897kW/6.23COP/VSD
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 897 kW (255 tons)
@@ -1258,7 +1298,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 897kW/6.23COP/VSD,  !- Name
+!   ElectricEIRChiller Carrier 19XR 897kW/6.23COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     896700,                  !- Reference Capacity {W}
     6.23,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -1331,6 +1372,7 @@
     0.20,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller McQuay PFH 932kW/5.09COP/Vanes" %>
 ! ElectricEIRChiller McQuay PFH 932kW/5.09COP/Vanes
 ! Manufacturer = McQuay, Model Line = PFH
 ! Reference Capacity = 932 kW (265 tons)
@@ -1340,7 +1382,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay PFH 932kW/5.09COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay PFH 932kW/5.09COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     931900,                  !- Reference Capacity {W}
     5.09,                    !- Reference COP {W/W}
     4.44,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -1413,6 +1456,7 @@
     0.09,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 960kW/4.64COP/Vanes" %>
 ! ElectricEIRChiller York YT 960kW/4.64COP/Vanes
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 960 kW (273 tons)
@@ -1422,7 +1466,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 960kW/4.64COP/Vanes,  !- Name
+!   ElectricEIRChiller York YT 960kW/4.64COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     960000,                  !- Reference Capacity {W}
     4.64,                    !- Reference COP {W/W}
     4.44,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -1495,6 +1540,7 @@
     0.09,                    !- Minimum Value of x
     1.09;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1023kW/5.81COP/Vanes" %>
 ! ElectricEIRChiller York YT 1023kW/5.81COP/Vanes
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1023 kW (291 tons)
@@ -1504,7 +1550,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1023kW/5.81COP/Vanes,  !- Name
+!   ElectricEIRChiller York YT 1023kW/5.81COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1023300,                 !- Reference Capacity {W}
     5.81,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -1577,6 +1624,7 @@
     0.09,                    !- Minimum Value of x
     1.06;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller McQuay PEH 1030kW/8.58COP/Vanes" %>
 ! ElectricEIRChiller McQuay PEH 1030kW/8.58COP/Vanes
 ! Manufacturer = McQuay, Model Line = PEH
 ! Reference Capacity = 1030 kW (293 tons)
@@ -1586,7 +1634,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay PEH 1030kW/8.58COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay PEH 1030kW/8.58COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1030300,                 !- Reference Capacity {W}
     8.58,                    !- Reference COP {W/W}
     6.11,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -1659,6 +1708,7 @@
     0.08,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1048kW/6.06COP/Vanes" %>
 ! ElectricEIRChiller York YT 1048kW/6.06COP/Vanes
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1048 kW (298 tons)
@@ -1668,7 +1718,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1048kW/6.06COP/Vanes,  !- Name
+!   ElectricEIRChiller York YT 1048kW/6.06COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1047900,                 !- Reference Capacity {W}
     6.06,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -1741,6 +1792,7 @@
     0.10,                    !- Minimum Value of x
     1.06;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1055kW/5.96COP/Vanes" %>
 ! ElectricEIRChiller York YT 1055kW/5.96COP/Vanes
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1055 kW (300 tons)
@@ -1750,7 +1802,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1055kW/5.96COP/Vanes,  !- Name
+!   ElectricEIRChiller York YT 1055kW/5.96COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1055000,                 !- Reference Capacity {W}
     5.96,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -1823,6 +1876,7 @@
     0.10,                    !- Minimum Value of x
     1.05;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1076kW/5.52COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19XR 1076kW/5.52COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1076 kW (306 tons)
@@ -1832,7 +1886,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1076kW/5.52COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1076kW/5.52COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1076100,                 !- Reference Capacity {W}
     5.52,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -1905,6 +1960,7 @@
     0.10,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHE 1080kW/7.39COP/Vanes" %>
 ! ElectricEIRChiller Trane CVHE 1080kW/7.39COP/Vanes
 ! Manufacturer = Trane, Model Line = CVHE
 ! Reference Capacity = 1080 kW (307 tons)
@@ -1914,7 +1970,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHE 1080kW/7.39COP/Vanes,  !- Name
+!   ElectricEIRChiller Trane CVHE 1080kW/7.39COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1079600,                 !- Reference Capacity {W}
     7.39,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -1987,6 +2044,7 @@
     0.20,                    !- Minimum Value of x
     1.05;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1090kW/7.57COP/VSD" %>
 ! ElectricEIRChiller York YT 1090kW/7.57COP/VSD
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1090 kW (310 tons)
@@ -1996,7 +2054,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1090kW/7.57COP/VSD,  !- Name
+!   ElectricEIRChiller York YT 1090kW/7.57COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1090100,                 !- Reference Capacity {W}
     7.57,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -2069,6 +2128,7 @@
     0.14,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller McQuay PEH 1104kW/8.00COP/Vanes" %>
 ! ElectricEIRChiller McQuay PEH 1104kW/8.00COP/Vanes
 ! Manufacturer = McQuay, Model Line = PEH
 ! Reference Capacity = 1104 kW (314 tons)
@@ -2078,7 +2138,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay PEH 1104kW/8.00COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay PEH 1104kW/8.00COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1104200,                 !- Reference Capacity {W}
     8.00,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -2151,6 +2212,7 @@
     0.08,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1125kW/7.92COP/VSD" %>
 ! ElectricEIRChiller York YT 1125kW/7.92COP/VSD
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1125 kW (320 tons)
@@ -2160,7 +2222,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1125kW/7.92COP/VSD,  !- Name
+!   ElectricEIRChiller York YT 1125kW/7.92COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1125300,                 !- Reference Capacity {W}
     7.92,                    !- Reference COP {W/W}
     6.11,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -2233,6 +2296,7 @@
     0.09,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHE 1125kW/4.89COP/Vanes" %>
 ! ElectricEIRChiller Trane CVHE 1125kW/4.89COP/Vanes
 ! Manufacturer = Trane, Model Line = CVHE
 ! Reference Capacity = 1125 kW (320 tons)
@@ -2242,7 +2306,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHE 1125kW/4.89COP/Vanes,  !- Name
+!   ElectricEIRChiller Trane CVHE 1125kW/4.89COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1125300,                 !- Reference Capacity {W}
     4.89,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -2315,6 +2380,7 @@
     0.10,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1125kW/7.92COP/VSD" %>
 ! ElectricEIRChiller York YT 1125kW/7.92COP/VSD
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1125 kW (320 tons)
@@ -2324,7 +2390,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1125kW/7.92COP/VSD_2,  !- Name
+!   ElectricEIRChiller York YT 1125kW/7.92COP/VSD_2,  !- Name
+    <%= chiller_name %>, !- Name
     1125300,                 !- Reference Capacity {W}
     7.92,                    !- Reference COP {W/W}
     6.11,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -2397,6 +2464,7 @@
     0.09,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHE 1129kW/7.19COP/Vanes" %>
 ! ElectricEIRChiller Trane CVHE 1129kW/7.19COP/Vanes
 ! Manufacturer = Trane, Model Line = CVHE
 ! Reference Capacity = 1129 kW (321 tons)
@@ -2406,7 +2474,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHE 1129kW/7.19COP/Vanes,  !- Name
+!   ElectricEIRChiller Trane CVHE 1129kW/7.19COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1128800,                 !- Reference Capacity {W}
     7.19,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -2479,6 +2548,7 @@
     0.15,                    !- Minimum Value of x
     1.06;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1143kW/6.57COP/VSD" %>
 ! ElectricEIRChiller Carrier 19XR 1143kW/6.57COP/VSD
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1143 kW (325 tons)
@@ -2488,7 +2558,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1143kW/6.57COP/VSD,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1143kW/6.57COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1142900,                 !- Reference Capacity {W}
     6.57,                    !- Reference COP {W/W}
     10.00,                   !- Reference Leaving Chilled Water Temperature {C}
@@ -2561,6 +2632,7 @@
     0.20,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1157kW/5.62COP/VSD" %>
 ! ElectricEIRChiller Carrier 19XR 1157kW/5.62COP/VSD
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1157 kW (329 tons)
@@ -2570,7 +2642,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1157kW/5.62COP/VSD,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1157kW/5.62COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1156900,                 !- Reference Capacity {W}
     5.62,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -2643,6 +2716,7 @@
     0.19,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1196kW/6.50COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19XR 1196kW/6.50COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1196 kW (340 tons)
@@ -2652,7 +2726,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1196kW/6.50COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1196kW/6.50COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1195600,                 !- Reference Capacity {W}
     6.50,                    !- Reference COP {W/W}
     7.22,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -2725,6 +2800,7 @@
     0.20,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1213kW/7.78COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19XR 1213kW/7.78COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1213 kW (345 tons)
@@ -2734,7 +2810,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1213kW/7.78COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1213kW/7.78COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1213200,                 !- Reference Capacity {W}
     7.78,                    !- Reference COP {W/W}
     6.11,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -2807,6 +2884,7 @@
     0.17,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller McQuay PEH 1231kW/6.18COP/Vanes" %>
 ! ElectricEIRChiller McQuay PEH 1231kW/6.18COP/Vanes
 ! Manufacturer = McQuay, Model Line = PEH
 ! Reference Capacity = 1231 kW (350 tons)
@@ -2816,7 +2894,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay PEH 1231kW/6.18COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay PEH 1231kW/6.18COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1230800,                 !- Reference Capacity {W}
     6.18,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -2889,6 +2968,7 @@
     0.10,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1234kW/5.39COP/VSD" %>
 ! ElectricEIRChiller Carrier 19XR 1234kW/5.39COP/VSD
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1234 kW (351 tons)
@@ -2898,7 +2978,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1234kW/5.39COP/VSD,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1234kW/5.39COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1234300,                 !- Reference Capacity {W}
     5.39,                    !- Reference COP {W/W}
     8.89,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -2971,6 +3052,7 @@
     0.19,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1259kW/6.26COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19XR 1259kW/6.26COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1259 kW (358 tons)
@@ -2980,7 +3062,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1259kW/6.26COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1259kW/6.26COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1258900,                 !- Reference Capacity {W}
     6.26,                    !- Reference COP {W/W}
     8.89,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -3053,6 +3136,7 @@
     0.18,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 1259kW/6.45COP/Vanes" %>
 ! ElectricEIRChiller York YK 1259kW/6.45COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 1259 kW (358 tons)
@@ -3062,7 +3146,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 1259kW/6.45COP/Vanes,  !- Name
+!   ElectricEIRChiller York YK 1259kW/6.45COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1258900,                 !- Reference Capacity {W}
     6.45,                    !- Reference COP {W/W}
     8.89,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -3135,6 +3220,7 @@
     0.18,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1266kW/4.39COP/Vanes" %>
 ! ElectricEIRChiller York YT 1266kW/4.39COP/Vanes
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1266 kW (360 tons)
@@ -3144,7 +3230,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1266kW/4.39COP/Vanes,  !- Name
+!   ElectricEIRChiller York YT 1266kW/4.39COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1266000,                 !- Reference Capacity {W}
     4.39,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -3217,6 +3304,7 @@
     0.11,                    !- Minimum Value of x
     1.05;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1284kW/6.20COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19XR 1284kW/6.20COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1284 kW (365 tons)
@@ -3226,7 +3314,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1284kW/6.20COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1284kW/6.20COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1283500,                 !- Reference Capacity {W}
     6.20,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -3299,6 +3388,7 @@
     0.20,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1294kW/7.61COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19XR 1294kW/7.61COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1294 kW (368 tons)
@@ -3308,7 +3398,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1294kW/7.61COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1294kW/7.61COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1294100,                 !- Reference Capacity {W}
     7.61,                    !- Reference COP {W/W}
     6.11,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -3381,6 +3472,7 @@
     0.16,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHE 1329kW/5.38COP/Vanes" %>
 ! ElectricEIRChiller Trane CVHE 1329kW/5.38COP/Vanes
 ! Manufacturer = Trane, Model Line = CVHE
 ! Reference Capacity = 1329 kW (378 tons)
@@ -3390,7 +3482,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHE 1329kW/5.38COP/Vanes,  !- Name
+!   ElectricEIRChiller Trane CVHE 1329kW/5.38COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1329300,                 !- Reference Capacity {W}
     5.38,                    !- Reference COP {W/W}
     6.11,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -3463,6 +3556,7 @@
     0.29,                    !- Minimum Value of x
     1.05;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1350kW/7.90COP/VSD" %>
 ! ElectricEIRChiller Carrier 19XR 1350kW/7.90COP/VSD
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1350 kW (384 tons)
@@ -3472,7 +3566,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1350kW/7.90COP/VSD,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1350kW/7.90COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1350400,                 !- Reference Capacity {W}
     7.90,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -3545,6 +3640,7 @@
     0.19,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1368kW/7.35COP/VSD" %>
 ! ElectricEIRChiller York YT 1368kW/7.35COP/VSD
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1368 kW (389 tons)
@@ -3554,7 +3650,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1368kW/7.35COP/VSD,  !- Name
+!   ElectricEIRChiller York YT 1368kW/7.35COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1367900,                 !- Reference Capacity {W}
     7.35,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -3627,6 +3724,7 @@
     0.10,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHE 1372kW/7.49COP/Vanes" %>
 ! ElectricEIRChiller Trane CVHE 1372kW/7.49COP/Vanes
 ! Manufacturer = Trane, Model Line = CVHE
 ! Reference Capacity = 1372 kW (390 tons)
@@ -3636,7 +3734,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHE 1372kW/7.49COP/Vanes,  !- Name
+!   ElectricEIRChiller Trane CVHE 1372kW/7.49COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1371500,                 !- Reference Capacity {W}
     7.49,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -3709,6 +3808,7 @@
     0.41,                    !- Minimum Value of x
     1.07;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1396kW/7.35COP/Vanes" %>
 ! ElectricEIRChiller York YT 1396kW/7.35COP/Vanes
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1396 kW (397 tons)
@@ -3718,7 +3818,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1396kW/7.35COP/Vanes,  !- Name
+!   ElectricEIRChiller York YT 1396kW/7.35COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1396100,                 !- Reference Capacity {W}
     7.35,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -3791,6 +3892,7 @@
     0.10,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1403kW/7.09COP/VSD" %>
 ! ElectricEIRChiller Carrier 19XR 1403kW/7.09COP/VSD
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1403 kW (399 tons)
@@ -3800,7 +3902,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1403kW/7.09COP/VSD,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1403kW/7.09COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1403100,                 !- Reference Capacity {W}
     7.09,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -3873,6 +3976,7 @@
     0.17,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1403kW/6.94COP/VSD" %>
 ! ElectricEIRChiller York YT 1403kW/6.94COP/VSD
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1403 kW (399 tons)
@@ -3882,7 +3986,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1403kW/6.94COP/VSD,  !- Name
+!   ElectricEIRChiller York YT 1403kW/6.94COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1403100,                 !- Reference Capacity {W}
     6.94,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -3955,6 +4060,7 @@
     0.10,                    !- Minimum Value of x
     1.1;                     !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHE 1407kW/7.14COP/VSD" %>
 ! ElectricEIRChiller Trane CVHE 1407kW/7.14COP/VSD
 ! Manufacturer = Trane, Model Line = CVHE
 ! Reference Capacity = 1407 kW (400 tons)
@@ -3964,7 +4070,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHE 1407kW/7.14COP/VSD,  !- Name
+!   ElectricEIRChiller Trane CVHE 1407kW/7.14COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1406600,                 !- Reference Capacity {W}
     7.14,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -4037,6 +4144,7 @@
     0.30,                    !- Minimum Value of x
     1.06;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller McQuay PFH 1407kW/6.60COP/Vanes" %>
 ! ElectricEIRChiller McQuay PFH 1407kW/6.60COP/Vanes
 ! Manufacturer = McQuay, Model Line = PFH
 ! Reference Capacity = 1407 kW (400 tons)
@@ -4046,7 +4154,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay PFH 1407kW/6.60COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay PFH 1407kW/6.60COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1406600,                 !- Reference Capacity {W}
     6.60,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -4119,6 +4228,7 @@
     0.10,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1407kW/6.04COP/VSD" %>
 ! ElectricEIRChiller Carrier 19XR 1407kW/6.04COP/VSD
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1407 kW (400 tons)
@@ -4128,7 +4238,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1407kW/6.04COP/VSD,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1407kW/6.04COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1406600,                 !- Reference Capacity {W}
     6.04,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -4201,6 +4312,7 @@
     0.20,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1410kW/8.54COP/VSD" %>
 ! ElectricEIRChiller Carrier 19XR 1410kW/8.54COP/VSD
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1410 kW (401 tons)
@@ -4210,7 +4322,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1410kW/8.54COP/VSD,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1410kW/8.54COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1410100,                 !- Reference Capacity {W}
     8.54,                    !- Reference COP {W/W}
     6.11,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -4283,6 +4396,7 @@
     0.18,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHE 1442kW/6.61COP/VSD" %>
 ! ElectricEIRChiller Trane CVHE 1442kW/6.61COP/VSD
 ! Manufacturer = Trane, Model Line = CVHE
 ! Reference Capacity = 1442 kW (410 tons)
@@ -4292,7 +4406,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHE 1442kW/6.61COP/VSD,  !- Name
+!   ElectricEIRChiller Trane CVHE 1442kW/6.61COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1441800,                 !- Reference Capacity {W}
     6.61,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -4365,6 +4480,7 @@
     0.10,                    !- Minimum Value of x
     1.07;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1459kW/6.40COP/VSD" %>
 ! ElectricEIRChiller York YT 1459kW/6.40COP/VSD
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1459 kW (415 tons)
@@ -4374,7 +4490,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1459kW/6.40COP/VSD,  !- Name
+!   ElectricEIRChiller York YT 1459kW/6.40COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1459400,                 !- Reference Capacity {W}
     6.40,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -4447,6 +4564,7 @@
     0.10,                    !- Minimum Value of x
     1.13;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHE 1484kW/9.96COP/VSD" %>
 ! ElectricEIRChiller Trane CVHE 1484kW/9.96COP/VSD
 ! Manufacturer = Trane, Model Line = CVHE
 ! Reference Capacity = 1484 kW (422 tons)
@@ -4456,7 +4574,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHE 1484kW/9.96COP/VSD,  !- Name
+!   ElectricEIRChiller Trane CVHE 1484kW/9.96COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1484000,                 !- Reference Capacity {W}
     9.96,                    !- Reference COP {W/W}
     4.44,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -4529,6 +4648,7 @@
     0.24,                    !- Minimum Value of x
     1.06;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1495kW/7.51COP/VSD" %>
 ! ElectricEIRChiller York YT 1495kW/7.51COP/VSD
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1495 kW (425 tons)
@@ -4538,7 +4658,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1495kW/7.51COP/VSD,  !- Name
+!   ElectricEIRChiller York YT 1495kW/7.51COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1494500,                 !- Reference Capacity {W}
     7.51,                    !- Reference COP {W/W}
     7.22,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -4611,6 +4732,7 @@
     0.11,                    !- Minimum Value of x
     1.05;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller McQuay WSC 1519kW/7.10COP/Vanes" %>
 ! ElectricEIRChiller McQuay WSC 1519kW/7.10COP/Vanes
 ! Manufacturer = McQuay, Model Line = WSC
 ! Reference Capacity = 1519 kW (432 tons)
@@ -4620,7 +4742,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay WSC 1519kW/7.10COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay WSC 1519kW/7.10COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1519200,                 !- Reference Capacity {W}
     7.10,                    !- Reference COP {W/W}
     8.89,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -4693,6 +4816,7 @@
     0.10,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1558kW/5.81COP/VSD" %>
 ! ElectricEIRChiller Carrier 19XR 1558kW/5.81COP/VSD
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1558 kW (443 tons)
@@ -4702,7 +4826,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1558kW/5.81COP/VSD,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1558kW/5.81COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1557800,                 !- Reference Capacity {W}
     5.81,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -4775,6 +4900,7 @@
     0.19,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1586kW/5.53COP/VSD" %>
 ! ElectricEIRChiller Carrier 19XR 1586kW/5.53COP/VSD
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1586 kW (451 tons)
@@ -4784,7 +4910,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1586kW/5.53COP/VSD,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1586kW/5.53COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1586000,                 !- Reference Capacity {W}
     5.53,                    !- Reference COP {W/W}
     8.89,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -4857,6 +4984,7 @@
     0.19,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller McQuay PEH 1635kW/7.47COP/Vanes" %>
 ! ElectricEIRChiller McQuay PEH 1635kW/7.47COP/Vanes
 ! Manufacturer = McQuay, Model Line = PEH
 ! Reference Capacity = 1635 kW (465 tons)
@@ -4866,7 +4994,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay PEH 1635kW/7.47COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay PEH 1635kW/7.47COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1635200,                 !- Reference Capacity {W}
     7.47,                    !- Reference COP {W/W}
     4.44,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -4939,6 +5068,7 @@
     0.08,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1635kW/6.36COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19XR 1635kW/6.36COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1635 kW (465 tons)
@@ -4948,7 +5078,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1635kW/6.36COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1635kW/6.36COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1635200,                 !- Reference Capacity {W}
     6.36,                    !- Reference COP {W/W}
     8.89,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -5021,6 +5152,7 @@
     0.18,                    !- Minimum Value of x
     1.05;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1656kW/8.24COP/VSD" %>
 ! ElectricEIRChiller Carrier 19XR 1656kW/8.24COP/VSD
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1656 kW (471 tons)
@@ -5030,7 +5162,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1656kW/8.24COP/VSD,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1656kW/8.24COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1656300,                 !- Reference Capacity {W}
     8.24,                    !- Reference COP {W/W}
     6.11,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -5103,6 +5236,7 @@
     0.17,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1663kW/9.34COP/Vanes" %>
 ! ElectricEIRChiller York YT 1663kW/9.34COP/Vanes
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1663 kW (473 tons)
@@ -5112,7 +5246,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1663kW/9.34COP/Vanes,  !- Name
+!   ElectricEIRChiller York YT 1663kW/9.34COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1663300,                 !- Reference Capacity {W}
     9.34,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -5185,6 +5320,7 @@
     0.17,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XL 1674kW/7.89COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19XL 1674kW/7.89COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19XL
 ! Reference Capacity = 1674 kW (476 tons)
@@ -5194,7 +5330,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XL 1674kW/7.89COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19XL 1674kW/7.89COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1673900,                 !- Reference Capacity {W}
     7.89,                    !- Reference COP {W/W}
     4.44,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -5267,6 +5404,7 @@
     0.32,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHF 1681kW/6.59COP/Vanes" %>
 ! ElectricEIRChiller Trane CVHF 1681kW/6.59COP/Vanes
 ! Manufacturer = Trane, Model Line = CVHF
 ! Reference Capacity = 1681 kW (478 tons)
@@ -5276,7 +5414,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHF 1681kW/6.59COP/Vanes,  !- Name
+!   ElectricEIRChiller Trane CVHF 1681kW/6.59COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1680900,                 !- Reference Capacity {W}
     6.59,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -5349,6 +5488,7 @@
     0.10,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1723kW/8.32COP/VSD" %>
 ! ElectricEIRChiller Carrier 19XR 1723kW/8.32COP/VSD
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1723 kW (490 tons)
@@ -5358,7 +5498,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1723kW/8.32COP/VSD,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1723kW/8.32COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1723100,                 !- Reference Capacity {W}
     8.32,                    !- Reference COP {W/W}
     6.11,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -5431,6 +5572,7 @@
     0.18,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1727kW/9.04COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19XR 1727kW/9.04COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1727 kW (491 tons)
@@ -5440,7 +5582,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1727kW/9.04COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1727kW/9.04COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1726600,                 !- Reference Capacity {W}
     9.04,                    !- Reference COP {W/W}
     7.78,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -5513,6 +5656,7 @@
     0.17,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller McQuay WSC 1751kW/6.73COP/Vanes" %>
 ! ElectricEIRChiller McQuay WSC 1751kW/6.73COP/Vanes
 ! Manufacturer = McQuay, Model Line = WSC
 ! Reference Capacity = 1751 kW (498 tons)
@@ -5522,7 +5666,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay WSC 1751kW/6.73COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay WSC 1751kW/6.73COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1751300,                 !- Reference Capacity {W}
     6.73,                    !- Reference COP {W/W}
     8.89,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -5595,6 +5740,7 @@
     0.10,                    !- Minimum Value of x
     1.06;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHF 1758kW/5.96COP/Vanes" %>
 ! ElectricEIRChiller Trane CVHF 1758kW/5.96COP/Vanes
 ! Manufacturer = Trane, Model Line = CVHF
 ! Reference Capacity = 1758 kW (500 tons)
@@ -5604,7 +5750,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHF 1758kW/5.96COP/Vanes,  !- Name
+!   ElectricEIRChiller Trane CVHF 1758kW/5.96COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1758300,                 !- Reference Capacity {W}
     5.96,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -5677,6 +5824,7 @@
     0.20,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1758kW/5.76COP/VSD" %>
 ! ElectricEIRChiller York YT 1758kW/5.76COP/VSD
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1758 kW (500 tons)
@@ -5686,7 +5834,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1758kW/5.76COP/VSD,  !- Name
+!   ElectricEIRChiller York YT 1758kW/5.76COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1758300,                 !- Reference Capacity {W}
     5.76,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -5759,6 +5908,7 @@
     0.10,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1758kW/6.26COP/Vanes" %>
 ! ElectricEIRChiller York YT 1758kW/6.26COP/Vanes
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1758 kW (500 tons)
@@ -5768,7 +5918,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1758kW/6.26COP/Vanes,  !- Name
+!   ElectricEIRChiller York YT 1758kW/6.26COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1758300,                 !- Reference Capacity {W}
     6.26,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -5841,6 +5992,7 @@
     0.10,                    !- Minimum Value of x
     1.14;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1758kW/5.96COP/Vanes" %>
 ! ElectricEIRChiller York YT 1758kW/5.96COP/Vanes
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1758 kW (500 tons)
@@ -5850,7 +6002,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1758kW/5.96COP/Vanes,  !- Name
+!   ElectricEIRChiller York YT 1758kW/5.96COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1758300,                 !- Reference Capacity {W}
     5.96,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -5923,6 +6076,7 @@
     0.10,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHE 1758kW/5.96COP/Vanes" %>
 ! ElectricEIRChiller Trane CVHE 1758kW/5.96COP/Vanes
 ! Manufacturer = Trane, Model Line = CVHE
 ! Reference Capacity = 1758 kW (500 tons)
@@ -5932,7 +6086,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHE 1758kW/5.96COP/Vanes,  !- Name
+!   ElectricEIRChiller Trane CVHE 1758kW/5.96COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1758300,                 !- Reference Capacity {W}
     5.96,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -6005,6 +6160,7 @@
     0.20,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1758kW/6.28COP/Vanes" %>
 ! ElectricEIRChiller York YT 1758kW/6.28COP/Vanes
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1758 kW (500 tons)
@@ -6014,7 +6170,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1758kW/6.28COP/Vanes,  !- Name
+!   ElectricEIRChiller York YT 1758kW/6.28COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1758300,                 !- Reference Capacity {W}
     6.28,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -6087,6 +6244,7 @@
     0.20,                    !- Minimum Value of x
     1.06;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1758kW/5.86COP/VSD" %>
 ! ElectricEIRChiller Carrier 19XR 1758kW/5.86COP/VSD
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1758 kW (500 tons)
@@ -6096,7 +6254,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1758kW/5.86COP/VSD,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1758kW/5.86COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1758300,                 !- Reference Capacity {W}
     5.86,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -6169,6 +6328,7 @@
     0.20,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHF 1758kW/6.46COP/VSD" %>
 ! ElectricEIRChiller Trane CVHF 1758kW/6.46COP/VSD
 ! Manufacturer = Trane, Model Line = CVHF
 ! Reference Capacity = 1758 kW (500 tons)
@@ -6178,7 +6338,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHF 1758kW/6.46COP/VSD,  !- Name
+!   ElectricEIRChiller Trane CVHF 1758kW/6.46COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1758300,                 !- Reference Capacity {W}
     6.46,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -6251,6 +6412,7 @@
     0.20,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHF 1758kW/6.87COP/Vanes" %>
 ! ElectricEIRChiller Trane CVHF 1758kW/6.87COP/Vanes
 ! Manufacturer = Trane, Model Line = CVHF
 ! Reference Capacity = 1758 kW (500 tons)
@@ -6260,7 +6422,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHF 1758kW/6.87COP/Vanes,  !- Name
+!   ElectricEIRChiller Trane CVHF 1758kW/6.87COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1758300,                 !- Reference Capacity {W}
     6.87,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -6333,6 +6496,7 @@
     0.20,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1776kW/8.00COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19XR 1776kW/8.00COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1776 kW (505 tons)
@@ -6342,7 +6506,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1776kW/8.00COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1776kW/8.00COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1775900,                 !- Reference Capacity {W}
     8.00,                    !- Reference COP {W/W}
     6.11,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -6415,6 +6580,7 @@
     0.17,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XL 1779kW/6.18COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19XL 1779kW/6.18COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19XL
 ! Reference Capacity = 1779 kW (506 tons)
@@ -6424,7 +6590,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XL 1779kW/6.18COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19XL 1779kW/6.18COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1779400,                 !- Reference Capacity {W}
     6.18,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -6497,6 +6664,7 @@
     0.20,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHF 1779kW/6.18COP/Vanes" %>
 ! ElectricEIRChiller Trane CVHF 1779kW/6.18COP/Vanes
 ! Manufacturer = Trane, Model Line = CVHF
 ! Reference Capacity = 1779 kW (506 tons)
@@ -6506,7 +6674,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHF 1779kW/6.18COP/Vanes,  !- Name
+!   ElectricEIRChiller Trane CVHF 1779kW/6.18COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1779400,                 !- Reference Capacity {W}
     6.18,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -6579,6 +6748,7 @@
     0.10,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1794kW/8.11COP/Vanes" %>
 ! ElectricEIRChiller York YT 1794kW/8.11COP/Vanes
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1794 kW (510 tons)
@@ -6588,7 +6758,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1794kW/8.11COP/Vanes,  !- Name
+!   ElectricEIRChiller York YT 1794kW/8.11COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1793500,                 !- Reference Capacity {W}
     8.11,                    !- Reference COP {W/W}
     7.22,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -6661,6 +6832,7 @@
     0.10,                    !- Minimum Value of x
     1.08;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1794kW/7.90COP/VSD" %>
 ! ElectricEIRChiller York YT 1794kW/7.90COP/VSD
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1794 kW (510 tons)
@@ -6670,7 +6842,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1794kW/7.90COP/VSD,  !- Name
+!   ElectricEIRChiller York YT 1794kW/7.90COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1793500,                 !- Reference Capacity {W}
     7.90,                    !- Reference COP {W/W}
     7.22,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -6743,6 +6916,7 @@
     0.10,                    !- Minimum Value of x
     1.05;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XL 1797kW/5.69COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19XL 1797kW/5.69COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19XL
 ! Reference Capacity = 1797 kW (511 tons)
@@ -6752,7 +6926,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XL 1797kW/5.69COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19XL 1797kW/5.69COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1797000,                 !- Reference Capacity {W}
     5.69,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -6825,6 +7000,7 @@
     0.39,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 1801kW/6.34COP/VSD" %>
 ! ElectricEIRChiller Carrier 19XR 1801kW/6.34COP/VSD
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 1801 kW (512 tons)
@@ -6834,7 +7010,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 1801kW/6.34COP/VSD,  !- Name
+!   ElectricEIRChiller Carrier 19XR 1801kW/6.34COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1800500,                 !- Reference Capacity {W}
     6.34,                    !- Reference COP {W/W}
     7.22,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -6907,6 +7084,7 @@
     0.20,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1867kW/10.09COP/Vanes" %>
 ! ElectricEIRChiller York YT 1867kW/10.09COP/Vanes
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1867 kW (531 tons)
@@ -6916,7 +7094,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1867kW/10.09COP/Vanes,  !- Name
+!   ElectricEIRChiller York YT 1867kW/10.09COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1867300,                 !- Reference Capacity {W}
     10.09,                   !- Reference COP {W/W}
     7.78,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -6989,6 +7168,7 @@
     0.09,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XL 1871kW/6.49COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19XL 1871kW/6.49COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19XL
 ! Reference Capacity = 1871 kW (532 tons)
@@ -6998,7 +7178,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XL 1871kW/6.49COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19XL 1871kW/6.49COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1870800,                 !- Reference Capacity {W}
     6.49,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -7071,6 +7252,7 @@
     0.19,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1881kW/6.77COP/VSD" %>
 ! ElectricEIRChiller York YT 1881kW/6.77COP/VSD
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1881 kW (535 tons)
@@ -7080,7 +7262,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1881kW/6.77COP/VSD,  !- Name
+!   ElectricEIRChiller York YT 1881kW/6.77COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     1881400,                 !- Reference Capacity {W}
     6.77,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -7153,6 +7336,7 @@
     0.09,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 1881kW/6.53COP/Vanes" %>
 ! ElectricEIRChiller York YK 1881kW/6.53COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 1881 kW (535 tons)
@@ -7162,7 +7346,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 1881kW/6.53COP/Vanes,  !- Name
+!   ElectricEIRChiller York YK 1881kW/6.53COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1881400,                 !- Reference Capacity {W}
     6.53,                    !- Reference COP {W/W}
     8.89,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -7235,6 +7420,7 @@
     0.19,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 1881kW/6.53COP/Vanes" %>
 ! ElectricEIRChiller York YK 1881kW/6.53COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 1881 kW (535 tons)
@@ -7244,7 +7430,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 1881kW/6.53COP/Vanes_2,  !- Name
+!   ElectricEIRChiller York YK 1881kW/6.53COP/Vanes_2,  !- Name
+    <%= chiller_name %>, !- Name
     1881400,                 !- Reference Capacity {W}
     6.53,                    !- Reference COP {W/W}
     8.89,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -7317,6 +7504,7 @@
     0.19,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller McQuay PEH 1895kW/6.42COP/Vanes" %>
 ! ElectricEIRChiller McQuay PEH 1895kW/6.42COP/Vanes
 ! Manufacturer = McQuay, Model Line = PEH
 ! Reference Capacity = 1895 kW (539 tons)
@@ -7326,7 +7514,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay PEH 1895kW/6.42COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay PEH 1895kW/6.42COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1895400,                 !- Reference Capacity {W}
     6.42,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -7399,6 +7588,7 @@
     0.09,                    !- Minimum Value of x
     1.09;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 1934kW/7.55COP/Vanes" %>
 ! ElectricEIRChiller York YT 1934kW/7.55COP/Vanes
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 1934 kW (550 tons)
@@ -7408,7 +7598,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 1934kW/7.55COP/Vanes,  !- Name
+!   ElectricEIRChiller York YT 1934kW/7.55COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1934100,                 !- Reference Capacity {W}
     7.55,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -7481,6 +7672,7 @@
     0.10,                    !- Minimum Value of x
     1.06;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller McQuay PEH 1934kW/6.01COP/Vanes" %>
 ! ElectricEIRChiller McQuay PEH 1934kW/6.01COP/Vanes
 ! Manufacturer = McQuay, Model Line = PEH
 ! Reference Capacity = 1934 kW (550 tons)
@@ -7490,7 +7682,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay PEH 1934kW/6.01COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay PEH 1934kW/6.01COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1934100,                 !- Reference Capacity {W}
     6.01,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -7563,6 +7756,7 @@
     0.10,                    !- Minimum Value of x
     1.08;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller McQuay WDC 1973kW/6.28COP/Vanes" %>
 ! ElectricEIRChiller McQuay WDC 1973kW/6.28COP/Vanes
 ! Manufacturer = McQuay, Model Line = WDC
 ! Reference Capacity = 1973 kW (561 tons)
@@ -7572,7 +7766,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay WDC 1973kW/6.28COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay WDC 1973kW/6.28COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1972800,                 !- Reference Capacity {W}
     6.28,                    !- Reference COP {W/W}
     8.89,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -7645,6 +7840,7 @@
     0.09,                    !- Minimum Value of x
     1.06;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 1997kW/7.24COP/Vanes" %>
 ! ElectricEIRChiller York YK 1997kW/7.24COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 1997 kW (568 tons)
@@ -7654,7 +7850,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 1997kW/7.24COP/Vanes,  !- Name
+!   ElectricEIRChiller York YK 1997kW/7.24COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     1997400,                 !- Reference Capacity {W}
     7.24,                    !- Reference COP {W/W}
     8.89,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -7727,6 +7924,7 @@
     0.18,                    !- Minimum Value of x
     1.06;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller McQuay PFH 2043kW/8.44COP/Vanes" %>
 ! ElectricEIRChiller McQuay PFH 2043kW/8.44COP/Vanes
 ! Manufacturer = McQuay, Model Line = PFH
 ! Reference Capacity = 2043 kW (581 tons)
@@ -7736,7 +7934,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay PFH 2043kW/8.44COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay PFH 2043kW/8.44COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     2043100,                 !- Reference Capacity {W}
     8.44,                    !- Reference COP {W/W}
     6.11,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -7809,6 +8008,7 @@
     0.08,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHF 2043kW/9.08COP/Vanes" %>
 ! ElectricEIRChiller Trane CVHF 2043kW/9.08COP/Vanes
 ! Manufacturer = Trane, Model Line = CVHF
 ! Reference Capacity = 2043 kW (581 tons)
@@ -7818,7 +8018,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHF 2043kW/9.08COP/Vanes,  !- Name
+!   ElectricEIRChiller Trane CVHF 2043kW/9.08COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     2043100,                 !- Reference Capacity {W}
     9.08,                    !- Reference COP {W/W}
     4.44,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -7891,6 +8092,7 @@
     0.28,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XL 2057kW/6.05COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19XL 2057kW/6.05COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19XL
 ! Reference Capacity = 2057 kW (585 tons)
@@ -7900,7 +8102,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XL 2057kW/6.05COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19XL 2057kW/6.05COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     2057200,                 !- Reference Capacity {W}
     6.05,                    !- Reference COP {W/W}
     7.78,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -7973,6 +8176,7 @@
     0.28,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 2110kW/7.15COP/Vanes" %>
 ! ElectricEIRChiller York YT 2110kW/7.15COP/Vanes
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 2110 kW (600 tons)
@@ -7982,7 +8186,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 2110kW/7.15COP/Vanes,  !- Name
+!   ElectricEIRChiller York YT 2110kW/7.15COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     2110000,                 !- Reference Capacity {W}
     7.15,                    !- Reference COP {W/W}
     7.22,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -8055,6 +8260,7 @@
     0.10,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller McQuay PFH 2124kW/6.03COP/Vanes" %>
 ! ElectricEIRChiller McQuay PFH 2124kW/6.03COP/Vanes
 ! Manufacturer = McQuay, Model Line = PFH
 ! Reference Capacity = 2124 kW (604 tons)
@@ -8064,7 +8270,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay PFH 2124kW/6.03COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay PFH 2124kW/6.03COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     2124000,                 !- Reference Capacity {W}
     6.03,                    !- Reference COP {W/W}
     8.89,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -8137,6 +8344,7 @@
     0.09,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 2159kW/6.85COP/Vanes" %>
 ! ElectricEIRChiller York YK 2159kW/6.85COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 2159 kW (614 tons)
@@ -8146,7 +8354,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 2159kW/6.85COP/Vanes,  !- Name
+!   ElectricEIRChiller York YK 2159kW/6.85COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     2159200,                 !- Reference Capacity {W}
     6.85,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -8219,6 +8428,7 @@
     0.14,                    !- Minimum Value of x
     1.05;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHF 2184kW/6.78COP/Vanes" %>
 ! ElectricEIRChiller Trane CVHF 2184kW/6.78COP/Vanes
 ! Manufacturer = Trane, Model Line = CVHF
 ! Reference Capacity = 2184 kW (621 tons)
@@ -8228,7 +8438,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHF 2184kW/6.78COP/Vanes,  !- Name
+!   ElectricEIRChiller Trane CVHF 2184kW/6.78COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     2183800,                 !- Reference Capacity {W}
     6.78,                    !- Reference COP {W/W}
     7.78,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -8301,6 +8512,7 @@
     0.09,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 2201kW/6.69COP/Vanes" %>
 ! ElectricEIRChiller York YK 2201kW/6.69COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 2201 kW (626 tons)
@@ -8310,7 +8522,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 2201kW/6.69COP/Vanes,  !- Name
+!   ElectricEIRChiller York YK 2201kW/6.69COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     2201400,                 !- Reference Capacity {W}
     6.69,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -8383,6 +8596,7 @@
     0.14,                    !- Minimum Value of x
     1.05;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 2233kW/9.54COP/VSD" %>
 ! ElectricEIRChiller York YT 2233kW/9.54COP/VSD
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 2233 kW (635 tons)
@@ -8392,7 +8606,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 2233kW/9.54COP/VSD,  !- Name
+!   ElectricEIRChiller York YT 2233kW/9.54COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     2233000,                 !- Reference Capacity {W}
     9.54,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -8465,6 +8680,7 @@
     0.10,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 2233kW/9.54COP/VSD" %>
 ! ElectricEIRChiller York YT 2233kW/9.54COP/VSD
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 2233 kW (635 tons)
@@ -8474,7 +8690,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 2233kW/9.54COP/VSD_2,  !- Name
+!   ElectricEIRChiller York YT 2233kW/9.54COP/VSD_2,  !- Name
+    <%= chiller_name %>, !- Name
     2233000,                 !- Reference Capacity {W}
     9.54,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -8547,6 +8764,7 @@
     0.10,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 2237kW/6.41COP/Vanes" %>
 ! ElectricEIRChiller York YK 2237kW/6.41COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 2237 kW (636 tons)
@@ -8556,7 +8774,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 2237kW/6.41COP/Vanes,  !- Name
+!   ElectricEIRChiller York YK 2237kW/6.41COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     2236600,                 !- Reference Capacity {W}
     6.41,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -8629,6 +8848,7 @@
     0.13,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 2275kW/6.32COP/Vanes" %>
 ! ElectricEIRChiller York YK 2275kW/6.32COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 2275 kW (647 tons)
@@ -8638,7 +8858,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 2275kW/6.32COP/Vanes,  !- Name
+!   ElectricEIRChiller York YK 2275kW/6.32COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     2275200,                 !- Reference Capacity {W}
     6.32,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -8711,6 +8932,7 @@
     0.13,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 2275kW/6.32COP/Vanes" %>
 ! ElectricEIRChiller York YK 2275kW/6.32COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 2275 kW (647 tons)
@@ -8720,7 +8942,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 2275kW/6.32COP/Vanes_2,  !- Name
+!   ElectricEIRChiller York YK 2275kW/6.32COP/Vanes_2,  !- Name
+    <%= chiller_name %>, !- Name
     2275200,                 !- Reference Capacity {W}
     6.32,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -8793,6 +9016,7 @@
     0.13,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHF 2300kW/8.10COP/Vanes" %>
 ! ElectricEIRChiller Trane CVHF 2300kW/8.10COP/Vanes
 ! Manufacturer = Trane, Model Line = CVHF
 ! Reference Capacity = 2300 kW (654 tons)
@@ -8802,7 +9026,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHF 2300kW/8.10COP/Vanes,  !- Name
+!   ElectricEIRChiller Trane CVHF 2300kW/8.10COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     2299900,                 !- Reference Capacity {W}
     8.10,                    !- Reference COP {W/W}
     4.44,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -8875,6 +9100,7 @@
     0.23,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHF 2317kW/6.33COP/VSD" %>
 ! ElectricEIRChiller Trane CVHF 2317kW/6.33COP/VSD
 ! Manufacturer = Trane, Model Line = CVHF
 ! Reference Capacity = 2317 kW (659 tons)
@@ -8884,7 +9110,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHF 2317kW/6.33COP/VSD,  !- Name
+!   ElectricEIRChiller Trane CVHF 2317kW/6.33COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     2317400,                 !- Reference Capacity {W}
     6.33,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -8957,6 +9184,7 @@
     0.10,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 2391kW/6.77COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19XR 2391kW/6.77COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 2391 kW (680 tons)
@@ -8966,7 +9194,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 2391kW/6.77COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19XR 2391kW/6.77COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     2391300,                 !- Reference Capacity {W}
     6.77,                    !- Reference COP {W/W}
     7.22,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -9039,6 +9268,7 @@
     0.20,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19XR 2391kW/6.44COP/VSD" %>
 ! ElectricEIRChiller Carrier 19XR 2391kW/6.44COP/VSD
 ! Manufacturer = Carrier, Model Line = 19XR
 ! Reference Capacity = 2391 kW (680 tons)
@@ -9048,7 +9278,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19XR 2391kW/6.44COP/VSD,  !- Name
+!   ElectricEIRChiller Carrier 19XR 2391kW/6.44COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     2391300,                 !- Reference Capacity {W}
     6.44,                    !- Reference COP {W/W}
     7.22,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -9121,6 +9352,7 @@
     0.20,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 2412kW/5.58COP/Vanes" %>
 ! ElectricEIRChiller York YK 2412kW/5.58COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 2412 kW (686 tons)
@@ -9130,7 +9362,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 2412kW/5.58COP/Vanes,  !- Name
+!   ElectricEIRChiller York YK 2412kW/5.58COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     2412400,                 !- Reference Capacity {W}
     5.58,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -9203,6 +9436,7 @@
     0.12,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller McQuay PFH 2462kW/6.67COP/Vanes" %>
 ! ElectricEIRChiller McQuay PFH 2462kW/6.67COP/Vanes
 ! Manufacturer = McQuay, Model Line = PFH
 ! Reference Capacity = 2462 kW (700 tons)
@@ -9212,7 +9446,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay PFH 2462kW/6.67COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay PFH 2462kW/6.67COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     2461600,                 !- Reference Capacity {W}
     6.67,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -9285,6 +9520,7 @@
     0.10,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHF 2567kW/11.77COP/VSD" %>
 ! ElectricEIRChiller Trane CVHF 2567kW/11.77COP/VSD
 ! Manufacturer = Trane, Model Line = CVHF
 ! Reference Capacity = 2567 kW (730 tons)
@@ -9294,7 +9530,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHF 2567kW/11.77COP/VSD,  !- Name
+!   ElectricEIRChiller Trane CVHF 2567kW/11.77COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     2567100,                 !- Reference Capacity {W}
     11.77,                   !- Reference COP {W/W}
     4.44,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -9367,6 +9604,7 @@
     0.11,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 2771kW/6.84COP/VSD" %>
 ! ElectricEIRChiller York YK 2771kW/6.84COP/VSD
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 2771 kW (788 tons)
@@ -9376,7 +9614,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 2771kW/6.84COP/VSD,  !- Name
+!   ElectricEIRChiller York YK 2771kW/6.84COP/VSD,  !- Name
+    <%= chiller_name %>, !- Name
     2771100,                 !- Reference Capacity {W}
     6.84,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -9449,6 +9688,7 @@
     0.20,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHF 2799kW/6.40COP/Vanes" %>
 ! ElectricEIRChiller Trane CVHF 2799kW/6.40COP/Vanes
 ! Manufacturer = Trane, Model Line = CVHF
 ! Reference Capacity = 2799 kW (796 tons)
@@ -9458,7 +9698,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHF 2799kW/6.40COP/Vanes,  !- Name
+!   ElectricEIRChiller Trane CVHF 2799kW/6.40COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     2799200,                 !- Reference Capacity {W}
     6.40,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -9531,6 +9772,7 @@
     0.20,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YT 3133kW/9.16COP/Vanes" %>
 ! ElectricEIRChiller York YT 3133kW/9.16COP/Vanes
 ! Manufacturer = York, Model Line = YT
 ! Reference Capacity = 3133 kW (891 tons)
@@ -9540,7 +9782,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YT 3133kW/9.16COP/Vanes,  !- Name
+!   ElectricEIRChiller York YT 3133kW/9.16COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     3133300,                 !- Reference Capacity {W}
     9.16,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -9613,6 +9856,7 @@
     0.07,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller McQuay PFH 3165kW/6.48COP/Vanes" %>
 ! ElectricEIRChiller McQuay PFH 3165kW/6.48COP/Vanes
 ! Manufacturer = McQuay, Model Line = PFH
 ! Reference Capacity = 3165 kW (900 tons)
@@ -9622,7 +9866,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay PFH 3165kW/6.48COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay PFH 3165kW/6.48COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     3165000,                 !- Reference Capacity {W}
     6.48,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -9695,6 +9940,7 @@
     0.10,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller McQuay PFH 4020kW/7.35COP/Vanes" %>
 ! ElectricEIRChiller McQuay PFH 4020kW/7.35COP/Vanes
 ! Manufacturer = McQuay, Model Line = PFH
 ! Reference Capacity = 4020 kW (1143 tons)
@@ -9704,7 +9950,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller McQuay PFH 4020kW/7.35COP/Vanes,  !- Name
+!   ElectricEIRChiller McQuay PFH 4020kW/7.35COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     4019500,                 !- Reference Capacity {W}
     7.35,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -9777,6 +10024,7 @@
     0.14,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 4396kW/6.63COP/Vanes" %>
 ! ElectricEIRChiller York YK 4396kW/6.63COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 4396 kW (1250 tons)
@@ -9786,7 +10034,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 4396kW/6.63COP/Vanes,  !- Name
+!   ElectricEIRChiller York YK 4396kW/6.63COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     4395800,                 !- Reference Capacity {W}
     6.63,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -9859,6 +10108,7 @@
     0.41,                    !- Minimum Value of x
     1.06;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 4477kW/6.64COP/Vanes" %>
 ! ElectricEIRChiller York YK 4477kW/6.64COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 4477 kW (1273 tons)
@@ -9868,7 +10118,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 4477kW/6.64COP/Vanes,  !- Name
+!   ElectricEIRChiller York YK 4477kW/6.64COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     4476700,                 !- Reference Capacity {W}
     6.64,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -9941,6 +10192,7 @@
     0.41,                    !- Minimum Value of x
     1.06;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 4515kW/6.22COP/Vanes" %>
 ! ElectricEIRChiller York YK 4515kW/6.22COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 4515 kW (1284 tons)
@@ -9950,7 +10202,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 4515kW/6.22COP/Vanes,  !- Name
+!   ElectricEIRChiller York YK 4515kW/6.22COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     4515400,                 !- Reference Capacity {W}
     6.22,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -10023,6 +10276,7 @@
     0.40,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 4537kW/6.28COP/Vanes" %>
 ! ElectricEIRChiller York YK 4537kW/6.28COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 4537 kW (1290 tons)
@@ -10032,7 +10286,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 4537kW/6.28COP/Vanes,  !- Name
+!   ElectricEIRChiller York YK 4537kW/6.28COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     4536500,                 !- Reference Capacity {W}
     6.28,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -10105,6 +10360,7 @@
     0.40,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHF 4610kW/6.34COP/Vanes" %>
 ! ElectricEIRChiller Trane CVHF 4610kW/6.34COP/Vanes
 ! Manufacturer = Trane, Model Line = CVHF
 ! Reference Capacity = 4610 kW (1311 tons)
@@ -10114,7 +10370,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHF 4610kW/6.34COP/Vanes,  !- Name
+!   ElectricEIRChiller Trane CVHF 4610kW/6.34COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     4610300,                 !- Reference Capacity {W}
     6.34,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -10187,6 +10444,7 @@
     0.20,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19EX 4667kW/6.16COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19EX 4667kW/6.16COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19EX
 ! Reference Capacity = 4667 kW (1327 tons)
@@ -10196,7 +10454,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19EX 4667kW/6.16COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19EX 4667kW/6.16COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     4666600,                 !- Reference Capacity {W}
     6.16,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -10269,6 +10528,7 @@
     0.40,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CVHF 4677kW/6.27COP/Vanes" %>
 ! ElectricEIRChiller Trane CVHF 4677kW/6.27COP/Vanes
 ! Manufacturer = Trane, Model Line = CVHF
 ! Reference Capacity = 4677 kW (1330 tons)
@@ -10278,7 +10538,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CVHF 4677kW/6.27COP/Vanes,  !- Name
+!   ElectricEIRChiller Trane CVHF 4677kW/6.27COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     4677100,                 !- Reference Capacity {W}
     6.27,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -10351,6 +10612,7 @@
     0.41,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 4966kW/6.05COP/Vanes" %>
 ! ElectricEIRChiller York YK 4966kW/6.05COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 4966 kW (1412 tons)
@@ -10360,7 +10622,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 4966kW/6.05COP/Vanes,  !- Name
+!   ElectricEIRChiller York YK 4966kW/6.05COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     4965500,                 !- Reference Capacity {W}
     6.05,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -10433,6 +10696,7 @@
     0.12,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 4969kW/7.14COP/Vanes" %>
 ! ElectricEIRChiller York YK 4969kW/7.14COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 4969 kW (1413 tons)
@@ -10442,7 +10706,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 4969kW/7.14COP/Vanes,  !- Name
+!   ElectricEIRChiller York YK 4969kW/7.14COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     4969000,                 !- Reference Capacity {W}
     7.14,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -10515,6 +10780,7 @@
     0.16,                    !- Minimum Value of x
     1.07;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 4969kW/7.07COP/Vanes" %>
 ! ElectricEIRChiller York YK 4969kW/7.07COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 4969 kW (1413 tons)
@@ -10524,7 +10790,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 4969kW/7.07COP/Vanes,  !- Name
+!   ElectricEIRChiller York YK 4969kW/7.07COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     4969000,                 !- Reference Capacity {W}
     7.07,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -10597,6 +10864,7 @@
     0.16,                    !- Minimum Value of x
     1.06;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19EX 4997kW/6.40COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19EX 4997kW/6.40COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19EX
 ! Reference Capacity = 4997 kW (1421 tons)
@@ -10606,7 +10874,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19EX 4997kW/6.40COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19EX 4997kW/6.40COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     4997200,                 !- Reference Capacity {W}
     6.40,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -10679,6 +10948,7 @@
     0.40,                    !- Minimum Value of x
     1.05;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19EX 5148kW/6.34COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19EX 5148kW/6.34COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19EX
 ! Reference Capacity = 5148 kW (1464 tons)
@@ -10688,7 +10958,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19EX 5148kW/6.34COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19EX 5148kW/6.34COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     5148400,                 !- Reference Capacity {W}
     6.34,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -10761,6 +11032,7 @@
     0.20,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 5170kW/7.15COP/Vanes" %>
 ! ElectricEIRChiller York YK 5170kW/7.15COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 5170 kW (1470 tons)
@@ -10770,7 +11042,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 5170kW/7.15COP/Vanes,  !- Name
+!   ElectricEIRChiller York YK 5170kW/7.15COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     5169500,                 !- Reference Capacity {W}
     7.15,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -10843,6 +11116,7 @@
     0.15,                    !- Minimum Value of x
     1.08;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19EX 5208kW/6.88COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19EX 5208kW/6.88COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19EX
 ! Reference Capacity = 5208 kW (1481 tons)
@@ -10852,7 +11126,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19EX 5208kW/6.88COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19EX 5208kW/6.88COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     5208200,                 !- Reference Capacity {W}
     6.88,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -10925,6 +11200,7 @@
     0.20,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 5465kW/6.94COP/Vanes" %>
 ! ElectricEIRChiller York YK 5465kW/6.94COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 5465 kW (1554 tons)
@@ -10934,7 +11210,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 5465kW/6.94COP/Vanes,  !- Name
+!   ElectricEIRChiller York YK 5465kW/6.94COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     5464900,                 !- Reference Capacity {W}
     6.94,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -11007,6 +11284,7 @@
     0.14,                    !- Minimum Value of x
     1.07;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YK 5549kW/6.50COP/Vanes" %>
 ! ElectricEIRChiller York YK 5549kW/6.50COP/Vanes
 ! Manufacturer = York, Model Line = YK
 ! Reference Capacity = 5549 kW (1578 tons)
@@ -11016,7 +11294,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YK 5549kW/6.50COP/Vanes,  !- Name
+!   ElectricEIRChiller York YK 5549kW/6.50COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     5549300,                 !- Reference Capacity {W}
     6.50,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -11089,6 +11368,7 @@
     0.14,                    !- Minimum Value of x
     1.05;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 19FA 5651kW/5.50COP/Vanes" %>
 ! ElectricEIRChiller Carrier 19FA 5651kW/5.50COP/Vanes
 ! Manufacturer = Carrier, Model Line = 19FA
 ! Reference Capacity = 5651 kW (1607 tons)
@@ -11098,7 +11378,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 19FA 5651kW/5.50COP/Vanes,  !- Name
+!   ElectricEIRChiller Carrier 19FA 5651kW/5.50COP/Vanes,  !- Name
+    <%= chiller_name %>, !- Name
     5651300,                 !- Reference Capacity {W}
     5.50,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -11171,6 +11452,7 @@
     0.19,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller DOE-2 Centrifugal/5.50COP" %>
 ! ElectricEIRChiller DOE-2 Centrifugal/5.50COP
 ! A generic centrifugal chiller from DOE-2.1E
 !
@@ -11251,6 +11533,7 @@
     0.0,                     !- Minimum Value of x
     1.0;                     !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Multistack MS 172kW/3.67COP/None" %>
 ! ElectricEIRChiller Multistack MS 172kW/3.67COP/None
 ! Manufacturer = Multistack, Model Line = MS
 ! Reference Capacity = 172 kW (49 tons)
@@ -11260,7 +11543,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Multistack MS 172kW/3.67COP/None,  !- Name
+!   ElectricEIRChiller Multistack MS 172kW/3.67COP/None,  !- Name
+    <%= chiller_name %>, !- Name
     172300,                  !- Reference Capacity {W}
     3.67,                    !- Reference COP {W/W}
     4.44,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -11333,6 +11617,7 @@
     0.40,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller DOE-2 Reciprocating/3.67COP" %>
 ! ElectricEIRChiller DOE-2 Reciprocating/3.67COP
 ! A generic reciprocating chiller from DOE-2.1E
 !
@@ -11413,6 +11698,7 @@
     0.0,                     !- Minimum Value of x
     1.0;                     !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane RTWA 383kW/4.17COP/Valve" %>
 ! ElectricEIRChiller Trane RTWA 383kW/4.17COP/Valve
 ! Manufacturer = Trane, Model Line = RTWA
 ! Reference Capacity = 383 kW (109 tons)
@@ -11422,7 +11708,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane RTWA 383kW/4.17COP/Valve,  !- Name
+!   ElectricEIRChiller Trane RTWA 383kW/4.17COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     383300,                  !- Reference Capacity {W}
     4.17,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -11495,6 +11782,7 @@
     0.25,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane RTHB 531kW/4.83COP/Valve" %>
 ! ElectricEIRChiller Trane RTHB 531kW/4.83COP/Valve
 ! Manufacturer = Trane, Model Line = RTHB
 ! Reference Capacity = 531 kW (151 tons)
@@ -11504,7 +11792,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane RTHB 531kW/4.83COP/Valve,  !- Name
+!   ElectricEIRChiller Trane RTHB 531kW/4.83COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     531000,                  !- Reference Capacity {W}
     4.83,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -11577,6 +11866,7 @@
     0.30,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane RTHB 538kW/5.12COP/Valve" %>
 ! ElectricEIRChiller Trane RTHB 538kW/5.12COP/Valve
 ! Manufacturer = Trane, Model Line = RTHB
 ! Reference Capacity = 538 kW (153 tons)
@@ -11586,7 +11876,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane RTHB 538kW/5.12COP/Valve,  !- Name
+!   ElectricEIRChiller Trane RTHB 538kW/5.12COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     538000,                  !- Reference Capacity {W}
     5.12,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -11659,6 +11950,7 @@
     0.30,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane RTHB 542kW/5.26COP/Valve" %>
 ! ElectricEIRChiller Trane RTHB 542kW/5.26COP/Valve
 ! Manufacturer = Trane, Model Line = RTHB
 ! Reference Capacity = 542 kW (154 tons)
@@ -11668,7 +11960,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane RTHB 542kW/5.26COP/Valve,  !- Name
+!   ElectricEIRChiller Trane RTHB 542kW/5.26COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     541500,                  !- Reference Capacity {W}
     5.26,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -11741,6 +12034,7 @@
     0.30,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YS 672kW/7.90COP/Valve" %>
 ! ElectricEIRChiller York YS 672kW/7.90COP/Valve
 ! Manufacturer = York, Model Line = YS
 ! Reference Capacity = 672 kW (191 tons)
@@ -11750,7 +12044,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YS 672kW/7.90COP/Valve,  !- Name
+!   ElectricEIRChiller York YS 672kW/7.90COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     671600,                  !- Reference Capacity {W}
     7.90,                    !- Reference COP {W/W}
     6.11,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -11823,6 +12118,7 @@
     0.09,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 23XL 686kW/5.91COP/Valve" %>
 ! ElectricEIRChiller Carrier 23XL 686kW/5.91COP/Valve
 ! Manufacturer = Carrier, Model Line = 23XL
 ! Reference Capacity = 686 kW (195 tons)
@@ -11832,7 +12128,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 23XL 686kW/5.91COP/Valve,  !- Name
+!   ElectricEIRChiller Carrier 23XL 686kW/5.91COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     685700,                  !- Reference Capacity {W}
     5.91,                    !- Reference COP {W/W}
     6.11,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -11905,6 +12202,7 @@
     0.20,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane RTHC 707kW/7.77COP/Valve" %>
 ! ElectricEIRChiller Trane RTHC 707kW/7.77COP/Valve
 ! Manufacturer = Trane, Model Line = RTHC
 ! Reference Capacity = 707 kW (201 tons)
@@ -11914,7 +12212,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane RTHC 707kW/7.77COP/Valve,  !- Name
+!   ElectricEIRChiller Trane RTHC 707kW/7.77COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     706800,                  !- Reference Capacity {W}
     7.77,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -11987,6 +12286,7 @@
     0.28,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YS 756kW/7.41COP/Valve" %>
 ! ElectricEIRChiller York YS 756kW/7.41COP/Valve
 ! Manufacturer = York, Model Line = YS
 ! Reference Capacity = 756 kW (215 tons)
@@ -11996,7 +12296,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YS 756kW/7.41COP/Valve,  !- Name
+!   ElectricEIRChiller York YS 756kW/7.41COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     756000,                  !- Reference Capacity {W}
     7.41,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -12069,6 +12370,7 @@
     0.11,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YS 781kW/5.42COP/Valve" %>
 ! ElectricEIRChiller York YS 781kW/5.42COP/Valve
 ! Manufacturer = York, Model Line = YS
 ! Reference Capacity = 781 kW (222 tons)
@@ -12078,7 +12380,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YS 781kW/5.42COP/Valve,  !- Name
+!   ElectricEIRChiller York YS 781kW/5.42COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     780700,                  !- Reference Capacity {W}
     5.42,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -12151,6 +12454,7 @@
     0.09,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 23XL 830kW/6.97COP/Valve" %>
 ! ElectricEIRChiller Carrier 23XL 830kW/6.97COP/Valve
 ! Manufacturer = Carrier, Model Line = 23XL
 ! Reference Capacity = 830 kW (236 tons)
@@ -12160,7 +12464,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 23XL 830kW/6.97COP/Valve,  !- Name
+!   ElectricEIRChiller Carrier 23XL 830kW/6.97COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     829900,                  !- Reference Capacity {W}
     6.97,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -12233,6 +12538,7 @@
     0.20,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 23XL 862kW/6.11COP/Valve" %>
 ! ElectricEIRChiller Carrier 23XL 862kW/6.11COP/Valve
 ! Manufacturer = Carrier, Model Line = 23XL
 ! Reference Capacity = 862 kW (245 tons)
@@ -12242,7 +12548,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 23XL 862kW/6.11COP/Valve,  !- Name
+!   ElectricEIRChiller Carrier 23XL 862kW/6.11COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     861500,                  !- Reference Capacity {W}
     6.11,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -12315,6 +12622,7 @@
     0.20,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 23XL 862kW/6.84COP/Valve" %>
 ! ElectricEIRChiller Carrier 23XL 862kW/6.84COP/Valve
 ! Manufacturer = Carrier, Model Line = 23XL
 ! Reference Capacity = 862 kW (245 tons)
@@ -12324,7 +12632,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 23XL 862kW/6.84COP/Valve,  !- Name
+!   ElectricEIRChiller Carrier 23XL 862kW/6.84COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     861500,                  !- Reference Capacity {W}
     6.84,                    !- Reference COP {W/W}
     9.69,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -12397,6 +12706,7 @@
     0.30,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 23XL 865kW/6.05COP/Valve" %>
 ! ElectricEIRChiller Carrier 23XL 865kW/6.05COP/Valve
 ! Manufacturer = Carrier, Model Line = 23XL
 ! Reference Capacity = 865 kW (246 tons)
@@ -12406,7 +12716,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 23XL 865kW/6.05COP/Valve,  !- Name
+!   ElectricEIRChiller Carrier 23XL 865kW/6.05COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     865100,                  !- Reference Capacity {W}
     6.05,                    !- Reference COP {W/W}
     4.44,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -12479,6 +12790,7 @@
     0.20,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YS 879kW/5.82COP/Valve" %>
 ! ElectricEIRChiller York YS 879kW/5.82COP/Valve
 ! Manufacturer = York, Model Line = YS
 ! Reference Capacity = 879 kW (250 tons)
@@ -12488,7 +12800,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YS 879kW/5.82COP/Valve,  !- Name
+!   ElectricEIRChiller York YS 879kW/5.82COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     879100,                  !- Reference Capacity {W}
     5.82,                    !- Reference COP {W/W}
     4.44,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -12561,6 +12874,7 @@
     0.10,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane RTHC 1009kW/5.37COP/Valve" %>
 ! ElectricEIRChiller Trane RTHC 1009kW/5.37COP/Valve
 ! Manufacturer = Trane, Model Line = RTHC
 ! Reference Capacity = 1009 kW (287 tons)
@@ -12570,7 +12884,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane RTHC 1009kW/5.37COP/Valve,  !- Name
+!   ElectricEIRChiller Trane RTHC 1009kW/5.37COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     1009200,                 !- Reference Capacity {W}
     5.37,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -12643,6 +12958,7 @@
     0.30,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane RTHB 1051kW/5.05COP/Valve" %>
 ! ElectricEIRChiller Trane RTHB 1051kW/5.05COP/Valve
 ! Manufacturer = Trane, Model Line = RTHB
 ! Reference Capacity = 1051 kW (299 tons)
@@ -12652,7 +12968,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane RTHB 1051kW/5.05COP/Valve,  !- Name
+!   ElectricEIRChiller Trane RTHB 1051kW/5.05COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     1051400,                 !- Reference Capacity {W}
     5.05,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -12725,6 +13042,7 @@
     0.20,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 23XL 1062kW/5.50COP/Valve" %>
 ! ElectricEIRChiller Carrier 23XL 1062kW/5.50COP/Valve
 ! Manufacturer = Carrier, Model Line = 23XL
 ! Reference Capacity = 1062 kW (302 tons)
@@ -12734,7 +13052,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 23XL 1062kW/5.50COP/Valve,  !- Name
+!   ElectricEIRChiller Carrier 23XL 1062kW/5.50COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     1062000,                 !- Reference Capacity {W}
     5.50,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -12807,6 +13126,7 @@
     0.20,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane RTHC 1066kW/5.73COP/Valve" %>
 ! ElectricEIRChiller Trane RTHC 1066kW/5.73COP/Valve
 ! Manufacturer = Trane, Model Line = RTHC
 ! Reference Capacity = 1066 kW (303 tons)
@@ -12816,7 +13136,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane RTHC 1066kW/5.73COP/Valve,  !- Name
+!   ElectricEIRChiller Trane RTHC 1066kW/5.73COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     1065500,                 !- Reference Capacity {W}
     5.73,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -12889,6 +13210,7 @@
     0.30,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane RTHC 1094kW/6.55COP/Valve" %>
 ! ElectricEIRChiller Trane RTHC 1094kW/6.55COP/Valve
 ! Manufacturer = Trane, Model Line = RTHC
 ! Reference Capacity = 1094 kW (311 tons)
@@ -12898,7 +13220,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane RTHC 1094kW/6.55COP/Valve,  !- Name
+!   ElectricEIRChiller Trane RTHC 1094kW/6.55COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     1093600,                 !- Reference Capacity {W}
     6.55,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -12971,6 +13294,7 @@
     0.25,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 23XL 1108kW/6.92COP/Valve" %>
 ! ElectricEIRChiller Carrier 23XL 1108kW/6.92COP/Valve
 ! Manufacturer = Carrier, Model Line = 23XL
 ! Reference Capacity = 1108 kW (315 tons)
@@ -12980,7 +13304,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 23XL 1108kW/6.92COP/Valve,  !- Name
+!   ElectricEIRChiller Carrier 23XL 1108kW/6.92COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     1107700,                 !- Reference Capacity {W}
     6.92,                    !- Reference COP {W/W}
     8.97,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -13053,6 +13378,7 @@
     0.20,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YS 1171kW/9.15COP/Valve" %>
 ! ElectricEIRChiller York YS 1171kW/9.15COP/Valve
 ! Manufacturer = York, Model Line = YS
 ! Reference Capacity = 1171 kW (333 tons)
@@ -13062,7 +13388,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YS 1171kW/9.15COP/Valve,  !- Name
+!   ElectricEIRChiller York YS 1171kW/9.15COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     1171000,                 !- Reference Capacity {W}
     9.15,                    !- Reference COP {W/W}
     6.11,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -13135,6 +13462,7 @@
     0.09,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Carrier 23XL 1196kW/6.39COP/Valve" %>
 ! ElectricEIRChiller Carrier 23XL 1196kW/6.39COP/Valve
 ! Manufacturer = Carrier, Model Line = 23XL
 ! Reference Capacity = 1196 kW (340 tons)
@@ -13144,7 +13472,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Carrier 23XL 1196kW/6.39COP/Valve,  !- Name
+!   ElectricEIRChiller Carrier 23XL 1196kW/6.39COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     1195600,                 !- Reference Capacity {W}
     6.39,                    !- Reference COP {W/W}
     7.22,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -13217,6 +13546,7 @@
     0.20,                    !- Minimum Value of x
     1.03;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YS 1554kW/9.31COP/Valve" %>
 ! ElectricEIRChiller York YS 1554kW/9.31COP/Valve
 ! Manufacturer = York, Model Line = YS
 ! Reference Capacity = 1554 kW (442 tons)
@@ -13226,7 +13556,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YS 1554kW/9.31COP/Valve,  !- Name
+!   ElectricEIRChiller York YS 1554kW/9.31COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     1554300,                 !- Reference Capacity {W}
     9.31,                    !- Reference COP {W/W}
     5.56,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -13299,6 +13630,7 @@
     0.10,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller York YS 1758kW/5.84COP/Valve" %>
 ! ElectricEIRChiller York YS 1758kW/5.84COP/Valve
 ! Manufacturer = York, Model Line = YS
 ! Reference Capacity = 1758 kW (500 tons)
@@ -13308,7 +13640,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller York YS 1758kW/5.84COP/Valve,  !- Name
+!   ElectricEIRChiller York YS 1758kW/5.84COP/Valve,  !- Name
+    <%= chiller_name %>, !- Name
     1758300,                 !- Reference Capacity {W}
     5.84,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -13381,6 +13714,7 @@
     0.20,                    !- Minimum Value of x
     1.04;                    !- Maximum Value of x
 
+<% elsif library_chiller_model == "ElectricEIRChiller Trane CGWD 207kW/3.99COP/None" %>
 ! ElectricEIRChiller Trane CGWD 207kW/3.99COP/None
 ! Manufacturer = Trane, Model Line = CGWD
 ! Reference Capacity = 207 kW (59 tons)
@@ -13390,7 +13724,8 @@
 !
 
   Chiller:Electric:EIR,
-    ElectricEIRChiller Trane CGWD 207kW/3.99COP/None,  !- Name
+!   ElectricEIRChiller Trane CGWD 207kW/3.99COP/None,  !- Name
+    <%= chiller_name %>, !- Name
     207400,                  !- Reference Capacity {W}
     3.99,                    !- Reference COP {W/W}
     6.67,                    !- Reference Leaving Chilled Water Temperature {C}
@@ -28137,3 +28472,4 @@
     0.25,                    !- Minimum Value of y
     1.01;                    !- Maximum Value of y
 
+<% end %>
