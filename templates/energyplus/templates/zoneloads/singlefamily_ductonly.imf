@@ -484,6 +484,7 @@ BuildingSurface:Detailed,
   Floor,                   !- Surface Type
   <%= system_name %> Plenum Construction,  !- Construction Name
   <%= return_plenum_zone_name %>,  !- Zone Name
+  ,                        !- Space Name
   Adiabatic,               !- Outside Boundary Condition
   ,                        !- Outside Boundary Condition Object
   NoSun,                   !- Sun Exposure
@@ -508,6 +509,7 @@ BuildingSurface:Detailed,
   Ceiling,                   !- Surface Type
   <%= system_name %> Plenum Construction,  !- Construction Name
   <%= return_plenum_zone_name %>,  !- Zone Name
+  ,                        !- Space Name
   Adiabatic,               !- Outside Boundary Condition
   ,                        !- Outside Boundary Condition Object
   NoSun,                   !- Sun Exposure
@@ -532,6 +534,7 @@ BuildingSurface:Detailed,
   Wall,                   !- Surface Type
   <%= system_name %> Plenum Construction,  !- Construction Name
   <%= return_plenum_zone_name %>,  !- Zone Name
+  ,                        !- Space Name
   Adiabatic,               !- Outside Boundary Condition
   ,                        !- Outside Boundary Condition Object
   NoSun,                   !- Sun Exposure
@@ -556,6 +559,7 @@ BuildingSurface:Detailed,
   Wall,                   !- Surface Type
   <%= system_name %> Plenum Construction,  !- Construction Name
   <%= return_plenum_zone_name %>,  !- Zone Name
+  ,                        !- Space Name
   Adiabatic,               !- Outside Boundary Condition
   ,                        !- Outside Boundary Condition Object
   NoSun,                   !- Sun Exposure
@@ -580,6 +584,7 @@ BuildingSurface:Detailed,
   Wall,                   !- Surface Type
   <%= system_name %> Plenum Construction,  !- Construction Name
   <%= return_plenum_zone_name %>,  !- Zone Name
+  ,                        !- Space Name
   Adiabatic,               !- Outside Boundary Condition
   ,                        !- Outside Boundary Condition Object
   NoSun,                   !- Sun Exposure
@@ -604,6 +609,7 @@ BuildingSurface:Detailed,
   Wall,                   !- Surface Type
   <%= system_name %> Plenum Construction,  !- Construction Name
   <%= return_plenum_zone_name %>,  !- Zone Name
+  ,                        !- Space Name
   Adiabatic,               !- Outside Boundary Condition
   ,                        !- Outside Boundary Condition Object
   NoSun,                   !- Sun Exposure
@@ -627,6 +633,7 @@ InternalMass,
   <%= return_plenum_zone_name %> Plenum Internal Mass,  !- Name
   <%= system_name %> Plenum Construction,  !- Construction Name
   <%= return_plenum_zone_name %>,          !- Zone Name
+  ,                        !- Space or SpaceList Name
   5.0;      !- Surface Area {m2}
 
 <% end %>
