@@ -18194,12 +18194,14 @@ AirLoopHVAC:ZoneSplitter,
     EL7 South Perim Zn (G.S1) Zone Equip Inlet,  !- Outlet 1 Node Name
     EL7 North Perim Zn (G.N2) Zone Equip Inlet;  !- Outlet 2 Node Name
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>
+
 AirLoopHVAC:ZoneSplitter,
     DXGF EL8 Zone Splitter,  !- Name
     DXGF EL8 Supply Path Inlet,  !- Inlet Node Name
     EL8 West Perim Zn (G.W1) Zone Equip Inlet,  !- Outlet 1 Node Name
     EL8 East Perim Zn (G.E2) Zone Equip Inlet;  !- Outlet 2 Node Name
-
+<% end %>
 
 !-   ===========  ALL OBJECTS IN CLASS: AIRLOOPHVAC:SUPPLYPATH ===========
 
@@ -18209,12 +18211,15 @@ AirLoopHVAC:SupplyPath,
     AirLoopHVAC:ZoneSplitter,!- Component 1 Object Type
     DXGF EL7 Zone Splitter;  !- Component 1 Name
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>
+
 AirLoopHVAC:SupplyPath,
     DXGF EL8 Supply Path,    !- Name
     DXGF EL8 Supply Path Inlet,  !- Supply Air Path Inlet Node Name
     AirLoopHVAC:ZoneSplitter,!- Component 1 Object Type
     DXGF EL8 Zone Splitter;  !- Component 1 Name
 
+<% end %>
 
 !-   ===========  ALL OBJECTS IN CLASS: BRANCH ===========
 
@@ -18386,6 +18391,7 @@ Branch,
         DXGF EL7 Mixed Air Outlet,  !- Component 1 Inlet Node Name
         DXGF EL7 Air Loop Outlet;!- Component 1 Outlet Node Name
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>											  
     Branch,
         DXGF EL8 Main Branch,    !- Name
         ,                        !- Pressure Drop Curve Name
@@ -18393,6 +18399,7 @@ Branch,
         NCGF EL8,      !- Component 1 Name
         DXGF EL8 Mixed Air Outlet,  !- Component 1 Inlet Node Name
         DXGF EL8 Air Loop Outlet;!- Component 1 Outlet Node Name
+<% end %>		 
 
 <% if :heating_system_type == "GAHP_COMBI" %>
  ! No Object 
@@ -18410,6 +18417,7 @@ Branch,
 ! Code specific to gas furnace (blank for now)
 <% end %>
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>											  
   Branch,
     DXGF EL7 Water Main Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
@@ -18417,7 +18425,9 @@ Branch,
     DXGF EL7 Water Heating Coil,  !- Component 1 Name
     DXGF EL7 Zone Coil Water In Node,  !- Component 1 Inlet Node Name
     DXGF EL7 Zone Coil Water Out Node;  !- Component 1 Outlet Node Name
+<% end %>
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>
   Branch,
     DXGF EL8 Water Main Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
@@ -18425,7 +18435,9 @@ Branch,
     DXGF EL8 Water Heating Coil,  !- Component 1 Name
     DXGF EL8 Zone Coil Water In Node,  !- Component 1 Inlet Node Name
     DXGF EL8 Zone Coil Water Out Node;  !- Component 1 Outlet Node Name
+<% end %>
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>
   Branch,
     Heating Supply Inlet Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
@@ -18433,7 +18445,9 @@ Branch,
     HW Circ Pump,            !- Component 1 Name
     HW Supply Inlet Node,    !- Component 1 Inlet Node Name
     HW Pump Oulet Node;      !- Component 1 Outlet Node Name
+<% end %>
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>
   Branch,
     Heating Supply Outlet Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
@@ -18441,7 +18455,9 @@ Branch,
     Heating Supply Outlet,   !- Component 1 Name
     Heating Supply Exit Pipe Inlet Node,  !- Component 1 Inlet Node Name
     HW Supply Outlet Node;   !- Component 1 Outlet Node Name
+<% end %>
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>
   Branch,
     Heating Demand Inlet Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
@@ -18449,7 +18465,9 @@ Branch,
     Heating Demand Inlet Pipe,  !- Component 1 Name
     HW Demand Inlet Node,    !- Component 1 Inlet Node Name
     HW Demand Entrance Pipe Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>
   Branch,
     Heating Demand Outlet Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
@@ -18457,7 +18475,10 @@ Branch,
     Heating Demand Outlet Pipe,  !- Component 1 Name
     HW Demand Exit Pipe Inlet Node,  !- Component 1 Inlet Node Name
     HW Demand Outlet Node;   !- Component 1 Outlet Node Name
+<% end %>
 
+
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>
   Branch,
     Heating Supply Side Bypass Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
@@ -18465,7 +18486,9 @@ Branch,
     Heating Supply Side Bypass,  !- Component 1 Name
     Heating Supply Bypass Inlet Node,  !- Component 1 Inlet Node Name
     Heating Supply Bypass Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>
   Branch,
     Heating Demand Side Bypass Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
@@ -18473,7 +18496,10 @@ Branch,
     Heating Demand Side Bypass,  !- Component 1 Name
     Heating Demand Bypass Inlet Node,  !- Component 1 Inlet Node Name
     Heating Demand Bypass Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>
 
+		 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>
   Branch,
     DH Heating Supply Inlet Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
@@ -18542,6 +18568,9 @@ Branch,
     DH Load Profile Pump Oulet Node,  !- Component 3 Inlet Node Name
     DH LoadProfile Non-Adiabatic Outlet Node;  !- Component 3 Outlet Node Name
 
+<% end %>
+
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>
   Branch,
     DH Indirect Water Heater Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
@@ -18549,6 +18578,7 @@ Branch,
     DH Water Heater_unit1,   !- Component 1 Name
     DH Water Heater Source Side Inlet Node,  !- Component 1 Inlet Node Name
     DH Water Heater Source Side Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>
 
 <% if :heating_system_type == "GAHP_COMBI" %>
  Branch,
@@ -18605,9 +18635,11 @@ BranchList,
     DXGF EL7 Branches,       !- Name
     DXGF EL7 Main Branch;    !- Branch 1 Name
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>
 BranchList,
     DXGF EL8 Branches,       !- Name
     DXGF EL8 Main Branch;    !- Branch 1 Name
+<% end %>
 
 <% if :heating_system_type == "GAHP_COMBI" %>
  BranchList,
@@ -18631,6 +18663,7 @@ BranchList,
  
 
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>											  
   BranchList,
     Heating Demand Side Branches,  !- Name
     Heating Demand Inlet Branch,  !- Branch 1 Name
@@ -18639,19 +18672,24 @@ BranchList,
     Heating Demand Side Bypass Branch,  !- Branch 4 Name
     DH Indirect Water Heater Branch,  !- Branch 5 Name
     Heating Demand Outlet Branch;  !- Branch 6 Name
+<% end %>		 
 
-  BranchList,
-    DH Supply Side Branches_unit1,  !- Name
-    DH Heating Supply Inlet Branch,  !- Branch 1 Name
-    DH Water Heater Branch_unit1,  !- Branch 2 Name
-    DH Supply Outlet Branch_unit1;  !- Branch 3 Name
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>
 
-  BranchList,
-    DH Demand Side Branches_unit1,  !- Name
-    DH Demand Inlet Branch_unit 1,  !- Branch 1 Name
-    DH Water Bath Branch_unit1,  !- Branch 2 Name
-    DH Load Profile Branch,  !- Branch 3 Name
-    DH Demand Outlet Branch_unit1;  !- Branch 4 Name
+BranchList,
+  DH Supply Side Branches_unit1,
+  DH Heating Supply Inlet Branch,
+  DH Water Heater Branch_unit1,
+  DH Supply Outlet Branch_unit1;
+
+BranchList,
+  DH Demand Side Branches_unit1,
+  DH Demand Inlet Branch_unit 1,
+  DH Water Bath Branch_unit1,
+  DH Load Profile Branch,
+  DH Demand Outlet Branch_unit1;
+
+<% end %>
 
 !-   ===========  ALL OBJECTS IN CLASS: CONNECTOR:SPLITTER ===========
 
@@ -18702,6 +18740,7 @@ Connector:Splitter,
 <% end %>	
 
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>											  
   Connector:Splitter,
     Heating Demand Splitter, !- Name
     Heating Demand Inlet Branch,  !- Inlet Branch Name
@@ -18709,17 +18748,22 @@ Connector:Splitter,
     DXGF EL8 Water Main Branch,  !- Outlet Branch 2 Name
     Heating Demand Side Bypass Branch,  !- Outlet Branch 3 Name
     DH Indirect Water Heater Branch;  !- Outlet Branch 4 Name
+<% end %>														
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>	 
   Connector:Splitter,
     DH Demand Splitter_unit1,!- Name
     DH Demand Inlet Branch_unit 1,  !- Inlet Branch Name
     DH Water Bath Branch_unit1,  !- Outlet Branch 1 Name
     DH Load Profile Branch;  !- Outlet Branch 2 Name
+<% end %>														
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>													
   Connector:Splitter,
     DH Supply Splitter_unit1,!- Name
     DH Heating Supply Inlet Branch,  !- Inlet Branch Name
     DH Water Heater Branch_unit1;  !- Outlet Branch 1 Name
+<% end %>									
 	
 !-   ===========  ALL OBJECTS IN CLASS: CONNECTOR:MIXER ===========
 
@@ -18769,6 +18813,7 @@ Connector:Mixer,
 ! Code specific to gas furnace (blank for now)
 <% end %>	
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>		  
   Connector:Mixer,
     Heating Demand Mixer,    !- Name
     Heating Demand Outlet Branch,  !- Outlet Branch Name
@@ -18776,17 +18821,22 @@ Connector:Mixer,
     DXGF EL8 Water Main Branch,  !- Inlet Branch 2 Name
     Heating Demand Side Bypass Branch,  !- Inlet Branch 3 Name
     DH Indirect Water Heater Branch;  !- Inlet Branch 4 Name
+<% end %>													   
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>															
   Connector:Mixer,
     DH Demand Mixer_unit1,   !- Name
     DH Demand Outlet Branch_unit1,  !- Outlet Branch Name
     DH Water Bath Branch_unit1,  !- Inlet Branch 1 Name
     DH Load Profile Branch;  !- Inlet Branch 2 Name
+<% end %>														 
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>												   
   Connector:Mixer,
     DH Supply Mixer_unit1,   !- Name
     DH Supply Outlet Branch_unit1,  !- Outlet Branch Name
     DH Water Heater Branch_unit1;  !- Inlet Branch 1 Name
+<% end %>									
 	
 !-   ===========  ALL OBJECTS IN CLASS: CONNECTORLIST ===========
 
@@ -18818,33 +18868,42 @@ ConnectorList,
     Connector:Mixer,         !- Connector 2 Object Type
     DHW Supply Mixer_unit4;  !- Connector 2 Name
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>
+
 ConnectorList,
     Heating Supply Side Connectors,  !- Name
     Connector:Splitter,      !- Connector 1 Object Type
     Heating Supply Splitter, !- Connector 1 Name
     Connector:Mixer,         !- Connector 2 Object Type
     Heating Supply Mixer;    !- Connector 2 Name
+<% end %>
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>												
   ConnectorList,
     Heating Demand Side Connectors,  !- Name
     Connector:Splitter,      !- Connector 1 Object Type
     Heating Demand Splitter, !- Connector 1 Name
     Connector:Mixer,         !- Connector 2 Object Type
     Heating Demand Mixer;    !- Connector 2 Name
+<% end %>												
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>												
   ConnectorList,
     DH Demand Connectors_unit1,  !- Name
     Connector:Splitter,      !- Connector 1 Object Type
     DH Demand Splitter_unit1,!- Connector 1 Name
     Connector:Mixer,         !- Connector 2 Object Type
     DH Demand Mixer_unit1;   !- Connector 2 Name
+<% end %>												
 
+<% if :heating_system_type == "GAHP_COMBI" or :heating_system_type == "BOILER" %>												
   ConnectorList,
     DH Supply Connectors_unit1,  !- Name
     Connector:Splitter,      !- Connector 1 Object Type
     DH Supply Splitter_unit1,!- Connector 1 Name
     Connector:Mixer,         !- Connector 2 Object Type
     DH Supply Mixer_unit1;   !- Connector 2 Name
+<% end %>												
 
 
 !-   ===========  ALL OBJECTS IN CLASS: OUTDOORAIR:NODE ===========
