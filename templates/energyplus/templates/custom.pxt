@@ -60,3 +60,79 @@ Output:Meter,Gas:Facility,hourly; !- [J]
 !Output:Variable,*,Site Outdoor Air Wetbulb Temperature,hourly; !- Zone Average [C]
 !Output:Variable,*,MT_System Cond Temp,hourly;
 !Output:Variable,*,LT_System Cond Temp,hourly;
+
+!Janik 10/22/2025 - added output variable to Investigate refrigeration loads and rule out component under-sizing
+Output:Variable,
+    *,                       !- Key Value
+    Refrigeration System Total Cases and Walk Ins Heat Transfer Rate,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Refrigeration System Total Cases and Walk Ins Heat Transfer Energy,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Refrigeration Case Evaporator Total Cooling Rate,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Refrigeration Case Evaporator Total Cooling Energy,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Refrigeration Walk In Evaporator Total Cooling Rate,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Refrigeration Walk In Evaporator Total Cooling Energy,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Refrigeration System Total Compressor Electricity Rate,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Refrigeration System Total Compressor Electricity Energy,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Refrigeration System Condenser Fan Electricity Rate,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Refrigeration System Condenser Fan Electricity Energy,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Refrigeration System Condensing Temperature,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Refrigeration System Evaporating Temperature,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Refrigeration Compressor Electricity Rate,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Refrigeration Compressor Electricity Energy,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Refrigeration Compressor Rack COP,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
