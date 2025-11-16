@@ -543,6 +543,26 @@ def get_runs_instances(study: Path, search_pattern = '**/instance*-out.sql', exc
         Default metadata fields:
             'File Name'
                 File path relative to study folder, with forward slashes.
+            'BldgLoc'
+                CEC Climate Zone (CZ01, CZ02, ..., CZ16)
+            'BldgType'
+                Prototype name code (Asm, ... SUn)
+            'Story'
+                Number of stories (1 or 2 for single family, 0 for all other building types)
+            'BldgHVAC'
+                HVAC type code found in cohort name (rDXGF, ...)
+            'BldgVint'
+                Vintage code found in cohort name (Ex, New)
+            'TechGroup'
+                Technology group found in cohort name (SpaceHtg_eq, ...)
+            'TechType'
+                Technology type found in cohort name (GasFurnace, ...)
+            'TechID'
+                Name for a set of input parameters , a.k.a. case_name (Msr-Res-GasFurnace-AFUE95-ECM)
+            'Cohort'
+                The entire cohort name (SFm&1&rDXGF&Ex&SpaceHtg_eq__GasFurnace)
+            'Case'
+                The case name
     """
     if not isinstance(study, Path):
         study = Path(study)
