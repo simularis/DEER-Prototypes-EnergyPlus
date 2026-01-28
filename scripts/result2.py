@@ -803,6 +803,15 @@ def gather_sim_data_to_sqlite_long(study: Path, queryfile: Path, sqlfile: Path,
             with conn:
                 df_metadata.to_sql('sim_metadata', conn, index=False, if_exists='append')
                 tabular_data.to_sql('sim_tabular', conn, index=False, if_exists='append')
+        # Save a Wide format table to CSV for manual review purposes
+        # The query script combines units into the column names and only provides columns with data.
+        script = Path("result2_helper_long2wide.sql").read_text()
+        with conn:
+            longTableForReview = pd.read_sql_query(script, conn)
+            # Convert from long format to wide format
+            wideTableForReview = longTableForReview.pivot(
+                index=['filename'],columns=['ColumnUnits'],values=['Values'])
+            wideTableForReview.to_csv('wideTableForReview.csv', index=None)
 
     finally:
         conn.close()
