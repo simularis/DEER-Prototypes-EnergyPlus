@@ -855,7 +855,7 @@ def cli_main():
     elif pargs.long:
         gather_sim_data_to_csv_long(pargs.study, pargs.queryfile, 'simdata.csv', pargs.parallel)
     elif pargs.tabular:
-        gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata_long.sqlite', pargs.paralell)
+        gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata_long.sqlite', pargs.parallel)
     else:
         gather_sim_data_to_sqlite_long(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
 
@@ -871,15 +871,14 @@ def gooey_main():
           #outputfile_kwargs = dict(widget='FileChooser')
           )
     pargs = parser.parse_args()
-    if pargs.sqlite:
-        if pargs.tabular:
-            gather_sim_data_to_sqlite_long(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
-        else:
-            gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
-    elif pargs.long:
-        gather_sim_data_to_csv_long(pargs.study, pargs.queryfile, 'simdata_long.csv',)
-    else:
+    if pargs.wide:
         gather_sim_data_to_csv(pargs.study, pargs.queryfile, 'simdata.csv', pargs.parallel)
+    elif pargs.long:
+        gather_sim_data_to_csv_long(pargs.study, pargs.queryfile, 'simdata.csv', pargs.parallel)
+    elif pargs.tabular:
+        gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata_long.sqlite', pargs.parallel)
+    else:
+        gather_sim_data_to_sqlite_long(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
 
 def test():
     """Starts the script with hard-coded options."""
