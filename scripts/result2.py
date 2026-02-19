@@ -841,7 +841,7 @@ def build_cli_parser(parser: argparse.ArgumentParser,
     #                    help=r'Output file, e.g. simdata.csv',
     #                    **outputfile_kwargs)
     parser.add_argument('-P', '--parallel', action='store_false', help='Disable parallel mode.')
-    parser.add_argument('-s', '--sqlite', action='store_true', help='Write output in SQLite format.')
+    parser.add_argument('-w', '--wide', action='store_true', help='Write output in wide csv format.')
     parser.add_argument('-t', '--tabular', action='store_true', help='If writing to SQLite, store data in tabular (long) format.')
     parser.add_argument('-l', '--long', action='store_true', help='If writing to CSV, store data in tabular (long) format.')
 
@@ -850,15 +850,14 @@ def cli_main():
     parser = argparse.ArgumentParser()
     build_cli_parser(parser)
     pargs = parser.parse_args()
-    if pargs.sqlite:
-        if pargs.tabular:
-            gather_sim_data_to_sqlite_long(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
-        else:
-            gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
-    elif pargs.long:
-        gather_sim_data_to_csv_long(pargs.study, pargs.queryfile, 'simdata_long.csv',)
-    else:
+    if pargs.wide:
         gather_sim_data_to_csv(pargs.study, pargs.queryfile, 'simdata.csv', pargs.parallel)
+    elif pargs.long:
+        gather_sim_data_to_csv_long(pargs.study, pargs.queryfile, 'simdata.csv', pargs.parallel)
+    elif pargs.tabular:
+        gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata.sqlite',)
+    else:
+        gather_sim_data_to_sqlite_long(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
 
 def gooey_main():
     """Opens a window for user to input options and start the script."""
