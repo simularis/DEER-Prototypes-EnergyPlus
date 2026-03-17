@@ -891,6 +891,13 @@ def gather_sim_data_to_csv_long(
     #             df_sim_data = pd.DataFrame.from_records(records)
     #             df_sim_data.to_csv(f, index=False, header=(i==0))
 
+def export_wide_table_from_sqlite():
+    """Save a CSV report in wide table format for manual review.
+    
+    Requires that data are already stored in long table format in a database."""
+
+    pass
+
 def build_cli_parser(parser: argparse.ArgumentParser,
                      study_kwargs = {},
                      queryfile_kwargs = {},
