@@ -946,6 +946,10 @@ def export_wide_table_from_sqlite(sqlfile: Path = 'simdata.sqlite',
             Path to the output CSV file in wide format.
             Default: 'simdata.csv'
     """
+    # TODO: Develop alternate options for handling different categories of queries.
+    # Typical categories are (1) unique results like energy usage
+    # (2) Aggregated results like cooling capacity across multiple zones with a wildcard query
+    # (3) Text results like weather file and simulation date.
     if not isinstance(sqlfile, Path):
         sqlfile = Path(sqlfile)
     if not isinstance(csvfile, Path):
