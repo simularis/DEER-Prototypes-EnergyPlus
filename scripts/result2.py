@@ -1025,11 +1025,15 @@ def gooey_main():
 def test():
     """Starts the script with hard-coded options."""
     #study = Path(r'C:\DEER2026\SWHC012-nick\commercial measures\SWHC012-04 Occupancy Sensor')
-    study = Path(r'C:\DEER2026\nf_com_testing_dhw\commercial measures\SWXX000-00 Measure Name')
-    queryfile = Path(r'..\querylibrary\query_default.txt')
-    gather_sim_data_to_csv(study, queryfile, 'simdata.csv', parallel=False)
+    #study = Path(r'C:\DEER2026\nf_com_testing_dhw\commercial measures\SWXX000-00 Measure Name')
+    study = Path(r'C:\DEER2026\SWHC050-server\residential measures\SWHC050-08 Ductless Heat Pump')
+    queryfile = study / '../../querylibrary/query_benchmark.txt'
+    output = study / 'simdata.sqlite'
+    csvfile = study / 'simdata.csv'
+    #gather_sim_data_to_sqlite_long(study, queryfile, output)
+    export_wide_table_from_sqlite(output, csvfile)
 
 if "__main__" == __name__:
-    cli_main()
+    #cli_main()
     #gooey_main()
-    #test()
+    test()
