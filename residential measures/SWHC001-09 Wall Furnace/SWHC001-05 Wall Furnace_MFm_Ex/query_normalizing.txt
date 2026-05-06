@@ -1,0 +1,2 @@
+ComponentSizingSummary/Entire Facility/Coil:Heating:Fuel/Design Size Nominal Capacity/*, Coil:Heating:Fuel Design Size Nominal Capacity
+

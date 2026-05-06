@@ -1,4 +1,3 @@
-ComponentSizingSummary/Entire Facility/Coil:Heating:Fuel/Design Size Nominal Capacity/*, Coil:Heating:Fuel Design Size Nominal Capacity
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Heating
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Cooling
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Interior Lighting
