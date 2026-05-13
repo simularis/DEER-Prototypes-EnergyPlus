@@ -1,0 +1,16 @@
+(in C:/DEERPY28/commercial measures/SWHC024-07 Fan Belt)
+rake aborted!
+NoMemoryError: failed to allocate memory
+C:/DEERPY28/commercial measures/SWHC024-07 Fan Belt/rakefile.rb:908:in `block in aggregate_profiles'
+C:/DEERPY28/commercial measures/SWHC024-07 Fan Belt/rakefile.rb:905:in `each'
+C:/DEERPY28/commercial measures/SWHC024-07 Fan Belt/rakefile.rb:905:in `aggregate_profiles'
+C:/DEERPY28/commercial measures/SWHC024-07 Fan Belt/rakefile.rb:880:in `block in <top (required)>'
+Tasks: TOP => results => C:/DEERPY28/commercial measures/SWHC024-07 Fan Belt/SWHC024-07 Fan Belt_Ex/results-profile-elec.csv
+(See full trace by running task with --trace)
+error: exit
+Using modelkit-config at C:/DEERPY28/commercial measures/SWHC024-07 Fan Belt/.modelkit-config
+Using global.pxv at C:/DEERPY28/commercial measures/SWHC024-07 Fan Belt/global.pxv
+[1mType Ctrl+C to cancel all tasks.[0m
+Evaluating worksheets...
+Processing: results-profile-elec.csv
+Elapsed task duration: 309.424095 sec
