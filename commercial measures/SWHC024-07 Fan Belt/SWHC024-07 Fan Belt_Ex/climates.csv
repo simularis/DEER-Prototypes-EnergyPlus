@@ -1,6 +1,6 @@
 skip,climate,weather_file,climate_zone,codes_file
 ,CZ01,CA_CZ01_ARCATA-AP_725945_CZ2025.epw,1,T24_weight_averaged_ex.csv
-,CZ02,CA_CZ02_SANTA-ROSA(AWOS)_724957_CZ2025,2,T24_weight_averaged_ex.csv
+,CZ02,CA_CZ02_SANTA-ROSA(AWOS)_724957_CZ2025.epw,2,T24_weight_averaged_ex.csv
 ,CZ03,CA_CZ03_OAKLAND-METRO-AP_724930_CZ2025.epw,3,T24_weight_averaged_ex.csv
 ,CZ04,CA_CZ04_PASO-ROBLES-MUNI-AP_723965_CZ2025.epw,4,T24_weight_averaged_ex.csv
 ,CZ05,CA_CZ05_SANTA-MARIA-PUBLIC-AP_723940_CZ2025.epw,5,T24_weight_averaged_ex.csv
