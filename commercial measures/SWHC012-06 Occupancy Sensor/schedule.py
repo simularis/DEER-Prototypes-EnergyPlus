@@ -27,7 +27,7 @@ import pandas as pd
 # Parameters set the calendar year, time step minutes, and setpoint values for active vs setback
 # User parameters
 
-YEAR = 2023
+YEAR = 2028
 TIME_STEP_MIN = 10
 
 
