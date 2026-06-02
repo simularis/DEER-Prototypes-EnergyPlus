@@ -588,9 +588,9 @@ Schedule:Compact,
 ! Solaris - Behzad S. Rizi - Added if statement to assign cooling/heating temp setpoint from schedule:file for the classroom zones
 <% if setpoint_temp_schedule.include?('csv') %>
   Schedule:File,
-	<%=zone_name %> Cooling Setpoint Schedule,  !- Name
+	  <%=zone_name %> Cooling Setpoint Schedule,  !- Name
     Temperature,             !- Schedule Type Limits Name
-	<%= $study_dir %>/../<%= setpoint_temp_schedule %>,  !- File Name
+	  C:/D-EPP/commercial measures/SWHC012-06 Occupancy Sensor/<%= setpoint_temp_schedule %>,  !- File Name
     3,                       !- Column Number
     1,                       !- Rows to Skip at Top
     8760,                    !- Number of Hours of Data
@@ -610,9 +610,9 @@ Schedule:Compact,
 ! Solaris - Behzad S. Rizi - Added if statement to assign cooling/heating temp setpoint from schedule:file for the classroom zones
 <% if setpoint_temp_schedule.include?('csv') %>
   Schedule:File,
-	<%=zone_name %> Heating Setpoint Schedule,  !- Name
+	  <%=zone_name %> Heating Setpoint Schedule,  !- Name
     Temperature,             !- Schedule Type Limits Name
-	<%= $study_dir %>/../<%= setpoint_temp_schedule %>,  !- File Name
+	  C:/D-EPP/commercial measures/SWHC012-06 Occupancy Sensor/<%= setpoint_temp_schedule %>,  !- File Name
     4,                       !- Column Number
     1,                       !- Rows to Skip at Top
     8760,                    !- Number of Hours of Data
