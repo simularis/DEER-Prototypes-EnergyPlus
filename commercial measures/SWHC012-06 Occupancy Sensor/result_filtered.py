@@ -78,10 +78,10 @@ if __name__ == "__main__":
     normunit = "Cooling Capacity (W)"
     excel_file_path = 'coil_list.xlsx'
 
-    sizing_detail_csv = 'SWHC012-05 Occupancy Sensor_Ex/results-sizing-detail.csv'
-    output_csv = 'SWHC012-05 Occupancy Sensor_Ex/sizing_agg_filtered.csv'
+    sizing_detail_csv = 'SWHC012-06 Occupancy Sensor_Ex/results-sizing-detail.csv'
+    output_csv = 'SWHC012-06 Occupancy Sensor_Ex/sizing_agg_filtered.csv'
     process_coil_list(normunit, excel_file_path, sizing_detail_csv, output_csv)
 
-    sizing_detail_csv = 'SWHC012-05 Occupancy Sensor_New/results-sizing-detail.csv'
-    output_csv = 'SWHC012-05 Occupancy Sensor_New/sizing_agg_filtered.csv'
+    sizing_detail_csv = 'SWHC012-06 Occupancy Sensor_New/results-sizing-detail.csv'
+    output_csv = 'SWHC012-06 Occupancy Sensor_New/sizing_agg_filtered.csv'
     process_coil_list(normunit, excel_file_path, sizing_detail_csv, output_csv)

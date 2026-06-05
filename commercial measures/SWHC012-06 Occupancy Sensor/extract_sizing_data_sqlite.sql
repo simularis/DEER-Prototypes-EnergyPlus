@@ -1,5 +1,8 @@
 -- For use with result2.py -s -t
 -- Extract sizing data table compatible with output from result.py
+DROP TABLE IF EXISTS "results-sizing-detail";
+CREATE TABLE "results-sizing-detail" AS
+
 SELECT
 t."TabularDataIndex",
 CAST(t."Value" as REAL) as "Value",
