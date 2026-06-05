@@ -70,7 +70,7 @@ the capacity of matching systems.
 1. Change directory into the first vintage subfolder and run the data extraction script:
 
 ```
-cd "C:/DEER-Prototypes-EnergyPlus/commercial measures/SWHC012-05 Occupancy Sensor/SWHC012-05 Occupancy Sensor_Ex"
+cd "C:/DEER-Prototypes-EnergyPlus/commercial measures/SWHC012-06 Occupancy Sensor/SWHC012-06 Occupancy Sensor_Ex"
 python result2.py -s -t -q ../query_SWHC012_normalizing.txt
 ```
 
@@ -92,7 +92,7 @@ download a portable executable or execute the query statement using a database p
 4. Then, continue with commands:
 
 ```
-cd "C:/DEER-Prototypes-EnergyPlus/commercial measures/SWHC012-05 Occupancy Sensor"
+cd "C:/DEER-Prototypes-EnergyPlus/commercial measures/SWHC012-06 Occupancy Sensor"
 python result_filtered.py
 ```
 
