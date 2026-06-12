@@ -44,12 +44,12 @@ Refrigeration:System,
  <% else %>
  <%   raise("error: unknown option condenser_type = '#{condenser_type}'") %>
  <% end %>
-    <%= ref_sys_comp_list %>,            !- Compressor or CompressorList Name
-    <%= cond_min_temp %>,                !- Minimum Condensing Temperature {C}
-    <%= working_fluid %>,                !- Refrigeration System Working Fluid Type
+    <%= ref_sys_comp_list %>,   !- Compressor or CompressorList Name
+    <%= cond_min_temp %>,                    !- Minimum Condensing Temperature {C}
+    <%= working_fluid %>,                     !- Refrigeration System Working Fluid Type
     <%= suction_temperature_control %>,  !- Suction Temperature Control Type
-    ,                                    !- Mechanical Subcooler Name
-    ,                                    !- Liquid Suction Heat Exchanger Subcooler Name
+    ,                        !- Mechanical Subcooler Name
+    ,                        !- Liquid Suction Heat Exchanger Subcooler Name
  <% if suction_gains %>
     <%= piping_suction_ua %>,            !- Sum UA Suction Piping {W/K}
     <%= suction_piping_location %>,      !- Suction Piping Zone Name
@@ -74,13 +74,13 @@ Refrigeration:CompressorList,
 <% if (condenser_type == "AirCooled") %>
 Refrigeration:Condenser:AirCooled,
     <%= ref_system_name %> Condenser Air Cooled,        !- Name
-    <%= ref_system_name %> Condenser HR curve,          !- Rated Effective Total Heat Rejection Rate Curve Name
-    <%= cond_subcool %>,                                !- Rated Subcooling Temperature Difference {deltaC}
-    <%= cond_fan_speed_control_type %>,                 !- Condenser Fan Speed Control Type
-    <%= cond_fan_power %>,                              !- Rated Fan Power {W}
-    0.25,                                               !- Minimum Fan Air Flow Ratio {dimensionless}
-    ,                                                   !- Air Inlet Node Name or Zone Name
-    ;                                                   !- End-Use Subcategory
+    <%= ref_system_name %> Condenser HR curve, !- Rated Effective Total Heat Rejection Rate Curve Name
+    <%= cond_subcool %>,                      !- Rated Subcooling Temperature Difference {deltaC}
+    <%= cond_fan_speed_control_type %>,                !- Condenser Fan Speed Control Type
+    <%= cond_fan_power %>,                   !- Rated Fan Power {W}
+    0.25,                    !- Minimum Fan Air Flow Ratio {dimensionless}
+    ,  !- Air Inlet Node Name or Zone Name
+    ;           !- End-Use Subcategory
 <% elsif (condenser_type == "EvaporativelyCooled") %>
 ! Evaporatively condenser from EnergyPlus default values
 ! Behzad Rizi, 2024-03-20
@@ -120,14 +120,14 @@ Refrigeration:Condenser:AirCooled,
   Curve:Linear,
     <%= ref_system_name %> Condenser HR curve,  !- Name
     0.0,                     !- Coefficient1 Constant
-    <%= cond_hr_mt_air %>,   !- Coefficient2 x
+    <%= cond_hr_mt_air %>,                   !- Coefficient2 x
     11.0,                    !- Minimum Value of x
     22.2;                    !- Maximum Value of x
 <% elsif (cond_curves_source == "LowTemp") %>
   Curve:Linear,
     <%= ref_system_name %> Condenser HR curve, !- Name
     0.0,                     !- Coefficient1 Constant
-    <%= cond_hr_lt_air %>,   !- Coefficient2 x
+    <%= cond_hr_lt_air %>,                   !- Coefficient2 x
     11.0,                    !- Minimum Value of x
     22.2;                    !- Maximum Value of x
 <% end %>
@@ -135,8 +135,8 @@ Refrigeration:Condenser:AirCooled,
 !Afshin Faramarzi and Behzad Rizi, 11/11/2024 - added EnergyManagementSystem to the model to control saturated condensing temperature 	
 <% if (cond_floating) %>
 EnergyManagementSystem:Sensor,
-T_sensor_<%= ref_system_name %>,       !- Name
-*,                                     !- Output:Variable or Output:Meter Index Key Name
+T_sensor_<%= ref_system_name %>,                    !- Name
+*,                       !- Output:Variable or Output:Meter Index Key Name
 <% if (condenser_type == "EvaporativelyCooled") %>
 Site Outdoor Air Wetbulb Temperature;  !- Output:Variable or Output:Meter Name
 <% else %>
@@ -144,23 +144,23 @@ Site Outdoor Air Drybulb Temperature;  !- Output:Variable or Output:Meter Name
 <% end %>
 
 EnergyManagementSystem:Actuator,
-CondensingTempOverride<%= ref_system_name %>,   !- Name
-<%= ref_system_name %>,                         !- Actuated Component Unique Name
-Refrigeration:System,                           !- Actuated Component Type
-Minimum Condensing Temperature;                 !- Actuated Component Control Type
+    CondensingTempOverride<%= ref_system_name %>,   !- Name
+    <%= ref_system_name %>,                         !- Actuated Component Unique Name
+    Refrigeration:System,                           !- Actuated Component Type
+    Minimum Condensing Temperature;                 !- Actuated Component Control Type
 	
 EnergyManagementSystem:OutputVariable,
-<%= ref_system_name %> Cond Temp,               !- Name
-CondensingTempOverride<%= ref_system_name %>,   !- EMS Variable Name
-Averaged,                                       !- Type of Data in Variable
-SystemTimestep,                                 !- Update Frequency
-CondTempControl<%= ref_system_name %>,          !- EMS Program or Subroutine Name
-C;                                              !- Units	
+<%= ref_system_name %> Cond Temp,    !- Name
+CondensingTempOverride<%= ref_system_name %>,       !- EMS Variable Name
+Averaged,                !- Type of Data in Variable
+SystemTimestep,          !- Update Frequency
+CondTempControl<%= ref_system_name %>,       !- EMS Program or Subroutine Name
+C;                       !- Units	
 
 EnergyManagementSystem:ProgramCallingManager,
-Ref Sys Cond Temp Management <%= ref_system_name %>,  !- Name
-InsideHVACSystemIterationLoop,                        !- EnergyPlus Model Calling Point
-CondTempControl<%= ref_system_name %>;                !- Program Name 1
+    Ref Sys Cond Temp Management <%= ref_system_name %>,  !- Name
+    InsideHVACSystemIterationLoop,  !- EnergyPlus Model Calling Point
+    CondTempControl<%= ref_system_name %>;       !- Program Name 1
 	
 EnergyManagementSystem:Program,	
 CondTempControl<%= ref_system_name %>,       !- Name
