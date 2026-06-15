@@ -12,13 +12,13 @@ cd "C:/DEER-Prototypes-EnergyPlus"
 ### 1.1. Run simulations
 
 ```
-cd "commercial measures/SWHC046-04 Pkg HP AC Com/SWHC046-04 Pkg HP AC Com_Ex"
+cd "commercial measures/SWHC046-07 Pkg HP AC Com/SWHC046-07 Pkg HP AC Com_Ex"
 modelkit rake compose
 REM For large number of simulations, rakefile may fail to gather results, so just run simulations.
 modelkit rake run
 ```
 
-Then, repeat for subfolder `SWHC046-04 Pkg HP AC Com_Htl_Ex`.
+Then, repeat for subfolder `SWHC046-07 Pkg HP AC Com_Htl_Ex`.
 
 Optionally, while `modelkit rake run` is running, use how-to-track-progress.py to see a progress bar.
 
@@ -39,18 +39,18 @@ modelkit rake results
 Option 2 (using equivalent python script)
 
 ```
-cd "commercial measures/SWHC046-04 Pkg HP AC Com/SWHC046-04 Pkg HP AC Com_Ex"
+cd "commercial measures/SWHC046-07 Pkg HP AC Com/SWHC046-07 Pkg HP AC Com_Ex"
 python "../../../scripts/result.py" . --queryfile "query.txt" --detailfile results-sizing-detail.csv --aggfile results-summary.csv
 ```
 
 Note that the python script has a side effect of outputting a file with disaggregated quantities for any query items that represent aggregate totals, such as cooling capacity of all coils.
 
-Repeat for each subfolder (`SWHC046-04 Pkg HP AC Com_Ex` and `SWHC046-04 Pkg HP AC Com_Htl_Ex`).
+Repeat for each subfolder (`SWHC046-07 Pkg HP AC Com_Ex` and `SWHC046-07 Pkg HP AC Com_Htl_Ex`).
 
 #### Generate customized simdata.csv
 
 ```
-cd "commercial measures/SWHC046-04 Pkg HP AC Com/"
+cd "commercial measures/SWHC046-07 Pkg HP AC Com/"
 python "result2.py" . --queryfile "query_SWHC046_QC.txt"
 ```
 
@@ -65,18 +65,18 @@ Use simdata.csv to perform QC, calculate UEC for all categories of load, and obt
 Extract results to results-sizing-detail.csv
 
 ```
-cd "commercial measures/SWHC046-04 Pkg HP AC Com/SWHC046-04 Pkg HP AC Com_Ex"
+cd "commercial measures/SWHC046-07 Pkg HP AC Com/SWHC046-04 Pkg HP AC Com_Ex"
 python "../../../scripts/result.py" . --queryfile "query_SWHC046_sizing.txt" --detailfile results-sizing-detail.csv --aggfile results-sizing-agg.csv
 ```
 
-Repeat for each vintage subfolder "SWHC046-04 Pkg HP AC Com_Htl_Ex".
+Repeat for each vintage subfolder "SWHC046-07 Pkg HP AC Com_Htl_Ex".
 
 ### 2.2. Filter cooling capacity
 
 Filter and aggregate results into sizing_agg_filtered.csv. Note that this step depends on the file coil_list.xlsx being in the same folder as the script.
 
 ```
-cd "commercial measures/SWHC046-04 Pkg HP AC Com"
+cd "commercial measures/SWHC046-07 Pkg HP AC Com"
 python result_filtered.py
 ```
 
@@ -94,9 +94,9 @@ cd "scripts/data transformation"
 REM Generate current_msr_mat.csv, sim_annual.csv, and sim_hourly_wb.csv.
 python Com.py
 REM Optionally, copy the outputs to the measure folder
-copy "current_msr_mat.csv" "commercial measures/SWHC046-04 Pkg HP AC Com"
-copy "sim_annual.csv" "commercial measures/SWHC046-04 Pkg HP AC Com"
-copy "sim_hourly_wb.csv" "commercial measures/SWHC046-04 Pkg HP AC Com"
+copy "current_msr_mat.csv" "commercial measures/SWHC046-07 Pkg HP AC Com"
+copy "sim_annual.csv" "commercial measures/SWHC046-07 Pkg HP AC Com"
+copy "sim_hourly_wb.csv" "commercial measures/SWHC046-07 Pkg HP AC Com"
 ```
 
 ### 3.2. Insert results from cooling capacity into sim_annual
