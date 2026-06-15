@@ -47,7 +47,7 @@ parameter "dx_crankcase_max_temp", :default => 10['C']
 parameter "dx_crankcase_cap", :default => 50['W']
 parameter "hp_defrost_temp", :default => 35['F']
 
-#Solaris Technical - Yasemin Agi & Behzad S. Rizi - 05/20/26 - Since defrost strategy is ReverseCycle, resistive defrost capacity should be zero.
+#Solaris Technical - Yasemin Agi & Behzad S. Rizi - 05/20/26 - Added parameters for defrost controls.
 parameter "hp_defrost_cap", :default => 0['W']
 parameter "hp_defrost_strat", :default => "ReverseCycle" # (ReverseCycle | Resistive)
 parameter "hp_defrost_ctrl", :default => "OnDemand" # (Timed | OnDemand)
