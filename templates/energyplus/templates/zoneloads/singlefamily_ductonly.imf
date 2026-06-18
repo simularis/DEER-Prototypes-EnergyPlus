@@ -486,6 +486,31 @@ Zone,
   ,                        !- Zone Outside Convection Algorithm
   No;                      !- Part of Total Floor Area
 
+ZoneInfiltration:DesignFlowRate,
+    <%= return_plenum_zone_name %> Infiltration,    !- Name
+    <%= return_plenum_zone_name %>, !- Zone or ZoneList Name
+    always_avail,               !- Schedule Name
+    AirChanges/Hour,            !- Design Flow Rate Calculation Method
+    ,                           !- Design Flow Rate {m3/s}
+    ,                           !- Flow per Zone Floor Area {m3/s-m2}
+    ,                           !- Flow per Exterior Surface Area {m3/s-m2}
+    0.1,                        !- Air Changes per Hour {1/hr}
+    1,                          !- Constant Term Coefficient
+    ,                           !- Temperature Term Coefficient
+    ,                           !- Velocity Term Coefficient
+    ;                           !- Velocity Squared Term Coefficient
+ZoneMixing,
+    <%= return_plenum_zone_name %> Mixing,             !- Name
+    <%= return_plenum_zone_name %>,  !- Zone Name
+    always_avail,                  !- Schedule Name
+    Flow/Zone,                     !- Design Flow Rate Calculation Method
+    0.05,                          !- Design Flow Rate {m3/s}
+    ,                              !- Flow per Zone Floor Area {m3/s-m2}
+    ,                              !- Flow per Person {m3/s-person}
+    ,                              !- Air Changes per Hour {1/hr}
+    <%= zone_name %>;                  !- Source Zone Name
+
+
 BuildingSurface:Detailed,
   <%= system_name %> Dummy Return Plenum Floor,  !- Name
   Floor,                   !- Surface Type
