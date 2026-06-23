@@ -18,7 +18,6 @@ df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working_fanbelt
 #df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_AshControl.xlsx', sheet_name='Measure_list', skiprows=4)
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
-
 # %%
 #generate unique list of measure names for Com
 
