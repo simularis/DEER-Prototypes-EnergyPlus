@@ -2,6 +2,9 @@
 
 This document describes the steps necessary to reproduce simulations and model outputs for this measure.
 
+## Post Processing
+Generate simdata.csv using result2.py and query_default.txt
+
 Prepared by Solaris Technical, Behzad S. Rizi - 2025-10-17
 
 ## Known Issue: `** Severe ** Invalid String Position` Error
