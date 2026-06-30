@@ -2,8 +2,10 @@ Processing steps for this measure
 
 ```
 cd C:\DEER-Prototypes-EnergyPlus
-cd "residential measures/SWHC027-08 PTAC PTHP"
+cd "residential measures/SWHC027-09 PTAC PTHP"
 modelkit rake run
+if there is an issue with warm up for SFm from dummy plenums. Update template file to 'singlefamily_ductonly_SWHC027.imf'
+
 python result2.py --queryfile "query_SWHC027_res.txt"
 ```
 
