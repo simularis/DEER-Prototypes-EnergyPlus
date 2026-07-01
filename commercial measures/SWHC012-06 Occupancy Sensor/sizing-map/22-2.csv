@@ -1050,6 +1050,7 @@ Pump:ConstantSpeed,Design Power Consumption,6
 Pump:ConstantSpeed,Design Size Design Flow Rate,4
 Pump:ConstantSpeed,Design Size Design Power Consumption,6
 Pump:VariableSpeed,Design Maximum Flow Rate,4
+Pump:VariableSpeed,Design Flow Rate,4
 Pump:VariableSpeed,Design Minimum Flow Rate,13
 Pump:VariableSpeed,Design Power Consumption,6
 Pump:VariableSpeed,Design Size Design Maximum Flow Rate,4
