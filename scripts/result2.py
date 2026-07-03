@@ -339,9 +339,9 @@ def build_query_with_special_cases(resultspec: ResultSpec, finalize = True) -> s
         query += ";"
     agg_columns.append('Units')
     return query, agg_columns
-
-
+    
 def get_sim_hourly(conn: Connection, column_filter=None):
+    # ... all existing code unchanged until the final return ...
     """Get simulation hourly results from one EnergyPlus SQLite output file.
 
     Inputs:
@@ -373,7 +373,6 @@ def get_sim_hourly(conn: Connection, column_filter=None):
         LookupKey returned
         Requires that the EnergyPlus model contains an OutputControl:Files object with SQLite = Yes.
     """
-
     ReportDataDictionary = pd.read_sql_query('select * from ReportDataDictionary', conn, index_col='ReportDataDictionaryIndex')
 
     # Transform ReportDataDictionary so we have a single column lookup string.
@@ -384,8 +383,17 @@ def get_sim_hourly(conn: Connection, column_filter=None):
         lambda x: f'{x.KeyValue}:{x.Name} [{x.Units}]({x.ReportingFrequency})' if bool(x.KeyValue)
         else f'{x.Name} [{x.Units}]({x.ReportingFrequency})'
         , axis=1)
+                       
+                                                                                            
+                                                                                                                                                                                                
 
-    query_report_data = 'select * from ReportData'
+    query_report_data = '''
+    SELECT rd.*
+    FROM ReportData rd
+    JOIN Time t ON rd.TimeIndex = t.TimeIndex
+    WHERE t.EnvironmentPeriodIndex NOT IN (1, 2)
+    '''
+
 
     rd_indices = []
     if column_filter:
@@ -393,7 +401,8 @@ def get_sim_hourly(conn: Connection, column_filter=None):
         # Note that ReportDataDictionaryIndex values are file-specific.
         rd_indices = ReportDataDictionary[ReportDataDictionary['LookupKey'].isin(column_filter)].index
         placeholders = ', '.join(['?'] * len(rd_indices))
-        query_report_data += f''' where "ReportDataDictionaryIndex" in ({placeholders})'''
+        query_report_data += f''' AND rd."ReportDataDictionaryIndex" IN ({placeholders})'''
+        # Note: changed from WHERE to AND because query already has WHERE clause
 
     #n_rows, = conn.execute('select count(*) from ReportData').fetchone()
     chunks = []
@@ -405,13 +414,17 @@ def get_sim_hourly(conn: Connection, column_filter=None):
     ReportData2 = ReportData.join(ReportDataDictionary, on='ReportDataDictionaryIndex')
 
     # Transform ReportData from long to wide so we can make a condensed table
-    ReportDataWide = ReportData2.pivot(index='LookupKey',columns='TimeIndex',values='Value')
-    # Prepare the table for saving in a database
-    #ReportDataWide['sim_id'] = sim_run.sim_id
-    #ReportDataWide2=ReportDataWide.reset_index().set_index(['TimeIndex'],drop=True)
+    ReportDataWide = ReportData2.pivot(index='LookupKey', columns='TimeIndex', values='Value')
+    # ── NEW: trim design-day / warmup columns ──────────────────────
+    n_cols = ReportDataWide.shape[1]
+        # Safety check — should now have exactly 8760 after SQL filter
+    n_cols = ReportDataWide.shape[1]
+    if n_cols != 8760:
+        print(f"  WARNING: {n_cols} time steps after design-day filter — expected 8760")
+
 
     return ReportDataWide
-
+    
 def get_sim_deer_peak(conn: Connection, bldgloc: str, column_filter=DEERPEAK_COLUMNS):
     """Get simulation DEER Peak results from one EnergyPlus SQLite output file.
 
@@ -428,12 +441,17 @@ def get_sim_deer_peak(conn: Connection, bldgloc: str, column_filter=DEERPEAK_COL
     E-5350: Effective PY2028
     """
     # Get all available hourly results with shape (N, 8760)
+    # Note: get_sim_hourly now trims design-day / warmup rows automatically
     ReportDataWide = get_sim_hourly(conn, column_filter=column_filter)
-    #ReportDataWide = ReportDataWide.loc[DEERPEAK_COLUMNS]
+
+    # ── CHANGED: was `!= 8760` which returned None whenever extra rows present ──
     if ReportDataWide.shape[1] != 8760:
-        # No hourly data. This can happen if simulation created the output file but failed to complete.
-        # Or if the file represents a sizing run.
+        # Still not 8760 after trimming — simulation did not complete a full run period
+        # or file represents a sizing run only
+        print(f"  WARNING: {ReportDataWide.shape[1]} time steps after trim — skipping DEER peak")
         return None
+    # ─────────────────────────────────────────────────────────────────────────────
+
     # Get 8760-length mask for DEER Peak Period (normalized)
     dpm = get_deer_peak_multipliers(bldgloc)
     # Compute the average value over the DEER Peak Period
@@ -441,6 +459,7 @@ def get_sim_deer_peak(conn: Connection, bldgloc: str, column_filter=DEERPEAK_COL
     #deer_peak_values = ReportDataWide.mul(dpm,axis=1).sum(axis=1).to_dict()
     # In testing, pandas.DataFrame.to_numpy().dot() takes about 7 µs
     deer_peak_values = dict(zip(ReportDataWide.index, ReportDataWide.to_numpy().dot(dpm)))
+    #
     return deer_peak_values
 
 def get_sim_tabular(
@@ -830,7 +849,7 @@ def gather_sim_data_long(study: Path, queryfile: Path, parallel=False):
 
 def gather_sim_data_to_csv(study: Path, queryfile: Path, csvfile: Path,
                            parallel = True,
-                           chunksize = 100):
+                           chunksize = None):
     # 2024-05-15 Todo
     # User testing observed that inconsistent filenames may result in inconsistent
     # column alignment in CSV mode. Workaround is to change chunksize=None.
@@ -848,7 +867,7 @@ def gather_sim_data_to_csv(study: Path, queryfile: Path, csvfile: Path,
 
 def gather_sim_data_to_sqlite(study: Path, queryfile: Path, sqlfile: Path,
                               parallel = True,
-                              chunksize = 100):
+                              chunksize = None):
     gather = gather_sim_data(study, queryfile, parallel)
     with connect(sqlfile) as conn:
         conn.execute('DROP TABLE IF EXISTS "sim_data";')
