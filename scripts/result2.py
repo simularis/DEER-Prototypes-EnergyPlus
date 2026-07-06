@@ -383,17 +383,17 @@ def get_sim_hourly(conn: Connection, column_filter=None):
         lambda x: f'{x.KeyValue}:{x.Name} [{x.Units}]({x.ReportingFrequency})' if bool(x.KeyValue)
         else f'{x.Name} [{x.Units}]({x.ReportingFrequency})'
         , axis=1)
-                       
-                                                                                            
-                                                                                                                                                                                                
-
+                                                                                                                                                                                                                   
     query_report_data = '''
-    SELECT rd.*
-    FROM ReportData rd
-    JOIN Time t ON rd.TimeIndex = t.TimeIndex
-    WHERE t.EnvironmentPeriodIndex NOT IN (1, 2)
+        SELECT rd.*
+        FROM ReportData rd
+        JOIN Time t ON rd.TimeIndex = t.TimeIndex
+        WHERE t.DayType IN (
+            'Sunday', 'Monday', 'Tuesday', 'Wednesday',
+            'Thursday', 'Friday', 'Saturday', 'Holiday'
+        )
+        ORDER BY rd.ReportDataDictionaryIndex, rd.TimeIndex
     '''
-
 
     rd_indices = []
     if column_filter:
