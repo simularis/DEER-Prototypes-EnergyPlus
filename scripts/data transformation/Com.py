@@ -382,8 +382,13 @@ for folder in folder_list:
                 f"{split_meta_cols_eu.iloc[i][1]}/"
                 f"{split_meta_cols_eu.iloc[i][2]}"
                         )
-            csv_path = f"{base_path}/instance-var.csv"
-            idf_path = f"{base_path}/instance.idf"
+            #2026-07-02 update: to deal with hardsize instance files which replace default instance files 
+            if os.path.exists(f"{base_path}/instance-var.csv"):
+                csv_path = f"{base_path}/instance-var.csv"
+                idf_path = f"{base_path}/instance.idf"
+            else:
+                csv_path = f"{base_path}/instance-hardsize-var.csv"
+                idf_path = f"{base_path}/instance-hardsize.idf"
 
             #3/3/2026 update, extract RunPeriod Start Day from IDF file for a particular simulation
             runperiod_start_day = helper_functions.get_runperiod_start_day(idf_path)
