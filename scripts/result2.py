@@ -339,9 +339,8 @@ def build_query_with_special_cases(resultspec: ResultSpec, finalize = True) -> s
         query += ";"
     agg_columns.append('Units')
     return query, agg_columns
-    
+
 def get_sim_hourly(conn: Connection, column_filter=None):
-    # ... all existing code unchanged until the final return ...
     """Get simulation hourly results from one EnergyPlus SQLite output file.
 
     Inputs:
@@ -383,8 +382,22 @@ def get_sim_hourly(conn: Connection, column_filter=None):
         lambda x: f'{x.KeyValue}:{x.Name} [{x.Units}]({x.ReportingFrequency})' if bool(x.KeyValue)
         else f'{x.Name} [{x.Units}]({x.ReportingFrequency})'
         , axis=1)
-                                                                                                                                                                                                                   
-    query_report_data = '''
+
+    # If a column filter is provided, we need to filter the ReportData table to only include the relevant columns.
+    rd_indices = []
+    column_filter_clause = ''
+    if column_filter:
+        # Construct a list of ReportDataDictionaryIndex values from column_filter.
+        # Note that ReportDataDictionaryIndex values are file-specific.
+        rd_indices = ReportDataDictionary[ReportDataDictionary['LookupKey'].isin(column_filter)].index
+        placeholders = ', '.join(['?'] * len(rd_indices))
+        column_filter_clause = f''' AND rd."ReportDataDictionaryIndex" IN ({placeholders})'''
+        # Note: changed from WHERE to AND because query already has WHERE clause
+
+    # Construct the ORDER BY clause for the SQL query. This ensures that the results are returned in a logical order.
+    order_by_clause = ' ORDER BY rd.ReportDataDictionaryIndex, rd.TimeIndex'
+
+    query_report_data = f'''
         SELECT rd.*
         FROM ReportData rd
         JOIN Time t ON rd.TimeIndex = t.TimeIndex
@@ -392,17 +405,9 @@ def get_sim_hourly(conn: Connection, column_filter=None):
             'Sunday', 'Monday', 'Tuesday', 'Wednesday',
             'Thursday', 'Friday', 'Saturday', 'Holiday'
         )
-        ORDER BY rd.ReportDataDictionaryIndex, rd.TimeIndex
+        {column_filter_clause}
+        {order_by_clause}
     '''
-
-    rd_indices = []
-    if column_filter:
-        # Construct a list of ReportDataDictionaryIndex values from column_filter.
-        # Note that ReportDataDictionaryIndex values are file-specific.
-        rd_indices = ReportDataDictionary[ReportDataDictionary['LookupKey'].isin(column_filter)].index
-        placeholders = ', '.join(['?'] * len(rd_indices))
-        query_report_data += f''' AND rd."ReportDataDictionaryIndex" IN ({placeholders})'''
-        # Note: changed from WHERE to AND because query already has WHERE clause
 
     #n_rows, = conn.execute('select count(*) from ReportData').fetchone()
     chunks = []
