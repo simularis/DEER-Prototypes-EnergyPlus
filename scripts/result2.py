@@ -46,7 +46,9 @@ from sqlite3 import connect, Connection
 from pathlib import Path
 from functools import cache
 import argparse
+import logging
 import concurrent.futures
+
 try:
     # itertools.batched available only after python 3.12
     from itertools import batched
@@ -64,6 +66,21 @@ except:
 import numpy as np
 import pandas as pd
 import tqdm
+
+# Configure logging for warnings and other messages in the script
+log = logging.getLogger(__name__)
+def configure_logging(logfile: Path = Path('result2.log')):
+    """Configure file-based logging for the CLI script."""
+    logfile = Path(logfile)
+    logfile.parent.mkdir(parents=True, exist_ok=True)
+    logging.basicConfig(
+        filename=logfile,
+        filemode='w',
+        level=logging.INFO,
+        format='%(asctime)s %(levelname)s %(message)s',
+        force=True,
+    )
+    return logging.getLogger(__name__)
 
 def get_deer_peak_day_E5152(bldgloc: str):
     """Return a for DEER peak period start day lookups.
@@ -430,8 +447,8 @@ def get_sim_hourly(conn: Connection, column_filter=None):
     ReportDataWide = ReportData2.pivot(index='LookupKey', columns='TimeIndex', values='Value')
 
     return ReportDataWide
-    
-def get_sim_deer_peak(conn: Connection, bldgloc: str, column_filter=DEERPEAK_COLUMNS):
+
+def get_sim_deer_peak(conn: Connection, bldgloc: str, column_filter=DEERPEAK_COLUMNS, loginfo: str = ''):
     """Get simulation DEER Peak results from one EnergyPlus SQLite output file.
 
     Inputs:
@@ -453,16 +470,14 @@ def get_sim_deer_peak(conn: Connection, bldgloc: str, column_filter=DEERPEAK_COL
     n_cols = ReportDataWide.shape[1]
     if n_cols != 8760:
         # Probably output variable is being stored at subhourly timesteps
-        print(f"Found {n_cols} time steps after design-day filter but expected 8760 [{loginfo}]")
+        log.warning(f"Found {n_cols} time steps after design-day filter but expected 8760 [{loginfo}]")
 
-    # ── CHANGED: was `!= 8760` which returned None whenever extra rows present ──
     if ReportDataWide.shape[1] != 8760:
         # Still not 8760 after trimming — simulation did not complete a full run period
         # or file represents a sizing run only
-        print(f"  WARNING: {ReportDataWide.shape[1]} time steps after trim — skipping DEER peak")
+        log.warning(f"{ReportDataWide.shape[1]} time steps after trim — skipping DEER peak [{loginfo}]")
         return None
-    # ─────────────────────────────────────────────────────────────────────────────
-
+    
     # Get 8760-length mask for DEER Peak Period (normalized)
     dpm = get_deer_peak_multipliers(bldgloc)
     # Compute the average value over the DEER Peak Period
@@ -584,7 +599,7 @@ def get_sim_peak_and_tabular(queryfile: Path,
 
         # Now get the DEER Peak values from hourly data
         # Column name(s) for DEER Peak average values are taken directly from hourly output column name.
-        deer_peak_values = get_sim_deer_peak(conn, bldgloc)
+        deer_peak_values = get_sim_deer_peak(conn, bldgloc, loginfo=f"{sqlfile}")
         if deer_peak_values is not None:
             sim_data.update(deer_peak_values)
 
@@ -755,7 +770,7 @@ def gather_sim_data(study: Path, queryfile: Path, parallel=False):
             "Electricity:Facility [J](Hourly)": 3738615573
         }
     """
-    print(f"Reading from {study}")
+    log.info(f"Reading from {study}")
     # Make sure queryfile does not give an error before starting main loop.
     _ = parse_query_file(queryfile)
 
@@ -771,7 +786,8 @@ def gather_sim_data(study: Path, queryfile: Path, parallel=False):
         # However, ProcessPoolExecutor was 3-4x the speed of a single-threaded loop.
         #with concurrent.futures.ThreadPoolExecutor() as executor:
         with concurrent.futures.ProcessPoolExecutor() as executor:
-            #print("Created a thread pool with ",executor._max_workers)
+            # TODO: configure a logging handler for each worker process to forward messages to a multiprocess queue
+            log.info(f"Created a process pool with {executor._max_workers} workers")
             future_lookup = dict() # Remember each file when requested.
             # Queue each operation to read simulation data, returning a future.
             for (sqlfile, bldgloc, metadata) in list_sqlfile:
@@ -789,7 +805,7 @@ def gather_sim_data(study: Path, queryfile: Path, parallel=False):
                 try:
                     sim_data = future.result()
                 except Exception as exc:
-                    print(f'Reading {sqlfile} generated an exception: {exc}')
+                    log.exception(f'Reading {sqlfile} generated an exception: {exc}')
                 else:
                     yield sim_data
                     time.sleep(0.001)
@@ -818,7 +834,7 @@ def gather_sim_data_long(study: Path, queryfile: Path, parallel=False):
             "Electricity:Facility [J](Hourly)": 3738615573
         }
     """
-    print(f"Reading from {study}")
+    log.info(f"Reading from {study}")
     # Make sure queryfile does not give an error before starting main loop.
     _ = parse_query_file(queryfile)
 
@@ -835,7 +851,8 @@ def gather_sim_data_long(study: Path, queryfile: Path, parallel=False):
         # However, ProcessPoolExecutor was 3-4x the speed of a single-threaded loop.
         #with concurrent.futures.ThreadPoolExecutor() as executor:
         with concurrent.futures.ProcessPoolExecutor() as executor:
-            #print("Created a thread pool with ",executor._max_workers)
+            # TODO: configure a logging handler for each worker process to forward messages to a multiprocess queue
+            log.info(f"Created a process pool with {executor._max_workers} workers")
             future_lookup = dict() # Remember each file when requested.
             # Queue each operation to read simulation data, returning a future.
             for (sqlfile, bldgloc, metadata) in list_sqlfile:
@@ -853,7 +870,7 @@ def gather_sim_data_long(study: Path, queryfile: Path, parallel=False):
                 try:
                     tabular_data = future.result()
                 except Exception as exc:
-                    print(f'Reading {sqlfile} generated an exception: {exc}')
+                    log.exception(f'Reading {sqlfile} generated an exception: {exc}')
                 else:
                     yield (sqlfile, bldgloc, metadata, tabular_data)
                     time.sleep(0.001)
@@ -903,12 +920,12 @@ def gather_sim_data_to_sqlite_long(study: Path, queryfile: Path, sqlfile: Path,
         gather = gather_sim_data_long(study, queryfile, parallel)
         for (sqlfile, bldgloc, metadata, tabular_data) in gather:
             # DEBUG
-            #print(sqlfile)
-            #print(tabular_data)
-            #print(metadata)
-
+            log.debug(f"Processing SQL file: {sqlfile}")
+            log.debug(f"metadata: {metadata}")
+            log.debug(f"tabular_data: {tabular_data}")
+            
             tabular_data.insert(0, "filename", metadata['File Name'])
-            #print(tabular_data.dtypes)
+            log.debug(f"tabular_data dtypes: {tabular_data.dtypes}")
             df_metadata = pd.DataFrame.from_dict([metadata])
 
             if tabular_data.empty:
@@ -972,6 +989,8 @@ def build_cli_parser(parser: argparse.ArgumentParser,
     #                    help=r'Output file, e.g. simdata.csv',
     #                    **outputfile_kwargs)
     parser.add_argument('-P', '--parallel', action='store_false', help='Disable parallel mode.')
+    parser.add_argument('--logfile', type=Path, default='result2.log',
+                        help='Log file for script diagnostics.')
     parser.add_argument('-c', '--csv', action='store_true', help='Write output in wide csv format.')
     parser.add_argument('-l', '--long', action='store_true', help='If writing to CSV, store data in tabular (long) format.')
     parser.add_argument('-w', '--wide', action='store_true', help='If writing to SQLite, store data in wide format.')
@@ -981,6 +1000,8 @@ def cli_main():
     parser = argparse.ArgumentParser()
     build_cli_parser(parser)
     pargs = parser.parse_args()
+    configure_logging(pargs.logfile)
+    log.info(f"Writing diagnostics to {pargs.logfile}")
     if pargs.csv:
         gather_sim_data_to_csv(pargs.study, pargs.queryfile, 'simdata.csv', pargs.parallel)
     elif pargs.long:
@@ -1002,6 +1023,8 @@ def gooey_main():
           #outputfile_kwargs = dict(widget='FileChooser')
           )
     pargs = parser.parse_args()
+    configure_logging(pargs.logfile)
+    log.info(f"Writing diagnostics to {pargs.logfile}")
     if pargs.csv:
         gather_sim_data_to_csv(pargs.study, pargs.queryfile, 'simdata.csv', pargs.parallel)
     elif pargs.long:
@@ -1013,6 +1036,7 @@ def gooey_main():
 
 def test():
     """Starts the script with hard-coded options."""
+    configure_logging(Path('result2.log'))
     #study = Path(r'C:\DEER2026\SWHC012-nick\commercial measures\SWHC012-04 Occupancy Sensor')
     study = Path(r'C:\DEER2026\nf_com_testing_dhw\commercial measures\SWXX000-00 Measure Name')
     queryfile = Path(r'..\querylibrary\query_default.txt')
