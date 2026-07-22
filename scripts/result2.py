@@ -46,8 +46,11 @@ from sqlite3 import connect, Connection
 from pathlib import Path
 from functools import cache
 import argparse
+import atexit
 import logging
+import multiprocessing
 import concurrent.futures
+from logging.handlers import QueueHandler, QueueListener
 
 try:
     # itertools.batched available only after python 3.12
@@ -67,20 +70,71 @@ import numpy as np
 import pandas as pd
 import tqdm
 
-# Configure logging for warnings and other messages in the script
+# Configure logging for warnings and other messages in the script.
+# Listener and handler are used to route logging messages from
+# worker processes to a single file handler in the main process.
 log = logging.getLogger(__name__)
+_LOG_QUEUE = None
+_LOG_LISTENER = None
+_LOG_FILE_HANDLER = None
+
 def configure_logging(logfile: Path = Path('result2.log')):
-    """Configure file-based logging for the CLI script."""
+    """Configure file-based logging for the CLI script and worker processes."""
+    global _LOG_QUEUE, _LOG_LISTENER, _LOG_FILE_HANDLER
+
     logfile = Path(logfile)
     logfile.parent.mkdir(parents=True, exist_ok=True)
-    logging.basicConfig(
-        filename=logfile,
-        filemode='w',
-        level=logging.INFO,
-        format='%(asctime)s %(levelname)s %(message)s',
-        force=True,
-    )
+
+    if _LOG_QUEUE is None:
+        _LOG_QUEUE = multiprocessing.Queue()
+
+    if _LOG_LISTENER is None:
+        _LOG_FILE_HANDLER = logging.FileHandler(logfile, mode='w')
+        _LOG_FILE_HANDLER.setFormatter(
+            logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+        )
+        _LOG_LISTENER = QueueListener(
+            _LOG_QUEUE,
+            _LOG_FILE_HANDLER,
+            respect_handler_level=True,
+        )
+        _LOG_LISTENER.start()
+
+    root_logger = logging.getLogger()
+    root_logger.handlers.clear()
+    root_logger.setLevel(logging.INFO)
+    root_logger.addHandler(QueueHandler(_LOG_QUEUE))
+    root_logger.propagate = False
+
     return logging.getLogger(__name__)
+
+def _configure_worker_logging(queue):
+    """Attach the worker process logger to a multiprocessing queue."""
+    root_logger = logging.getLogger()
+    root_logger.handlers.clear()
+    root_logger.setLevel(logging.INFO)
+    root_logger.addHandler(QueueHandler(queue))
+    root_logger.propagate = False
+
+def _stop_logging():
+    """Stop the queue listener and close any file/queue resources safely."""
+    global _LOG_LISTENER, _LOG_FILE_HANDLER, _LOG_QUEUE
+
+    if _LOG_LISTENER is not None:
+        _LOG_LISTENER.stop()
+    _LOG_LISTENER = None
+
+    if _LOG_FILE_HANDLER is not None:
+        _LOG_FILE_HANDLER.close()
+    _LOG_FILE_HANDLER = None
+ 
+    if _LOG_QUEUE is not None:
+        _LOG_QUEUE.close()
+        _LOG_QUEUE.join_thread()
+    _LOG_QUEUE = None
+
+atexit.register(_stop_logging)
+
 
 def get_deer_peak_day_E5152(bldgloc: str):
     """Return a for DEER peak period start day lookups.
@@ -470,14 +524,10 @@ def get_sim_deer_peak(conn: Connection, bldgloc: str, column_filter=DEERPEAK_COL
     n_cols = ReportDataWide.shape[1]
     if n_cols != 8760:
         # Probably output variable is being stored at subhourly timesteps
-        log.warning(f"Found {n_cols} time steps after design-day filter but expected 8760 [{loginfo}]")
-
-    if ReportDataWide.shape[1] != 8760:
-        # Still not 8760 after trimming — simulation did not complete a full run period
-        # or file represents a sizing run only
-        log.warning(f"{ReportDataWide.shape[1]} time steps after trim — skipping DEER peak [{loginfo}]")
+        # Cannot compute DEER peak values if the number of time steps is not 8760
+        log.warning(f"[{loginfo}] Simulation period expected 8760 time steps but found {n_cols}")
         return None
-    
+
     # Get 8760-length mask for DEER Peak Period (normalized)
     dpm = get_deer_peak_multipliers(bldgloc)
     # Compute the average value over the DEER Peak Period
@@ -785,8 +835,10 @@ def gather_sim_data(study: Path, queryfile: Path, parallel=False):
         # In initial testing, ThreadPoolExecutor was 0.5x the speed of a single-threaded loop.
         # However, ProcessPoolExecutor was 3-4x the speed of a single-threaded loop.
         #with concurrent.futures.ThreadPoolExecutor() as executor:
-        with concurrent.futures.ProcessPoolExecutor() as executor:
-            # TODO: configure a logging handler for each worker process to forward messages to a multiprocess queue
+        with concurrent.futures.ProcessPoolExecutor(
+            initializer=_configure_worker_logging,
+            initargs=(_LOG_QUEUE,),
+        ) as executor:
             log.info(f"Created a process pool with {executor._max_workers} workers")
             future_lookup = dict() # Remember each file when requested.
             # Queue each operation to read simulation data, returning a future.
@@ -850,8 +902,10 @@ def gather_sim_data_long(study: Path, queryfile: Path, parallel=False):
         # In initial testing, ThreadPoolExecutor was 0.5x the speed of a single-threaded loop.
         # However, ProcessPoolExecutor was 3-4x the speed of a single-threaded loop.
         #with concurrent.futures.ThreadPoolExecutor() as executor:
-        with concurrent.futures.ProcessPoolExecutor() as executor:
-            # TODO: configure a logging handler for each worker process to forward messages to a multiprocess queue
+        with concurrent.futures.ProcessPoolExecutor(
+            initializer=_configure_worker_logging,
+            initargs=(_LOG_QUEUE,),
+        ) as executor:
             log.info(f"Created a process pool with {executor._max_workers} workers")
             future_lookup = dict() # Remember each file when requested.
             # Queue each operation to read simulation data, returning a future.
@@ -1002,14 +1056,17 @@ def cli_main():
     pargs = parser.parse_args()
     configure_logging(pargs.logfile)
     log.info(f"Writing diagnostics to {pargs.logfile}")
-    if pargs.csv:
-        gather_sim_data_to_csv(pargs.study, pargs.queryfile, 'simdata.csv', pargs.parallel)
-    elif pargs.long:
-        gather_sim_data_to_csv_long(pargs.study, pargs.queryfile, 'simdata_long.csv', pargs.parallel)
-    elif pargs.wide:
-        gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
-    else:
-        gather_sim_data_to_sqlite_long(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
+    try:
+        if pargs.csv:
+            gather_sim_data_to_csv(pargs.study, pargs.queryfile, 'simdata.csv', pargs.parallel)
+        elif pargs.long:
+            gather_sim_data_to_csv_long(pargs.study, pargs.queryfile, 'simdata_long.csv', pargs.parallel)
+        elif pargs.wide:
+            gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
+        else:
+            gather_sim_data_to_sqlite_long(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
+    finally:
+        _stop_logging()
 
 def gooey_main():
     """Opens a window for user to input options and start the script."""
@@ -1025,14 +1082,17 @@ def gooey_main():
     pargs = parser.parse_args()
     configure_logging(pargs.logfile)
     log.info(f"Writing diagnostics to {pargs.logfile}")
-    if pargs.csv:
-        gather_sim_data_to_csv(pargs.study, pargs.queryfile, 'simdata.csv', pargs.parallel)
-    elif pargs.long:
-        gather_sim_data_to_csv_long(pargs.study, pargs.queryfile, 'simdata_long.csv', pargs.parallel)
-    elif pargs.wide:
-        gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
-    else:
-        gather_sim_data_to_sqlite_long(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
+    try:
+        if pargs.csv:
+            gather_sim_data_to_csv(pargs.study, pargs.queryfile, 'simdata.csv', pargs.parallel)
+        elif pargs.long:
+            gather_sim_data_to_csv_long(pargs.study, pargs.queryfile, 'simdata_long.csv', pargs.parallel)
+        elif pargs.wide:
+            gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
+        else:
+            gather_sim_data_to_sqlite_long(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
+    finally:
+        _stop_logging()
 
 def test():
     """Starts the script with hard-coded options."""
