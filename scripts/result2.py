@@ -21,8 +21,12 @@ Changelog
     * 2025-07-24 Filename pattern matching revised for better consistency between different conventions
     * 2026-01-19 Column names updated to improve consistency across models
     * 2026-03-03 Added options for DEER Peak demand: E-5152 (original behavior) and E-5350
+    * 2026-04-19 Set DEER Peak default to CZ2025
+    * 2026-07-21 Fixed peak demand extraction issue which returned None whenever
+                 extra rows present in hourly data (design days and warmup).
 
 @Author: Nicholas Fette <nfette@solaris-technical.com>
+@Author: Safia Sheerin
 @Date: 2024-05-01
 
 """
@@ -42,7 +46,12 @@ from sqlite3 import connect, Connection
 from pathlib import Path
 from functools import cache
 import argparse
+import atexit
+import logging
+import multiprocessing
 import concurrent.futures
+from logging.handlers import QueueHandler, QueueListener
+
 try:
     # itertools.batched available only after python 3.12
     from itertools import batched
@@ -60,6 +69,72 @@ except:
 import numpy as np
 import pandas as pd
 import tqdm
+
+# Configure logging for warnings and other messages in the script.
+# Listener and handler are used to route logging messages from
+# worker processes to a single file handler in the main process.
+log = logging.getLogger(__name__)
+_LOG_QUEUE = None
+_LOG_LISTENER = None
+_LOG_FILE_HANDLER = None
+
+def configure_logging(logfile: Path = Path('result2.log')):
+    """Configure file-based logging for the CLI script and worker processes."""
+    global _LOG_QUEUE, _LOG_LISTENER, _LOG_FILE_HANDLER
+
+    logfile = Path(logfile)
+    logfile.parent.mkdir(parents=True, exist_ok=True)
+
+    if _LOG_QUEUE is None:
+        _LOG_QUEUE = multiprocessing.Queue()
+
+    if _LOG_LISTENER is None:
+        _LOG_FILE_HANDLER = logging.FileHandler(logfile, mode='w')
+        _LOG_FILE_HANDLER.setFormatter(
+            logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+        )
+        _LOG_LISTENER = QueueListener(
+            _LOG_QUEUE,
+            _LOG_FILE_HANDLER,
+            respect_handler_level=True,
+        )
+        _LOG_LISTENER.start()
+
+    root_logger = logging.getLogger()
+    root_logger.handlers.clear()
+    root_logger.setLevel(logging.INFO)
+    root_logger.addHandler(QueueHandler(_LOG_QUEUE))
+    root_logger.propagate = False
+
+    return logging.getLogger(__name__)
+
+def _configure_worker_logging(queue):
+    """Attach the worker process logger to a multiprocessing queue."""
+    root_logger = logging.getLogger()
+    root_logger.handlers.clear()
+    root_logger.setLevel(logging.INFO)
+    root_logger.addHandler(QueueHandler(queue))
+    root_logger.propagate = False
+
+def _stop_logging():
+    """Stop the queue listener and close any file/queue resources safely."""
+    global _LOG_LISTENER, _LOG_FILE_HANDLER, _LOG_QUEUE
+
+    if _LOG_LISTENER is not None:
+        _LOG_LISTENER.stop()
+    _LOG_LISTENER = None
+
+    if _LOG_FILE_HANDLER is not None:
+        _LOG_FILE_HANDLER.close()
+    _LOG_FILE_HANDLER = None
+ 
+    if _LOG_QUEUE is not None:
+        _LOG_QUEUE.close()
+        _LOG_QUEUE.join_thread()
+    _LOG_QUEUE = None
+
+atexit.register(_stop_logging)
+
 
 def get_deer_peak_day_E5152(bldgloc: str):
     """Return a for DEER peak period start day lookups.
@@ -340,7 +415,6 @@ def build_query_with_special_cases(resultspec: ResultSpec, finalize = True) -> s
     agg_columns.append('Units')
     return query, agg_columns
 
-
 def get_sim_hourly(conn: Connection, column_filter=None):
     """Get simulation hourly results from one EnergyPlus SQLite output file.
 
@@ -373,7 +447,6 @@ def get_sim_hourly(conn: Connection, column_filter=None):
         LookupKey returned
         Requires that the EnergyPlus model contains an OutputControl:Files object with SQLite = Yes.
     """
-
     ReportDataDictionary = pd.read_sql_query('select * from ReportDataDictionary', conn, index_col='ReportDataDictionaryIndex')
 
     # Transform ReportDataDictionary so we have a single column lookup string.
@@ -385,34 +458,51 @@ def get_sim_hourly(conn: Connection, column_filter=None):
         else f'{x.Name} [{x.Units}]({x.ReportingFrequency})'
         , axis=1)
 
-    query_report_data = 'select * from ReportData'
-
+    # Begin preparing a SQLite query to retrieve the relevant ReportData rows based on the column filter and time filter.
+    # If a column filter is provided, we need to filter the ReportData table to only include the relevant columns.
     rd_indices = []
+    column_filter_clause = ''
     if column_filter:
         # Construct a list of ReportDataDictionaryIndex values from column_filter.
         # Note that ReportDataDictionaryIndex values are file-specific.
         rd_indices = ReportDataDictionary[ReportDataDictionary['LookupKey'].isin(column_filter)].index
         placeholders = ', '.join(['?'] * len(rd_indices))
-        query_report_data += f''' where "ReportDataDictionaryIndex" in ({placeholders})'''
+        column_filter_clause = f''' AND rd."ReportDataDictionaryIndex" IN ({placeholders})'''
+        # Note: changed from WHERE to AND because query already has WHERE clause
 
-    #n_rows, = conn.execute('select count(*) from ReportData').fetchone()
+    # Note: filter DayType to only include the seven days of the week plus holidays,
+    # excluding design days and warmup periods.
+
+    # Construct the ORDER BY clause for the SQL query. This ensures that the results are returned in a logical order.
+    order_by_clause = ' ORDER BY rd.ReportDataDictionaryIndex, rd.TimeIndex'
+
+    query_report_data = f'''
+        SELECT rd.*
+        FROM ReportData rd
+        JOIN Time t ON rd.TimeIndex = t.TimeIndex
+        WHERE t.DayType IN (
+            'Sunday', 'Monday', 'Tuesday', 'Wednesday',
+            'Thursday', 'Friday', 'Saturday', 'Holiday'
+        )
+        {column_filter_clause}
+        {order_by_clause}
+    '''
+
     chunks = []
     for chunk in pd.read_sql_query(query_report_data, conn, chunksize=10000,
                                    params=tuple(rd_indices) if column_filter else None):
         chunks.append(chunk)
     ReportData = pd.concat(chunks, axis=0)
 
+    # Join the tables ReportData (values) and ReportDataDictionary (variable names and units).
     ReportData2 = ReportData.join(ReportDataDictionary, on='ReportDataDictionaryIndex')
 
     # Transform ReportData from long to wide so we can make a condensed table
-    ReportDataWide = ReportData2.pivot(index='LookupKey',columns='TimeIndex',values='Value')
-    # Prepare the table for saving in a database
-    #ReportDataWide['sim_id'] = sim_run.sim_id
-    #ReportDataWide2=ReportDataWide.reset_index().set_index(['TimeIndex'],drop=True)
+    ReportDataWide = ReportData2.pivot(index='LookupKey', columns='TimeIndex', values='Value')
 
     return ReportDataWide
 
-def get_sim_deer_peak(conn: Connection, bldgloc: str, column_filter=DEERPEAK_COLUMNS):
+def get_sim_deer_peak(conn: Connection, bldgloc: str, column_filter=DEERPEAK_COLUMNS, loginfo: str = ''):
     """Get simulation DEER Peak results from one EnergyPlus SQLite output file.
 
     Inputs:
@@ -428,12 +518,16 @@ def get_sim_deer_peak(conn: Connection, bldgloc: str, column_filter=DEERPEAK_COL
     E-5350: Effective PY2028
     """
     # Get all available hourly results with shape (N, 8760)
+    # Note: get_sim_hourly now trims design-day / warmup rows automatically
     ReportDataWide = get_sim_hourly(conn, column_filter=column_filter)
-    #ReportDataWide = ReportDataWide.loc[DEERPEAK_COLUMNS]
-    if ReportDataWide.shape[1] != 8760:
-        # No hourly data. This can happen if simulation created the output file but failed to complete.
-        # Or if the file represents a sizing run.
+    # Safety check — should now have exactly 8760 after SQL filter
+    n_cols = ReportDataWide.shape[1]
+    if n_cols != 8760:
+        # Probably output variable is being stored at subhourly timesteps
+        # Cannot compute DEER peak values if the number of time steps is not 8760
+        log.warning(f"[{loginfo}] Simulation period expected 8760 time steps but found {n_cols}")
         return None
+
     # Get 8760-length mask for DEER Peak Period (normalized)
     dpm = get_deer_peak_multipliers(bldgloc)
     # Compute the average value over the DEER Peak Period
@@ -441,6 +535,7 @@ def get_sim_deer_peak(conn: Connection, bldgloc: str, column_filter=DEERPEAK_COL
     #deer_peak_values = ReportDataWide.mul(dpm,axis=1).sum(axis=1).to_dict()
     # In testing, pandas.DataFrame.to_numpy().dot() takes about 7 µs
     deer_peak_values = dict(zip(ReportDataWide.index, ReportDataWide.to_numpy().dot(dpm)))
+    #
     return deer_peak_values
 
 def get_sim_tabular(
@@ -554,7 +649,7 @@ def get_sim_peak_and_tabular(queryfile: Path,
 
         # Now get the DEER Peak values from hourly data
         # Column name(s) for DEER Peak average values are taken directly from hourly output column name.
-        deer_peak_values = get_sim_deer_peak(conn, bldgloc)
+        deer_peak_values = get_sim_deer_peak(conn, bldgloc, loginfo=f"{sqlfile}")
         if deer_peak_values is not None:
             sim_data.update(deer_peak_values)
 
@@ -725,7 +820,7 @@ def gather_sim_data(study: Path, queryfile: Path, parallel=False):
             "Electricity:Facility [J](Hourly)": 3738615573
         }
     """
-    print(f"Reading from {study}")
+    log.info(f"Reading from {study}")
     # Make sure queryfile does not give an error before starting main loop.
     _ = parse_query_file(queryfile)
 
@@ -740,8 +835,11 @@ def gather_sim_data(study: Path, queryfile: Path, parallel=False):
         # In initial testing, ThreadPoolExecutor was 0.5x the speed of a single-threaded loop.
         # However, ProcessPoolExecutor was 3-4x the speed of a single-threaded loop.
         #with concurrent.futures.ThreadPoolExecutor() as executor:
-        with concurrent.futures.ProcessPoolExecutor() as executor:
-            #print("Created a thread pool with ",executor._max_workers)
+        with concurrent.futures.ProcessPoolExecutor(
+            initializer=_configure_worker_logging,
+            initargs=(_LOG_QUEUE,),
+        ) as executor:
+            log.info(f"Created a process pool with {executor._max_workers} workers")
             future_lookup = dict() # Remember each file when requested.
             # Queue each operation to read simulation data, returning a future.
             for (sqlfile, bldgloc, metadata) in list_sqlfile:
@@ -759,7 +857,7 @@ def gather_sim_data(study: Path, queryfile: Path, parallel=False):
                 try:
                     sim_data = future.result()
                 except Exception as exc:
-                    print(f'Reading {sqlfile} generated an exception: {exc}')
+                    log.exception(f'Reading {sqlfile} generated an exception: {exc}')
                 else:
                     yield sim_data
                     time.sleep(0.001)
@@ -788,7 +886,7 @@ def gather_sim_data_long(study: Path, queryfile: Path, parallel=False):
             "Electricity:Facility [J](Hourly)": 3738615573
         }
     """
-    print(f"Reading from {study}")
+    log.info(f"Reading from {study}")
     # Make sure queryfile does not give an error before starting main loop.
     _ = parse_query_file(queryfile)
 
@@ -804,8 +902,11 @@ def gather_sim_data_long(study: Path, queryfile: Path, parallel=False):
         # In initial testing, ThreadPoolExecutor was 0.5x the speed of a single-threaded loop.
         # However, ProcessPoolExecutor was 3-4x the speed of a single-threaded loop.
         #with concurrent.futures.ThreadPoolExecutor() as executor:
-        with concurrent.futures.ProcessPoolExecutor() as executor:
-            #print("Created a thread pool with ",executor._max_workers)
+        with concurrent.futures.ProcessPoolExecutor(
+            initializer=_configure_worker_logging,
+            initargs=(_LOG_QUEUE,),
+        ) as executor:
+            log.info(f"Created a process pool with {executor._max_workers} workers")
             future_lookup = dict() # Remember each file when requested.
             # Queue each operation to read simulation data, returning a future.
             for (sqlfile, bldgloc, metadata) in list_sqlfile:
@@ -823,14 +924,14 @@ def gather_sim_data_long(study: Path, queryfile: Path, parallel=False):
                 try:
                     tabular_data = future.result()
                 except Exception as exc:
-                    print(f'Reading {sqlfile} generated an exception: {exc}')
+                    log.exception(f'Reading {sqlfile} generated an exception: {exc}')
                 else:
                     yield (sqlfile, bldgloc, metadata, tabular_data)
                     time.sleep(0.001)
 
 def gather_sim_data_to_csv(study: Path, queryfile: Path, csvfile: Path,
                            parallel = True,
-                           chunksize = 100):
+                           chunksize = None):
     # 2024-05-15 Todo
     # User testing observed that inconsistent filenames may result in inconsistent
     # column alignment in CSV mode. Workaround is to change chunksize=None.
@@ -848,7 +949,7 @@ def gather_sim_data_to_csv(study: Path, queryfile: Path, csvfile: Path,
 
 def gather_sim_data_to_sqlite(study: Path, queryfile: Path, sqlfile: Path,
                               parallel = True,
-                              chunksize = 100):
+                              chunksize = None):
     gather = gather_sim_data(study, queryfile, parallel)
     with connect(sqlfile) as conn:
         conn.execute('DROP TABLE IF EXISTS "sim_data";')
@@ -873,12 +974,12 @@ def gather_sim_data_to_sqlite_long(study: Path, queryfile: Path, sqlfile: Path,
         gather = gather_sim_data_long(study, queryfile, parallel)
         for (sqlfile, bldgloc, metadata, tabular_data) in gather:
             # DEBUG
-            #print(sqlfile)
-            #print(tabular_data)
-            #print(metadata)
-
+            log.debug(f"Processing SQL file: {sqlfile}")
+            log.debug(f"metadata: {metadata}")
+            log.debug(f"tabular_data: {tabular_data}")
+            
             tabular_data.insert(0, "filename", metadata['File Name'])
-            #print(tabular_data.dtypes)
+            log.debug(f"tabular_data dtypes: {tabular_data.dtypes}")
             df_metadata = pd.DataFrame.from_dict([metadata])
 
             if tabular_data.empty:
@@ -942,6 +1043,8 @@ def build_cli_parser(parser: argparse.ArgumentParser,
     #                    help=r'Output file, e.g. simdata.csv',
     #                    **outputfile_kwargs)
     parser.add_argument('-P', '--parallel', action='store_false', help='Disable parallel mode.')
+    parser.add_argument('--logfile', type=Path, default='result2.log',
+                        help='Log file for script diagnostics.')
     parser.add_argument('-c', '--csv', action='store_true', help='Write output in wide csv format.')
     parser.add_argument('-l', '--long', action='store_true', help='If writing to CSV, store data in tabular (long) format.')
     parser.add_argument('-w', '--wide', action='store_true', help='If writing to SQLite, store data in wide format.')
@@ -951,14 +1054,19 @@ def cli_main():
     parser = argparse.ArgumentParser()
     build_cli_parser(parser)
     pargs = parser.parse_args()
-    if pargs.csv:
-        gather_sim_data_to_csv(pargs.study, pargs.queryfile, 'simdata.csv', pargs.parallel)
-    elif pargs.long:
-        gather_sim_data_to_csv_long(pargs.study, pargs.queryfile, 'simdata_long.csv', pargs.parallel)
-    elif pargs.wide:
-        gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
-    else:
-        gather_sim_data_to_sqlite_long(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
+    configure_logging(pargs.logfile)
+    log.info(f"Writing diagnostics to {pargs.logfile}")
+    try:
+        if pargs.csv:
+            gather_sim_data_to_csv(pargs.study, pargs.queryfile, 'simdata.csv', pargs.parallel)
+        elif pargs.long:
+            gather_sim_data_to_csv_long(pargs.study, pargs.queryfile, 'simdata_long.csv', pargs.parallel)
+        elif pargs.wide:
+            gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
+        else:
+            gather_sim_data_to_sqlite_long(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
+    finally:
+        _stop_logging()
 
 def gooey_main():
     """Opens a window for user to input options and start the script."""
@@ -972,17 +1080,23 @@ def gooey_main():
           #outputfile_kwargs = dict(widget='FileChooser')
           )
     pargs = parser.parse_args()
-    if pargs.csv:
-        gather_sim_data_to_csv(pargs.study, pargs.queryfile, 'simdata.csv', pargs.parallel)
-    elif pargs.long:
-        gather_sim_data_to_csv_long(pargs.study, pargs.queryfile, 'simdata_long.csv', pargs.parallel)
-    elif pargs.wide:
-        gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
-    else:
-        gather_sim_data_to_sqlite_long(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
+    configure_logging(pargs.logfile)
+    log.info(f"Writing diagnostics to {pargs.logfile}")
+    try:
+        if pargs.csv:
+            gather_sim_data_to_csv(pargs.study, pargs.queryfile, 'simdata.csv', pargs.parallel)
+        elif pargs.long:
+            gather_sim_data_to_csv_long(pargs.study, pargs.queryfile, 'simdata_long.csv', pargs.parallel)
+        elif pargs.wide:
+            gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
+        else:
+            gather_sim_data_to_sqlite_long(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
+    finally:
+        _stop_logging()
 
 def test():
     """Starts the script with hard-coded options."""
+    configure_logging(Path('result2.log'))
     #study = Path(r'C:\DEER2026\SWHC012-nick\commercial measures\SWHC012-04 Occupancy Sensor')
     study = Path(r'C:\DEER2026\nf_com_testing_dhw\commercial measures\SWXX000-00 Measure Name')
     queryfile = Path(r'..\querylibrary\query_default.txt')
