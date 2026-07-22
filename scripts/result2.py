@@ -21,8 +21,12 @@ Changelog
     * 2025-07-24 Filename pattern matching revised for better consistency between different conventions
     * 2026-01-19 Column names updated to improve consistency across models
     * 2026-03-03 Added options for DEER Peak demand: E-5152 (original behavior) and E-5350
+    * 2026-04-19 Set DEER Peak default to CZ2025
+    * 2026-07-21 Fixed peak demand extraction issue which returned None whenever
+                 extra rows present in hourly data (design days and warmup).
 
 @Author: Nicholas Fette <nfette@solaris-technical.com>
+@Author: Safia Sheerin
 @Date: 2024-05-01
 
 """
@@ -383,6 +387,7 @@ def get_sim_hourly(conn: Connection, column_filter=None):
         else f'{x.Name} [{x.Units}]({x.ReportingFrequency})'
         , axis=1)
 
+    # Begin preparing a SQLite query to retrieve the relevant ReportData rows based on the column filter and time filter.
     # If a column filter is provided, we need to filter the ReportData table to only include the relevant columns.
     rd_indices = []
     column_filter_clause = ''
@@ -393,6 +398,9 @@ def get_sim_hourly(conn: Connection, column_filter=None):
         placeholders = ', '.join(['?'] * len(rd_indices))
         column_filter_clause = f''' AND rd."ReportDataDictionaryIndex" IN ({placeholders})'''
         # Note: changed from WHERE to AND because query already has WHERE clause
+
+    # Note: filter DayType to only include the seven days of the week plus holidays,
+    # excluding design days and warmup periods.
 
     # Construct the ORDER BY clause for the SQL query. This ensures that the results are returned in a logical order.
     order_by_clause = ' ORDER BY rd.ReportDataDictionaryIndex, rd.TimeIndex'
@@ -409,24 +417,17 @@ def get_sim_hourly(conn: Connection, column_filter=None):
         {order_by_clause}
     '''
 
-    #n_rows, = conn.execute('select count(*) from ReportData').fetchone()
     chunks = []
     for chunk in pd.read_sql_query(query_report_data, conn, chunksize=10000,
                                    params=tuple(rd_indices) if column_filter else None):
         chunks.append(chunk)
     ReportData = pd.concat(chunks, axis=0)
 
+    # Join the tables ReportData (values) and ReportDataDictionary (variable names and units).
     ReportData2 = ReportData.join(ReportDataDictionary, on='ReportDataDictionaryIndex')
 
     # Transform ReportData from long to wide so we can make a condensed table
     ReportDataWide = ReportData2.pivot(index='LookupKey', columns='TimeIndex', values='Value')
-    # ── NEW: trim design-day / warmup columns ──────────────────────
-    n_cols = ReportDataWide.shape[1]
-        # Safety check — should now have exactly 8760 after SQL filter
-    n_cols = ReportDataWide.shape[1]
-    if n_cols != 8760:
-        print(f"  WARNING: {n_cols} time steps after design-day filter — expected 8760")
-
 
     return ReportDataWide
     
@@ -448,6 +449,11 @@ def get_sim_deer_peak(conn: Connection, bldgloc: str, column_filter=DEERPEAK_COL
     # Get all available hourly results with shape (N, 8760)
     # Note: get_sim_hourly now trims design-day / warmup rows automatically
     ReportDataWide = get_sim_hourly(conn, column_filter=column_filter)
+    # Safety check — should now have exactly 8760 after SQL filter
+    n_cols = ReportDataWide.shape[1]
+    if n_cols != 8760:
+        # Probably output variable is being stored at subhourly timesteps
+        print(f"Found {n_cols} time steps after design-day filter but expected 8760 [{loginfo}]")
 
     # ── CHANGED: was `!= 8760` which returned None whenever extra rows present ──
     if ReportDataWide.shape[1] != 8760:
