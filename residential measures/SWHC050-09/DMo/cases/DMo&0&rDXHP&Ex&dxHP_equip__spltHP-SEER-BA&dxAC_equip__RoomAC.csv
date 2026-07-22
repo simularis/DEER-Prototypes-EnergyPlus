@@ -1,3 +1,0 @@
-skip,case_name,:heat_type,:combi,:boiler_eff,:boiler_eff_curve,:curve_evaluation_variable,:design_hw_temp,:min_hw_temp,:sub_heat_type,:cooling_coil_cop,:heating_coil_cop,:supplyfan_total_eff,:motor_eff,:burner_eff,:ductless,:use_dummy_return_plenum,:vfd_curve_name,:coil_type,:hvac_type,:dhw_stpt_sch,:water_heater_type,:tank_size,:uef,:tank_height,:loop_sept,:tank_sept
-,Pre-RE-HV-RoomAC-9.0E-ERheat,DX,,,,,,,,2.64,2.2854,0.7,0.9,,FALSE,FALSE,,,,,,,,,,
-,Std-RE-HV-RoomAC-9.8E-ERheat,DX,,,,,,,,2.87,2.2854,0.7,0.9,,FALSE,FALSE,,,,,,,,,,
