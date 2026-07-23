@@ -1,8 +1,36 @@
-# SWHC045 Heat Pump HVAC Fuel Substitution
+# SWHC044 Ductless HVAC Fuel Substitution
+
+ Prepared by Solaris Technical, Yasemin Agi - 2026-07-23
 
 This document describes the steps necessary to reproduce simulations and model outputs for this measure.
+# Running models
+cd C:/.../SWHC044-08 Ductless HVAC Fuel Sub/SWHC044-08 Ductless HVAC Fuel Sub_DMo_Ex
+modelkit rake run
 
-Prepared by Solaris Technical, Behzad S. Rizi - 2025-10-17
+Generate 'results-sizing-agg.csv' using result.py and query_default.txt
+Rename to 'results-summary.csv'
+
+repeat for 
+SWHC044-08 Ductless HVAC Fuel Sub_MFm_Ex
+SWHC044-08 Ductless HVAC Fuel Sub_SFm_1975
+SWHC044-08 Ductless HVAC Fuel Subb_SFm_1985
+
+## Post Processing
+cd C:/.../SWHC044-08 Ductless HVAC Fuel Sub
+Generate 'simdata.csv' using result2.py and query_default.txt
+
+# Load Shapes
+cd C:/.../scripts/data transformation
+python DMo.py
+python MFm.py
+python SFm.py
+
+## Known Issue: Warm Up Error
+For some climate zones, the SFm protoype breaks due to the DUMMY PLENUM spaces not having zone infiltration or zone mixing, resulting in a warm up error.
+
+Use 'singlefamily_ductonly_SWHC044.imf' to replace 'singlefamily_ductonly.imf' under C:\...\SWHC044-08\templates\energyplus\templates\zoneloads
+
+This file adds minimal zone mixing and infiltration to the dummy plenums so the model can achieve warm up.
 
 ## Known Issue: `** Severe ** Invalid String Position` Error
 
