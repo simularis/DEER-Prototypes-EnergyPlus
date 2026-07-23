@@ -101,7 +101,6 @@ daily_volume = case draw_pattern
 
 
 # TRC - 2026-06-18 reverted so that defaults aren't changed and previously accepted measures still run.
-#tank_size = case water_heater_type
 # Solaris - 2026-06-26 Janik Somaiya - Solaris added conditional statement for the parameter "allow_tankless_tank_size_override"
 tank_size = case water_heater_type
             when 'gas_tankless'
