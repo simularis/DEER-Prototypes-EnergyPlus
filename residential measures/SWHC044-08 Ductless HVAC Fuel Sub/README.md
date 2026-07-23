@@ -23,7 +23,7 @@ SWHC044 Ductless HVAC Fuel Sub_SFm_1985
 ## Step 2
 cd C:\DEER-Prototypes-EnergyPlus
 cd "residential measures/SWHC044-08 Ductless HVAC Fuel Sub"
-python result2.py --queryfile "query.txt"
+python result2.py --queryfile "query_SWHC044.txt"
 ```
 Confirm script generated 'simdata.csv'.
 
