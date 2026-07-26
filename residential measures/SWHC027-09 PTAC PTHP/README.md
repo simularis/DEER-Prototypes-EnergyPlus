@@ -1,4 +1,15 @@
-Processing steps for this measure
+# SWHC027 Packaged terminal air conditioner and heat pump - residential models
+
+## Running simulations
+
+This measure uses the "templatized" residential prototypes, which use a
+SCHEDULE:FILE object to define schedules like `site_mains_water_temp` and
+`DHW_demand_frac_sch`. EnergyPlus does not robustly handle relative file paths
+to schedules. To avoid an EnergyPlus simulation error, this measure uses a modified
+`rakefile.rb` that defines a global variable `$repository_dir` so that schedule
+files are referenced via an absolute file path.
+
+## Processing steps for this measure
 
 ```
 cd C:\DEER-Prototypes-EnergyPlus
