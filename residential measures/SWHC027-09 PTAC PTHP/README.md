@@ -52,3 +52,7 @@ python MFm.py
 python SFm.py
 Repeat each for new and existing.
 ```
+If NormUnits column do not generate and/or Bldg HVAC column does not match eTRM, run
+```
+python clean_loadshapes_SWHC027_res.py
+```
