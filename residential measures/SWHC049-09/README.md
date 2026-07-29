@@ -1,6 +1,5 @@
 # SWHC049-09 Ducted SEER Rated Heat Pump, Residential
 
-**Current PR:** #85
 
 ## Measure Description
 
