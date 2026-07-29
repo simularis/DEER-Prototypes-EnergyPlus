@@ -11,6 +11,7 @@ This folder contains the residential Ducted SEER Rated Heat Pump measure setup u
 - **Retired packaged AC offerings** — this measure now includes heat pump equipment only
 - Removed SEER2>=15.2 measure offering, merged SEER2>=16.9 offering with SEER2>=16.0 offering
 - Renamed techIDs for clarity and consistency
+- Updated HP templates to include CCH and defrost proposed parameters consistent with Update residential crankcase and defrost heater parameters sound-data/DEER-Prototypes-EnergyPlus#179.
 
 ## Cohorts and Case Names
 
