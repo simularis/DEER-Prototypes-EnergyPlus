@@ -1,7 +1,5 @@
 # SWHC050-09 Ductless Heat Pump, Residential
 
-**Current PR:** #97
-
 ## Cohorts and Case Names
 
 Tables below show the origin of TechIDs present in this folder.
@@ -40,13 +38,13 @@ for the models generated in this folder. After running simulations:
 
 ```bash
 cd "residential measures/SWHC050-09"
-python result2_test.py -q query_swhc050.txt
+python result2.py -q query_swhc050.txt
 ```
 ## Data Transformation and Post-Processing
 Measure Working List: DEER_EnergyPlus_Modelkit_Measure_list_working_swhc050.xlsx
 
 ## Post-Processing Steps
 - Run simulations and confirm result files
-- Scrape outputs with scripts/result2_test.py using query_swhc050.txt
+- Scrape outputs with scripts/result2.py using query_swhc050.txt
 - Run transformation scripts from scripts/data transformation/
 - Review generated files: current_msr_mat.csv, sim_annual.csv, sim_hourly_eu.csv, sim_hourly_wb.csv
