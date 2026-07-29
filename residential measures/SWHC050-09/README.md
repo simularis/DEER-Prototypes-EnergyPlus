@@ -1,5 +1,16 @@
 # SWHC050-09 Ductless Heat Pump, Residential
 
+## Measure Description
+
+This folder contains the residential Ductless Heat Pump measure setup used for DEER prototype simulation, result scraping, and downstream post-processing.
+
+### Key Changes in This Revision
+- Update to CZ2025 weather files
+- Switching model setup to align with templatized DEER residential prototypes
+- Consolidated some measure offering tiers based on market availability
+- Renamed techIDs for clarity and consistency
+- Updated HP templates to include CCH and defrost proposed parameters consistent with Update residential crankcase and defrost heater parameters sound-data/DEER-Prototypes-EnergyPlus#179.
+
 ## Cohorts and Case Names
 
 Tables below show the origin of TechIDs present in this folder.
