@@ -38,6 +38,7 @@ class CoilListProcessor:
         # Merge the sizing detail data with the coil list data based on row name and building type
         self.df_filtered = pd.merge(self.sim_sizing_data,
                                     self.coil_list_df,
+                                    how='right',
                                     left_on=['RowName', self.sim_sizing_data['building type'].str.lower()],
                                     right_on=['object name', self.coil_list_df['building type'].str.lower()])
         
@@ -79,10 +80,10 @@ if __name__ == "__main__":
     excel_file_path = 'coil_list.xlsx'
 
 
-    sizing_detail_csv = 'SWHC046-06 Pkg HP AC Com_Ex/results-sizing-detail.csv'
-    output_csv = 'SWHC046-06 Pkg HP AC Com_Ex/sizing_agg_filtered.csv'
+    sizing_detail_csv = 'SWHC046-07 Pkg HP AC Com_Ex/results-sizing-detail.csv'
+    output_csv = 'SWHC046-07 Pkg HP AC Com_Ex/sizing_agg_filtered.csv'
     process_coil_list(normunit, excel_file_path, sizing_detail_csv, output_csv)
 
-    sizing_detail_csv = 'SWHC046-06 Pkg HP AC Com_Htl_Ex/results-sizing-detail.csv'
-    output_csv = 'SWHC046-06 Pkg HP AC Com_Htl_Ex/sizing_agg_filtered.csv'
+    sizing_detail_csv = 'SWHC046-07 Pkg HP AC Com_Htl_Ex/results-sizing-detail.csv'
+    output_csv = 'SWHC046-07 Pkg HP AC Com_Htl_Ex/sizing_agg_filtered.csv'
     process_coil_list(normunit, excel_file_path, sizing_detail_csv, output_csv)
