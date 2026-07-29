@@ -36,9 +36,12 @@ Measure Working List: DEER_EnergyPlus_Modelkit_Measure_list_working_SWHC012.xlsx
 - Run simulations and confirm result files
 - Scrape outputs with 'scripts/result2.py' using query_SWHC012.txt
 - Run transformation scripts from 'scripts/data transformation'
-- Review generated files: current_msr_mat.csv, sim_annual.csv, sim_hourly_eu.csv, sim_hourly_wb.csv
+- Review generated files: current_msr_mat.csv, sim_annual.csv, sim_hourly_eu.csv, sim_hourly_wb.csv, CEDARS_LoadShape_Com.zip
 
-## Other Model Notes
+## Load Shape Workaround
+The load shape files (found in CEDARS_LoadShape_Com.zip) are missing the 'NormUnit' column required for uploading to CEDARS. The missing column must be added manually into each of the 3 load shape files (one for each building type). The column must be added in between the 'BldgLoc' and 'Type (Whole Building or End Use)' columns with the column header 'NormUnit' and value 'Cap-Tons' for each line.
+
+## Other Simulation Notes
 
 ### HVAC-Zone Template
 
