@@ -4,6 +4,4 @@ skip,case_name,:mt_meatdc1_fan_power,:mt_fishdc_fan_power,:mt_melon_fan_power,:m
 ,NE-Ref_Storage-ReachIn-LT-PSC-Std,,,,,,,,,,,44.008,44.008,44.008,44.008
 ,NE-Ref_Storage-ReachIn-LT-SHP-Std,,,,,,,,,,,59.565,59.565,59.565,59.565
 ,NE-Ref_Storage-ReachIn-MT-ECM-Msr,24.898,24.898,24.898,24.898,24.898,24.898,24.898,24.898,24.898,24.898,,,,
-#,NE-Ref_Storage-ReachIn-MT-PMS-Msr,17.12,17.12,17.12,17.12,17.12,17.12,17.12,17.12,17.12,17.12,,,,
 ,NE-Ref_Storage-ReachIn-LT-ECM-Msr,,,,,,,,,,,26.487,26.487,26.487,26.487
-#,NE-Ref_Storage-ReachIn-LT-PMS-Msr,,,,,,,,,,,18.213,18.213,18.213,18.213
