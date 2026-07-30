@@ -36,7 +36,7 @@ This folder contains the commercial refrigerated fan motor measure setup used fo
 The file `query.txt` includes queries for cooling and heating capacity. After running simulations:
 
 ```bash
-cd 'residential measures/SWCR003-05'
+cd 'commercial measures/SWCR003-05'
 python result2.py -q query.txt
 ```
 ## Data Transformation and Post-Processing
