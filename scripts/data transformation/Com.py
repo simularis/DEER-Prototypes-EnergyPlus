@@ -382,7 +382,9 @@ for folder in folder_list:
                 f"{split_meta_cols_eu.iloc[i][1]}/"
                 f"{split_meta_cols_eu.iloc[i][2]}"
                         )
-            #2026-07-02 update: to deal with hardsize instance files which replace default instance files 
+            # Kelsey Yen, Solaris Technical LLC, 2026-07-08, new feature: 
+            # Added the following lines of code to deal with hardsizing instance files (instance-hardsize-var.csv and instance-hardsize.idf) 
+            # which are used in place of the default instance files.
             if os.path.exists(f"{base_path}/instance-var.csv"):
                 csv_path = f"{base_path}/instance-var.csv"
                 idf_path = f"{base_path}/instance.idf"
@@ -423,6 +425,8 @@ for folder in folder_list:
 
 # Create DataFrame once
 hourly_df = pd.DataFrame(hourly_data, index=index)
+
+# %%
 
 # %%
 fyr_hrly = hourly_df
