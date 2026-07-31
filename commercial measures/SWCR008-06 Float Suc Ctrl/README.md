@@ -5,7 +5,8 @@
 This folder contains the commercial floating suction controls measure setup used for DEER prototype simulation, result scraping, and downstream post-processing.
 
 ### Key Changes in This Revision
-- Update to CZ2025 weather files
+- Updated to CZ2025 weather files
+- Added condenser sizing for air-cooled condensers
 
 ## Cohorts and Case Names
 
