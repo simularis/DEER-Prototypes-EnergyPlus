@@ -25,11 +25,11 @@ This folder contians the commercial Occupancy Sensor measure setup used for DEER
 The file 'query_SWHC012.txt' includes queries for cooling capacity. After running simulations: 
 '''
 cd 'commercial measures/SWHC012-06'
-python result2.py -q query_swhc012.txt
+python result2.py -q query_SWHC012.txt
 '''
 
 ## Data Transformation and Post-Processing
-Measure Working List: DEER_EnergyPlus_Modelkit_Measure_list_working_SWHC012.xlsx
+Measure Working List: DEER_EnergyPlus_Modelkit_Measure_list_working_SWHC012-06.xlsx
 
 ## Simulation and Post-Processing Steps
 - Run schedule.py to generate schedules for each building type
@@ -118,3 +118,6 @@ The result_filtered script cross-references the result_sizing_detail.csv and coi
 
 ### Classroom System Names
 The classroom system names were manually identified by inspection of prototype root files and tabulated in the file `coil_list.xlsx` (sheet "Main coils").
+
+### Occupancy Schedule
+`OccSchedule vs TempSetpointSch.xlsx` shows details of the occupancy schedule and assigned temperature setpoints based on classroom usage, days of the week, and holidays.
