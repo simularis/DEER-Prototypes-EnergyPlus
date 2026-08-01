@@ -10,7 +10,7 @@ This folder contians the commercial Occupancy Sensor measure setup used for DEER
 - Reverted interim workaround (old version of prototypes)
 - For generated schedules, use calendar year 2009 (start day = Thursday)
 - Added lines to Com.py to deal with hardsize instance files
-- Removed unused cohorts and cases to align with eTRM offerings
+- Removed DXGF case for ERC and DXHP for EPr and ESe to align with eTRM offerings
 
 ## Cohorts and Cases
 
@@ -32,6 +32,7 @@ python result2.py -q query_SWHC012.txt
 Measure Working List: DEER_EnergyPlus_Modelkit_Measure_list_working_SWHC012-06.xlsx
 
 ## Simulation and Post-Processing Steps
+- Copy '22-2.csv' from sizing-map folder into 'C:\Program Files (x86)\Modelkit Caboodle\lib\rubygems\gems\modelkit-energyplus-0.3.0\resources\sizing-map' to ensure simulations run
 - Run schedule.py to generate schedules for each building type
 - Run simulations and confirm result files
 - Scrape outputs with 'scripts/result2.py' using query_SWHC012.txt
