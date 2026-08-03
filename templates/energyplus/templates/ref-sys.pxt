@@ -51,11 +51,11 @@ Refrigeration:System,
     ,                        !- Mechanical Subcooler Name
     ,                        !- Liquid Suction Heat Exchanger Subcooler Name
  <% if suction_gains %>
-    <%= piping_suction_ua %>,                        !- Sum UA Suction Piping {W/K}
-    <%= suction_piping_location %>,                        !- Suction Piping Zone Name
+    <%= piping_suction_ua %>,            !- Sum UA Suction Piping {W/K}
+    <%= suction_piping_location %>,      !- Suction Piping Zone Name
  <% else %>
-    ,                        !- Sum UA Suction Piping {W/K}
-    ,                        !- Suction Piping Zone Name
+    ,                                    !- Sum UA Suction Piping {W/K}
+    ,                                    !- Suction Piping Zone Name
 <% end %>
     <%= enduse_subcategory %>;           !- End-Use Subcategory
 
