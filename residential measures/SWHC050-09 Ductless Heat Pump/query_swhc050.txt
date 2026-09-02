@@ -41,3 +41,4 @@ ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitaryHeatPump:AirToAir/Nomi
 ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitaryHeatPump:AirToAir/Nominal Cooling Capacity/*, CoolCapPTHP
 ComponentSizingSummary/Entire Facility/Coil:Heating:Electric/Design Size Nominal Capacity/*, HeatCapPTAC
 ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/*, CoolCapPTAC
+
