@@ -209,7 +209,7 @@ WaterUse:Connections,
     <%= water_use[:name] %> Outlet Node,        !- Outlet Node Name
     ,                                           !- Hot Water Storage Tank Name
     ,                                           !- Cold Water Storage Tank Name
-    <%= water_heater_name %>_Loop_setpt,        !- Hot Water Supply Temperature Schedule Name
+    <%= water_heater_name %>_dhw_setpt,        !- Hot Water Supply Temperature Schedule Name
     ,                                           !- Drain Water Heat Exchanger Type
     None,                                       !- Drain Water Heat Exchanger Destination
     ,                                           !- Drain Water Heat Exchanger U-Factor Times Area {W/K}
@@ -226,186 +226,175 @@ Branch,
 <% end %>
 
 Branch,
-    <%= water_heater_name %> Central Tank Branch,
-    ,
-    WaterHeater:Stratified,
-    <%= water_heater_name %>,
-    <%= water_heater_name %> use inlet node,
-    <%= water_heater_name %> use outlet node;
+    <%= water_heater_name %> Central Tank Branch,  !- Name
+    ,                                               !- Pressure Drop Curve Name
+    WaterHeater:Stratified,                         !- Component 1 Object Type
+    <%= water_heater_name %>,                       !- Component 1 Name
+    <%= water_heater_name %> use inlet node,        !- Component 1 Inlet Node Name
+    <%= water_heater_name %> use outlet node;       !- Component 1 Outlet Node Name
 
 Branch,
-    <%= water_heater_name %> DHW Supply Inlet Branch,
-    ,
-    Pump:VariableSpeed,
-    <%= water_heater_name %> Recirculation Pump,
-    <%= water_heater_name %> DHW Supply Inlet Node,
-    <%= water_heater_name %> Recirculation Pump Outlet Node;
+    <%= water_heater_name %> DHW Supply Inlet Branch,            !- Name
+    ,                                                             !- Pressure Drop Curve Name
+    Pump:VariableSpeed,                                           !- Component 1 Object Type
+    <%= water_heater_name %> Recirculation Pump,                  !- Component 1 Name
+    <%= water_heater_name %> DHW Supply Inlet Node,               !- Component 1 Inlet Node Name
+    <%= water_heater_name %> Recirculation Pump Outlet Node;      !- Component 1 Outlet Node Name
 
 Branch,
-    <%= water_heater_name %> DHW Supply Outlet Branch,
-    ,
-    Pipe:Adiabatic,
-    <%= water_heater_name %> DHW Supply Outlet Pipe,
-    <%= water_heater_name %> DHW Supply Outlet Pipe Inlet Node,
-    <%= water_heater_name %> DHW Supply Outlet Node;
+    <%= water_heater_name %> DHW Supply Outlet Branch,            !- Name
+    ,                                                             !- Pressure Drop Curve Name
+    Pipe:Adiabatic,                                               !- Component 1 Object Type
+    <%= water_heater_name %> DHW Supply Outlet Pipe,              !- Component 1 Name
+    <%= water_heater_name %> DHW Supply Outlet Pipe Inlet Node,   !- Component 1 Inlet Node Name
+    <%= water_heater_name %> DHW Supply Outlet Node;              !- Component 1 Outlet Node Name
 
 Branch,
-    <%= water_heater_name %> DHW Supply Bypass Branch,
-    ,
-    Pipe:Adiabatic,
-    <%= water_heater_name %> DHW Supply Bypass Pipe,
-    <%= water_heater_name %> DHW Supply Bypass Inlet Node,
-    <%= water_heater_name %> DHW Supply Bypass Outlet Node;
+    <%= water_heater_name %> DHW Supply Bypass Branch,            !- Name
+    ,                                                             !- Pressure Drop Curve Name
+    Pipe:Adiabatic,                                               !- Component 1 Object Type
+    <%= water_heater_name %> DHW Supply Bypass Pipe,              !- Component 1 Name
+    <%= water_heater_name %> DHW Supply Bypass Inlet Node,        !- Component 1 Inlet Node Name
+    <%= water_heater_name %> DHW Supply Bypass Outlet Node;       !- Component 1 Outlet Node Name
 
 Branch,
-    <%= water_heater_name %> DHW Demand Inlet Branch,
-    ,
-    Pipe:Adiabatic,
-    <%= water_heater_name %> DHW Demand Inlet Pipe,
-    <%= water_heater_name %> DHW Demand Inlet Node,
-    <%= water_heater_name %> DHW Demand Splitter Inlet Node;
-
-<% if use_recirc %>
-Branch,
-    <%= water_heater_name %> Recirculation Return Branch,
-    ,
-    Pipe:Adiabatic,
-    <%= water_heater_name %> Recirculation Return Pipe,
-    <%= water_heater_name %> Recirculation Return Inlet Node,
-    <%= water_heater_name %> Recirculation Return Outlet Node;
-<% end %>
+    <%= water_heater_name %> DHW Demand Inlet Branch,             !- Name
+    ,                                                             !- Pressure Drop Curve Name
+    Pipe:Adiabatic,                                               !- Component 1 Object Type
+    <%= water_heater_name %> DHW Demand Inlet Pipe,               !- Component 1 Name
+    <%= water_heater_name %> DHW Demand Inlet Node,               !- Component 1 Inlet Node Name
+    <%= water_heater_name %> DHW Demand Splitter Inlet Node;      !- Component 1 Outlet Node Name
 
 Branch,
-    <%= water_heater_name %> DHW Demand Outlet Branch,
-    ,
-    Pipe:Adiabatic,
-    <%= water_heater_name %> DHW Demand Outlet Pipe,
-    <%= water_heater_name %> DHW Demand Mixer Outlet Node,
-    <%= water_heater_name %> DHW Demand Outlet Node;
+    <%= water_heater_name %> Recirculation Return Branch,         !- Name
+    ,                                                             !- Pressure Drop Curve Name
+    Pipe:Adiabatic,                                               !- Component 1 Object Type
+    <%= water_heater_name %> Recirculation Return Pipe,           !- Component 1 Name
+    <%= water_heater_name %> Recirculation Return Inlet Node,     !- Component 1 Inlet Node Name
+    <%= water_heater_name %> Recirculation Return Outlet Node;    !- Component 1 Outlet Node Name
+
+Branch,
+    <%= water_heater_name %> DHW Demand Outlet Branch,            !- Name
+    ,                                                             !- Pressure Drop Curve Name
+    Pipe:Adiabatic,                                               !- Component 1 Object Type
+    <%= water_heater_name %> DHW Demand Outlet Pipe,              !- Component 1 Name
+    <%= water_heater_name %> DHW Demand Mixer Outlet Node,        !- Component 1 Inlet Node Name
+    <%= water_heater_name %> DHW Demand Outlet Node;              !- Component 1 Outlet Node Name
 
 BranchList,
-    <%= water_heater_name %> DHW Supply Side Branches,
-    <%= water_heater_name %> DHW Supply Inlet Branch,
-    <%= water_heater_name %> Central Tank Branch,
-    <%= water_heater_name %> DHW Supply Bypass Branch,
-    <%= water_heater_name %> DHW Supply Outlet Branch;
+    <%= water_heater_name %> DHW Supply Side Branches,            !- Name
+    <%= water_heater_name %> DHW Supply Inlet Branch,             !- Branch 1 Name
+    <%= water_heater_name %> Central Tank Branch,                 !- Branch 2 Name
+    <%= water_heater_name %> DHW Supply Bypass Branch,            !- Branch 3 Name
+    <%= water_heater_name %> DHW Supply Outlet Branch;            !- Branch 4 Name
 
 BranchList,
-    <%= water_heater_name %> DHW Demand Side Branches,
-    <%= water_heater_name %> DHW Demand Inlet Branch,
+    <%= water_heater_name %> DHW Demand Side Branches,            !- Name
+    <%= water_heater_name %> DHW Demand Inlet Branch,             !- Branch 1 Name
 <% water_uses.each do |water_use| %>
-    <%= water_use[:name] %> Water Use Branch,
+    <%= water_use[:name] %> Water Use Branch,                     !- Water Use Branch Name
 <% end %>
-<% if use_recirc %>
-    <%= water_heater_name %> Recirculation Return Branch,
-<% end %>
-    <%= water_heater_name %> DHW Demand Outlet Branch;
+    <%= water_heater_name %> Recirculation Return Branch,         !- Recirculation Return Branch Name
+    <%= water_heater_name %> DHW Demand Outlet Branch;            !- Demand Outlet Branch Name
 
 Connector:Splitter,
-    <%= water_heater_name %> DHW Supply Splitter,
-    <%= water_heater_name %> DHW Supply Inlet Branch,
-    <%= water_heater_name %> Central Tank Branch,
-    <%= water_heater_name %> DHW Supply Bypass Branch;
+    <%= water_heater_name %> DHW Supply Splitter,                 !- Name
+    <%= water_heater_name %> DHW Supply Inlet Branch,             !- Inlet Branch Name
+    <%= water_heater_name %> Central Tank Branch,                 !- Outlet Branch 1 Name
+    <%= water_heater_name %> DHW Supply Bypass Branch;            !- Outlet Branch 2 Name
 
 Connector:Mixer,
-    <%= water_heater_name %> DHW Supply Mixer,
-    <%= water_heater_name %> DHW Supply Outlet Branch,
-    <%= water_heater_name %> Central Tank Branch,
-    <%= water_heater_name %> DHW Supply Bypass Branch;
+    <%= water_heater_name %> DHW Supply Mixer,                    !- Name
+    <%= water_heater_name %> DHW Supply Outlet Branch,            !- Outlet Branch Name
+    <%= water_heater_name %> Central Tank Branch,                 !- Inlet Branch 1 Name
+    <%= water_heater_name %> DHW Supply Bypass Branch;            !- Inlet Branch 2 Name
 
 Connector:Splitter,
-    <%= water_heater_name %> DHW Demand Splitter,
-    <%= water_heater_name %> DHW Demand Inlet Branch,
-<% water_uses.each_with_index do |water_use, index| %>
-    <%= water_use[:name] %> Water Use Branch<%= (!use_recirc && index == water_uses.length - 1) ? ";" : "," %>
+    <%= water_heater_name %> DHW Demand Splitter,                 !- Name
+    <%= water_heater_name %> DHW Demand Inlet Branch,             !- Inlet Branch Name
+<% water_uses.each do |water_use| %>
+    <%= water_use[:name] %> Water Use Branch,                     !- Water Use Outlet Branch Name
 <% end %>
-<% if use_recirc %>
-    <%= water_heater_name %> Recirculation Return Branch;
-<% end %>
+    <%= water_heater_name %> Recirculation Return Branch;         !- Recirculation Outlet Branch Name
 
 Connector:Mixer,
-    <%= water_heater_name %> DHW Demand Mixer,
-    <%= water_heater_name %> DHW Demand Outlet Branch,
-<% water_uses.each_with_index do |water_use, index| %>
-    <%= water_use[:name] %> Water Use Branch<%= (!use_recirc && index == water_uses.length - 1) ? ";" : "," %>
+    <%= water_heater_name %> DHW Demand Mixer,                    !- Name
+    <%= water_heater_name %> DHW Demand Outlet Branch,            !- Outlet Branch Name
+<% water_uses.each do |water_use| %>
+    <%= water_use[:name] %> Water Use Branch,                     !- Water Use Inlet Branch Name
 <% end %>
-<% if use_recirc %>
-    <%= water_heater_name %> Recirculation Return Branch;
-<% end %>
+    <%= water_heater_name %> Recirculation Return Branch;         !- Recirculation Inlet Branch Name
 
 ConnectorList,
-    <%= water_heater_name %> DHW Supply Side Connectors,
-    Connector:Splitter,
-    <%= water_heater_name %> DHW Supply Splitter,
-    Connector:Mixer,
-    <%= water_heater_name %> DHW Supply Mixer;
+    <%= water_heater_name %> DHW Supply Side Connectors,          !- Name
+    Connector:Splitter,                                          !- Connector 1 Object Type
+    <%= water_heater_name %> DHW Supply Splitter,                 !- Connector 1 Name
+    Connector:Mixer,                                             !- Connector 2 Object Type
+    <%= water_heater_name %> DHW Supply Mixer;                    !- Connector 2 Name
 
 ConnectorList,
-    <%= water_heater_name %> DHW Demand Side Connectors,
-    Connector:Splitter,
-    <%= water_heater_name %> DHW Demand Splitter,
-    Connector:Mixer,
-    <%= water_heater_name %> DHW Demand Mixer;
+    <%= water_heater_name %> DHW Demand Side Connectors,          !- Name
+    Connector:Splitter,                                          !- Connector 1 Object Type
+    <%= water_heater_name %> DHW Demand Splitter,                 !- Connector 1 Name
+    Connector:Mixer,                                             !- Connector 2 Object Type
+    <%= water_heater_name %> DHW Demand Mixer;                    !- Connector 2 Name
 
 Pipe:Adiabatic,
-    <%= water_heater_name %> DHW Supply Outlet Pipe,
-    <%= water_heater_name %> DHW Supply Outlet Pipe Inlet Node,
-    <%= water_heater_name %> DHW Supply Outlet Node;
+    <%= water_heater_name %> DHW Supply Outlet Pipe,              !- Name
+    <%= water_heater_name %> DHW Supply Outlet Pipe Inlet Node,   !- Inlet Node Name
+    <%= water_heater_name %> DHW Supply Outlet Node;              !- Outlet Node Name
 
 Pipe:Adiabatic,
-    <%= water_heater_name %> DHW Supply Bypass Pipe,
-    <%= water_heater_name %> DHW Supply Bypass Inlet Node,
-    <%= water_heater_name %> DHW Supply Bypass Outlet Node;
+    <%= water_heater_name %> DHW Supply Bypass Pipe,              !- Name
+    <%= water_heater_name %> DHW Supply Bypass Inlet Node,        !- Inlet Node Name
+    <%= water_heater_name %> DHW Supply Bypass Outlet Node;       !- Outlet Node Name
 
 Pipe:Adiabatic,
-    <%= water_heater_name %> DHW Demand Inlet Pipe,
-    <%= water_heater_name %> DHW Demand Inlet Node,
-    <%= water_heater_name %> DHW Demand Splitter Inlet Node;
-
-<% if use_recirc %>
-Pipe:Adiabatic,
-    <%= water_heater_name %> Recirculation Return Pipe,
-    <%= water_heater_name %> Recirculation Return Inlet Node,
-    <%= water_heater_name %> Recirculation Return Outlet Node;
-<% end %>
+    <%= water_heater_name %> DHW Demand Inlet Pipe,               !- Name
+    <%= water_heater_name %> DHW Demand Inlet Node,               !- Inlet Node Name
+    <%= water_heater_name %> DHW Demand Splitter Inlet Node;      !- Outlet Node Name
 
 Pipe:Adiabatic,
-    <%= water_heater_name %> DHW Demand Outlet Pipe,
-    <%= water_heater_name %> DHW Demand Mixer Outlet Node,
-    <%= water_heater_name %> DHW Demand Outlet Node;
+    <%= water_heater_name %> Recirculation Return Pipe,           !- Name
+    <%= water_heater_name %> Recirculation Return Inlet Node,     !- Inlet Node Name
+    <%= water_heater_name %> Recirculation Return Outlet Node;    !- Outlet Node Name
 
-! Keep this pump in both cases. It is the PlantLoop supply pump needed to move
-! water during DHW draws, even when the dedicated recirculation return is absent.
+Pipe:Adiabatic,
+    <%= water_heater_name %> DHW Demand Outlet Pipe,              !- Name
+    <%= water_heater_name %> DHW Demand Mixer Outlet Node,        !- Inlet Node Name
+    <%= water_heater_name %> DHW Demand Outlet Node;              !- Outlet Node Name
+
 Pump:VariableSpeed,
-    <%= water_heater_name %> Recirculation Pump,
-    <%= water_heater_name %> DHW Supply Inlet Node,
-    <%= water_heater_name %> Recirculation Pump Outlet Node,
-    autosize,
-    21521.4467194739,
-    autosize,
-    0.9,
-    ,
-    ,
-    1,
-    ,
-    ,
-    0,
-    Intermittent,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    PowerPerFlowPerPressure,
-    348701.1,
-    1.282051282,
-    ,
-    Domestic Hot Water Recirculation;
+    <%= water_heater_name %> Recirculation Pump,                  !- Name
+    <%= water_heater_name %> DHW Supply Inlet Node,               !- Inlet Node Name
+    <%= water_heater_name %> Recirculation Pump Outlet Node,      !- Outlet Node Name
+    autosize,                !- Design Maximum Flow Rate {m3/s}
+    21521.4467194739,        !- Design Pump Head {Pa}
+    autosize,                !- Design Power Consumption {W}
+    0.9,                     !- Motor Efficiency
+    ,                        !- Fraction of Motor Inefficiencies to Fluid Stream
+    ,                        !- Coefficient 1 of the Part Load Performance Curve
+    1,                       !- Coefficient 2 of the Part Load Performance Curve
+    ,                        !- Coefficient 3 of the Part Load Performance Curve
+    ,                        !- Coefficient 4 of the Part Load Performance Curve
+    0,                       !- Design Minimum Flow Rate {m3/s}
+    Intermittent,            !- Pump Control Type
+    ,                        !- Pump Flow Rate Schedule Name
+    ,                        !- Pump Curve Name
+    ,                        !- Impeller Diameter {m}
+    ,                        !- VFD Control Type
+    ,                        !- Pump RPM Schedule Name
+    ,                        !- Minimum Pressure Schedule {Pa}
+    ,                        !- Maximum Pressure Schedule {Pa}
+    ,                        !- Minimum RPM Schedule {rev/min}
+    ,                        !- Maximum RPM Schedule {rev/min}
+    ,                        !- Zone Name
+    ,                        !- Skin Loss Radiative Fraction
+    PowerPerFlowPerPressure, !- Design Power Sizing Method
+    348701.1,                !- Design Electric Power per Unit Flow Rate {W/(m3/s)}
+    1.282051282,             !- Design Shaft Power per Unit Flow Rate per Unit Head {W/((m3/s)-Pa)}
+    ,                        !- Design Minimum Flow Rate Fraction
+    General;                 !- End-Use Subcategory
 
 PlantLoop,
     <%= water_heater_name %> Central DHW Loop,                   !- Name
