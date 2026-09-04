@@ -17,13 +17,12 @@ parameter "hvac_type", :default=>""
 
 #combi HW/DHW systems
 parameter "combi", :default => false
+# Solaris Technical - Behzad S. Rizi - 2026-09-03 - Central MFm DHW master switch.
+parameter "central_dhw", :default => false, :domain => Boolean # false: existing per-dwelling-unit DHW; true: one building-level DHW plant serving all units.
+parameter "central_dhw_zone", :default => "", :domain => String # Optional ambient zone for the central tank. If blank, the first dwelling air-handler zone is used.
 parameter "ductless", :default => FALSE
 parameter "use_dummy_return_plenum", :default=>true
 parameter "dhw_stpt_sch", :default => ""
-
-#9/1/2026 Solaris Technical, Yasemin Agi
-#central DHW system
-parameter "central", :default => false
 
 import "zonehvac/res-zone-hvac-combi.pxt", :group => "hvac_zone" do
   include "*"
@@ -33,7 +32,7 @@ end
 
 import "system/res-water-heater-combi.pxt", :group => "water_heating" do
   include "*"
-  exclude "water_heater_name|water_heater_zone|water_use_zone|system_name|sch"
+  exclude "water_heater_name|water_heater_zone|water_use_zone|system_name|sch|water_uses"
   parameter "water_heater_type"
 end
 
@@ -192,8 +191,7 @@ all_zones = [
 ] #two story MFm control zone and air handler zone, and floor area
 all_dhw = {}
 all_hydronic = {}
-
-#9/1/2026 Solaris Technical, Yasemin Agi
+# Solaris Technical - Behzad S. Rizi - 2026-09-03 - Collect one DHW load per dwelling unit when central_dhw is enabled.
 central_water_uses = []
 
 for zone in all_zones
@@ -222,25 +220,26 @@ for zone in all_zones
     all_dhw[water_heater_name] ||= []
     all_dhw[water_heater_name] << system_name
 
-#9/1/2026 Solaris Technical, Yasemin Agi
-if central && !combi
-  central_water_uses << {
-    :name => "#{system_name} DHW",
-    :zone_name => control_zone_name,
-    :peak_flow => peak_flow / all_zones.length
-  }
-else
-  insert 'system/res-water-heater-combi.pxt',
-    :water_heater_name => water_heater_name,
-    :water_heater_zone => water_heater_zone,
-    :water_use_zone => control_zone_name,
-    :system_name => system_name,
-    :combi => combi,
-    :dhw_demand_sch => dhw_demand_sch,
-    :climate_zone_num => climate_zone,
-    :dhw_stpt_sch => dhw_stpt_sch,
-    **water_heating
-end
+  if central_dhw
+    # Keep the existing one-load-per-dwelling-unit representation, but connect all loads to one DHW plant.
+    central_water_uses << {
+      :name => water_heater_name,
+      :zone_name => control_zone_name,
+      :peak_flow => peak_flow
+    }
+  else
+    insert 'system/res-water-heater-combi.pxt',
+      :water_heater_name => water_heater_name,
+      :water_heater_zone => water_heater_zone,
+      :water_use_zone => control_zone_name,
+      :system_name => system_name,
+      :combi => combi,
+      :central_dhw => false,
+      :dhw_demand_sch => dhw_demand_sch,
+      :climate_zone_num => climate_zone,
+      :dhw_stpt_sch => dhw_stpt_sch,
+      **water_heating
+  end
 
   insert 'zoneloads/MFm_ductonly.imf',
     :zone_name=>control_zone_name,
@@ -260,17 +259,21 @@ end
     **hvac_zone
 end
 
-#9/1/2026 Solaris Technical, Yasemin Agi
-if central && !combi
-  insert 'system/res-water-heater-central-dev.pxt',
-    **water_heating,
+# Solaris Technical - Behzad S. Rizi- 2026-09-03 - Generate one centralized MFm DHW system after all 24 unit loads are collected.
+if central_dhw
+  raise "central_dhw and combi cannot both be true" if combi
+  central_dhw_zone_name = central_dhw_zone.empty? ? all_zones[0][1] : central_dhw_zone
+
+  insert 'system/res-water-heater-combi.pxt',
     :water_heater_name => "Central DHW",
-    :water_heater_zone => "EL1 SSE Perim Pl Zn (G.SSE14)", #?
+    :water_heater_zone => central_dhw_zone_name,
     :water_uses => central_water_uses,
-    :use_recirc => use_recirc,
+    :central_dhw => true,
+    :combi => false,
     :dhw_demand_sch => dhw_demand_sch,
     :climate_zone_num => climate_zone,
-    :dhw_stpt_sch => dhw_stpt_sch
+    :dhw_stpt_sch => dhw_stpt_sch,
+    **water_heating
 end
 
 if (!combi and (heat_type == "HW" or heat_type == "ST"))
