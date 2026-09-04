@@ -36,7 +36,7 @@ parameter "parasitic_fuel", :default=> "NaturalGas" #Electricity
 
 parameter "combi", :default => false #combined space heating and DHW
 
-# Solaris Technical - Behzad S. Rizi - 2026-09-03 - Develope Central multifamily DHW system.
+# Solaris Technical - Behzad S. Rizi - 2026-09-03 - Developed Central multifamily DHW system.
 parameter "central_dhw", :default => false, :domain => Boolean
 parameter "water_uses", :default => []
 # Master switch for the centralized distribution recirculation branch/pump topology.
@@ -154,8 +154,8 @@ rule "sanco2_hpwh_rule", :parameters => {:water_heater_type => "sanco2_hpwh"} do
 end
 %>
 
-# Solaris Technical - Behzad S. Rizi - 2026-09-03 - Develope Central multifamily DHW system.
-# Central DHW is intentionally independent of the legacy dwelling-unit combi space-heating configuration.
+! Solaris Technical - Behzad S. Rizi - 2026-09-03 - Developed Central multifamily DHW system.
+! Central DHW is intentionally independent of the legacy dwelling-unit combi space-heating configuration.
 <% if central_dhw %>
 
 ! =================================================================================================
