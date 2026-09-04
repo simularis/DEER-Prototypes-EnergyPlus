@@ -1,0 +1,6 @@
+skip,case_name,:combi,:central_dhw,:heat_type,:water_heater_type,:use_recirc,:dhw_heating_source,:thermal_eff,:sch
+,CentralStorageWH-NoRecirc,FALSE,TRUE,DX,gas,FALSE,water_heater,0.84,MFm_minute_dhw_demand_fraction.csv
+,CentralStorageWH-Recirc,FALSE,TRUE,DX,gas,TRUE,water_heater,0.84,MFm_minute_dhw_demand_fraction.csv
+,CentralBoiler-NoRecirc,FALSE,TRUE,DX,,FALSE,boiler,0.84,MFm_minute_dhw_demand_fraction.csv
+,CentralBoiler-RecircStorage,FALSE,TRUE,DX,,TRUE,boiler,0.84,MFm_minute_dhw_demand_fraction.csv
+,default,,,,,,,,
