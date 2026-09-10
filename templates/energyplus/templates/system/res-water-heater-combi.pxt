@@ -154,8 +154,8 @@ rule "sanco2_hpwh_rule", :parameters => {:water_heater_type => "sanco2_hpwh"} do
 end
 %>
 
-# Solaris Technical - Behzad S. Rizi - 2026-09-03 - Develope Central multifamily DHW system.
-# Central DHW is intentionally independent of the legacy dwelling-unit combi space-heating configuration.
+! Solaris Technical - Behzad S. Rizi - 2026-09-03 - Develope Central multifamily DHW system.
+! Central DHW is intentionally independent of the legacy dwelling-unit combi space-heating configuration.
 <% if central_dhw %>
 
 ! =================================================================================================
