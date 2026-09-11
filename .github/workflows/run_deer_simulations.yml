@@ -39,6 +39,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.model_ref }}
+
+      - name: Capture commit SHA
+        id: gitinfo
+        shell: bash
+        run: |
+          echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
 
       - name: Validate measure path
         shell: bash
@@ -55,22 +63,19 @@ jobs:
           role-to-assume: ${{ vars.AWS_SIMULATION_ROLE_ARN }}
           aws-region: us-east-1
 
-      - name: Start simulation workflow
-        shell: bash
+      - name: Launch simulation
         run: |
-          aws stepfunctions start-execution \
-            --state-machine-arn "${{ vars.SIMULATION_STATE_MACHINE_ARN }}" \
-            --input "$(jq -n \
-              --arg repo "${{ github.repository }}" \
-              --arg branch "${{ inputs.model_ref }}" \
-              --arg path "${{ inputs.measure_path }}" \
-              --arg profile "${{ inputs.run_profile }}" \
-              --arg actor "${{ github.actor }}" \
-              '{
-                repository: $repo,
-                commit: $commit,
-                branch: $branch,
-                measurePath: $path,
-                runProfile: $profile,
-                requestedBy: $actor
-              }')"
+          aws ssm send-command \
+            --instance-ids "${{ vars.SIMULATION_INSTANCE_ID }}" \
+            --document-name "AWS-RunPowerShellScript" \
+            --parameters '{
+              "commands":[
+                "C:\\Scripts\\RunDeerSimulation.ps1 ^
+                  -RunId ${{ github.run_id }} ^
+                  -Repository simularis/DEER-Prototypes-in-EnergyPlus ^
+                  -CommitSha ${{ steps.gitinfo.outputs.sha }} ^
+                  -MeasurePath ''${{ inputs.measure_path }}'' ^
+                  -S3Bucket ${{ vars.SIMULATION_BUCKET }}"
+              ]
+            }'
+
