@@ -2,12 +2,16 @@ name: Run DEER simulations
 
 run-name: >-
   Simulate ${{ inputs.measure_path }}
-  from ${{ github.ref_name }}
+  from ${{ inputs.model_ref }} using ${{ inputs.run_profile }} profile
   by @${{ github.actor }}
 
 on:
   workflow_dispatch:
     inputs:
+      model_ref:
+        description: Git branch, tag, or SHA
+        required: true
+        type: string
       measure_path:
         description: "Repository-relative path to the measure folder"
         required: true
@@ -49,7 +53,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ vars.AWS_SIMULATION_ROLE_ARN }}
-          aws-region: us-west-2
+          aws-region: us-east-1
 
       - name: Start simulation workflow
         shell: bash
@@ -58,8 +62,7 @@ jobs:
             --state-machine-arn "${{ vars.SIMULATION_STATE_MACHINE_ARN }}" \
             --input "$(jq -n \
               --arg repo "${{ github.repository }}" \
-              --arg commit "${{ github.sha }}" \
-              --arg branch "${{ github.ref_name }}" \
+              --arg branch "${{ inputs.model_ref }}" \
               --arg path "${{ inputs.measure_path }}" \
               --arg profile "${{ inputs.run_profile }}" \
               --arg actor "${{ github.actor }}" \
