@@ -1,0 +1,73 @@
+name: Run DEER simulations
+
+run-name: >-
+  Simulate ${{ inputs.measure_path }}
+  from ${{ github.ref_name }}
+  by @${{ github.actor }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      measure_path:
+        description: "Repository-relative path to the measure folder"
+        required: true
+        type: string
+      run_profile:
+        description: "Requested compute profile"
+        required: true
+        type: choice
+        options:
+          - test
+          - standard
+          - large
+      compose_only:
+        description: "Compose models without running EnergyPlus"
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate measure path
+        shell: bash
+        run: |
+          test -d "${{ inputs.measure_path }}"
+          case "${{ inputs.measure_path }}" in
+            "commercial measures/"*|"residential measures/"*) ;;
+            *) echo "Invalid measure path"; exit 1 ;;
+          esac
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_SIMULATION_ROLE_ARN }}
+          aws-region: us-west-2
+
+      - name: Start simulation workflow
+        shell: bash
+        run: |
+          aws stepfunctions start-execution \
+            --state-machine-arn "${{ vars.SIMULATION_STATE_MACHINE_ARN }}" \
+            --input "$(jq -n \
+              --arg repo "${{ github.repository }}" \
+              --arg commit "${{ github.sha }}" \
+              --arg branch "${{ github.ref_name }}" \
+              --arg path "${{ inputs.measure_path }}" \
+              --arg profile "${{ inputs.run_profile }}" \
+              --arg actor "${{ github.actor }}" \
+              '{
+                repository: $repo,
+                commit: $commit,
+                branch: $branch,
+                measurePath: $path,
+                runProfile: $profile,
+                requestedBy: $actor
+              }')"
