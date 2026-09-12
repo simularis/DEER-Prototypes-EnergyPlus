@@ -46,6 +46,7 @@ jobs:
         id: gitinfo
         shell: bash
         run: |
+          echo "start_date=$(date)" >> $GITHUB_OUTPUT
           echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
 
       - name: Validate measure path
@@ -63,7 +64,6 @@ jobs:
           role-to-assume: ${{ vars.AWS_SIMULATION_ROLE_ARN }}
           aws-region: us-east-1
 
-
       - name: Launch simulation
         id: launchSimulation
         shell: bash
@@ -71,7 +71,8 @@ jobs:
           COMMAND_ID=$(aws ssm send-command \
             --instance-ids "${{ vars.SIMULATION_INSTANCE_ID }}" \
             --document-name "AWS-RunPowerShellScript" \
-            --parameters "commands=\"pwsh C:\\Scripts\\RunDeerSimulation.ps1 -RunId ${{ github.run_id }} -Repository ${{ github.repository }} -CommitSha ${{ steps.gitinfo.outputs.sha }} -MeasurePath \\\"${{ inputs.measure_path }}\\\" -S3Bucket ${{ vars.SIMULATION_BUCKET }} --cloud-watch-output-config CloudWatchOutputEnabled=true\"" \
+            --parameters "commands=\"pwsh C:\\Scripts\\RunDeerSimulation.ps1 -RunId ${{ github.run_id }} -Repository ${{ github.repository }} -CommitSha ${{ steps.gitinfo.outputs.sha }} -MeasurePath \\\"${{ inputs.measure_path }}\\\" -S3Bucket ${{ vars.SIMULATION_BUCKET }} \"" \
+            --cloud-watch-output-config CloudWatchOutputEnabled=true,CloudWatchLogGroupName="/aws/ssm/githubactions" \
             --query 'Command.CommandId' \
             --output text \
             )
@@ -82,19 +83,46 @@ jobs:
           echo "Measure path: ${{ inputs.measure_path }}"
           echo "Commit SHA: ${{ steps.gitinfo.outputs.sha }}"
           echo "Command ID: ${{ steps.launchSimulation.outputs.command_id }}"
+          echo "Log file: s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/logs/RunDeerSimulation.log"
 
       - name: Wait for simulation to complete
         shell: bash
         run: |
           while true; do
-            STATUS=$(aws ssm list-command-invocations \
+            STATUS=$(aws ssm get-command-invocation \
+              --instance-id "${{ vars.SIMULATION_INSTANCE_ID }}" \
               --command-id "${{ steps.launchSimulation.outputs.command_id }}" \
               --details \
               --query "CommandInvocations[0].Status" \
               --output text)
             echo "Current status: $STATUS"
-            if [[ "$STATUS" == "Success" || "$STATUS" == "Failed" || "$STATUS" == "Cancelled" ]]; then
-              break
+            if [[ "$STATUS" == "Failed" ]]; then
+                echo "SSM command failed"
+                exit 1
+            fi
+            if [[ "$STATUS" == "Cancelled" ]]; then
+                echo "SSM command cancelled"
+                exit 1
+            fi
+            if [[ "$STATUS" == "Success" ]]; then
+                break
             fi
             sleep 30
           done
+
+      - name: Download status file
+        shell: bash
+        run: |
+          aws s3 cp "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/status.json" status.json
+          cat status.json
+
+      - name: Validate status
+        shell: bash
+        run: |
+          STATUS=$(jq -r .Status status.json)
+
+          if [[ "$STATUS" != "Success" ]]; then
+            echo "Simulation failed"
+            cat status.json
+            exit 1
+          fi
