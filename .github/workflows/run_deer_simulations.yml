@@ -63,10 +63,6 @@ jobs:
           role-to-assume: ${{ vars.AWS_SIMULATION_ROLE_ARN }}
           aws-region: us-east-1
 
-      - name: Show final command
-        run: |
-          echo "${{ inputs.measure_path }}"
-          echo "${{ steps.gitinfo.outputs.sha }}"
 
       - name: Launch simulation
         run: |
@@ -80,3 +76,25 @@ jobs:
         shell: bash
         run: |
           echo "command_id=$COMMAND_ID" >> $GITHUB_OUTPUT
+      
+      - name: Show final command
+        run: |
+          echo "Measure path: ${{ inputs.measure_path }}"
+          echo "Commit SHA: ${{ steps.gitinfo.outputs.sha }}"
+          echo "Command ID: $COMMAND_ID"
+
+      - name: Wait for simulation to complete
+        shell: bash
+        run: |
+          while true; do
+            STATUS=$(aws ssm list-command-invocations \
+              --command-id "${{ steps.commandinfo.outputs.command_id }}" \
+              --details \
+              --query "CommandInvocations[0].Status" \
+              --output text)
+            echo "Current status: $STATUS"
+            if [[ "$STATUS" == "Success" || "$STATUS" == "Failed" || "$STATUS" == "Cancelled" ]]; then
+              break
+            fi
+            sleep 30
+          done
