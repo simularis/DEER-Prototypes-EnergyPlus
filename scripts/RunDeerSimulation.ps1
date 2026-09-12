@@ -21,6 +21,8 @@ Set-Location "$Workspace\repo"
 
 git checkout $CommitSha
 
+Set-Location "$Workspace\repo\$MeasurePath"
+
 modelkit rake compose
 
 # modelkit rake run
