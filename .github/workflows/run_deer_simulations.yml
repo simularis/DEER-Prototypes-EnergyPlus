@@ -1,9 +1,9 @@
 name: Run DEER simulations
 
 run-name: >-
-  Simulate ${{ inputs.measure_path }}
-  from ${{ inputs.model_ref }} using ${{ inputs.run_profile }} profile
-  by @${{ github.actor }}
+  Run by @${{ github.actor }} from ${{ inputs.model_ref }}
+  using ${{ inputs.run_profile }} profile
+  in ${{ inputs.measure_path }}
 
 on:
   workflow_dispatch:
@@ -30,6 +30,10 @@ on:
         type: boolean
         default: false
 
+concurrency:
+  group: ec2-simulations2
+  cancel-in-progress: false
+
 permissions:
   id-token: write
   contents: read
@@ -38,12 +42,12 @@ jobs:
   submit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: simularis-gh-actions
           path: workflow_repo
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ inputs.model_ref }}
           path: model_repo
@@ -72,7 +76,7 @@ jobs:
           find . -name "RunDeerSimulation.ps1"
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: ${{ vars.AWS_SIMULATION_ROLE_ARN }}
           aws-region: us-east-1
@@ -84,6 +88,31 @@ jobs:
           aws s3 cp \
             workflow_repo/scripts/RunDeerSimulation.ps1 \
             "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/RunDeerSimulation.ps1"
+
+      - name: Start simulation instance
+        run: |
+          aws ec2 start-instances \
+            --instance-ids "${{ vars.SIMULATION_INSTANCE_ID }}"
+
+          aws ec2 wait instance-running \
+            --instance-ids "${{ vars.SIMULATION_INSTANCE_ID }}"
+
+      - name: Wait for SSM
+        run: |
+          while true; do
+            STATUS=$(aws ssm describe-instance-information \
+              --filters "Key=InstanceIds,Values=${{ vars.SIMULATION_INSTANCE_ID }}" \
+              --query "InstanceInformationList[0].PingStatus" \
+              --output text)
+
+            echo "SSM status: $STATUS"
+
+            if [[ "$STATUS" == "Online" ]]; then
+              break
+            fi
+
+            sleep 15
+          done
 
       - name: Launch simulation
         id: launchSimulation
@@ -129,6 +158,12 @@ jobs:
             fi
             sleep 30
           done
+
+      - name: Stop simulation instance
+        if: always()
+        run: |
+          aws ec2 stop-instances \
+            --instance-ids "${{ vars.SIMULATION_INSTANCE_ID }}"
 
       - name: Download status file
         shell: bash
