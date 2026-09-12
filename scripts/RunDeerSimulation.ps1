@@ -8,11 +8,14 @@ param(
     [string]$S3Bucket
 )
 
+$ErrorActionPreference = 'Stop'
+$PSNativeCommandUseErrorActionPreference = $true
+
 $Workspace = "E:\githubactions\$RunId"
 
 New-Item -ItemType Directory -Force -Path $Workspace
 
-git clone "$Repository" "$Workspace\repo"
+git clone "https://github.com/$Repository.git" "$Workspace\repo"
 
 Set-Location "$Workspace\repo"
 
