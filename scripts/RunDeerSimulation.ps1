@@ -36,6 +36,7 @@ try {
     
     Set-Location "$Workspace\repo"
     
+    # In case the user re-runs the same job with a different commit, we need to fetch all commits to ensure the specified commit is available.
     git fetch --all
 
     git checkout $CommitSha
@@ -75,6 +76,7 @@ finally {
 
     $status = @{
         RunId = $RunId
+        Repository = $Repository
         CommitSha = $CommitSha
         MeasurePath = $MeasurePath
         Status = $RunStatus

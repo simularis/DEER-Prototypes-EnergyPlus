@@ -40,6 +40,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: simularis-gh-actions
+          path: workflow_repo
+
+      - uses: actions/checkout@v4
+        with:
           ref: ${{ inputs.model_ref }}
 
       - name: Capture commit SHA
@@ -64,27 +69,35 @@ jobs:
           role-to-assume: ${{ vars.AWS_SIMULATION_ROLE_ARN }}
           aws-region: us-east-1
 
+      - name: Send the RunDeerSimulation script to S3
+        id: sendScript
+        shell: bash
+        run: |
+          aws s3 cp \
+            workflow_repo/scripts/RunDeerSimulation.ps1
+            "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/RunDeerSimulation.ps1"
+
       - name: Launch simulation
         id: launchSimulation
         shell: bash
         run: |
+          # The bootstrap script downloads the simulation script and then launches it.
           COMMAND_ID=$(aws ssm send-command \
             --instance-ids "${{ vars.SIMULATION_INSTANCE_ID }}" \
             --document-name "AWS-RunPowerShellScript" \
-            --parameters "commands=\"pwsh C:\\Scripts\\RunDeerSimulation.ps1 -RunId ${{ github.run_id }} -Repository ${{ github.repository }} -CommitSha ${{ steps.gitinfo.outputs.sha }} -MeasurePath \\\"${{ inputs.measure_path }}\\\" -S3Bucket ${{ vars.SIMULATION_BUCKET }} \"" \
+            --parameters "commands=\"pwsh C:/Scripts/BootstrapSimulation.ps1 -RunId ${{ github.run_id }} -Repository ${{ github.repository }} -CommitSha ${{ steps.gitinfo.outputs.sha }} -MeasurePath \\\"${{ inputs.measure_path }}\\\" -S3Bucket ${{ vars.SIMULATION_BUCKET }} \"" \
             --cloud-watch-output-config CloudWatchOutputEnabled=true,CloudWatchLogGroupName="/aws/ssm/githubactions" \
             --query 'Command.CommandId' \
             --output text \
             )
           echo "command_id=$COMMAND_ID" >> $GITHUB_OUTPUT
-      
-      - name: Show final command
-        run: |
-          echo "Measure path: ${{ inputs.measure_path }}"
-          echo "Commit SHA: ${{ steps.gitinfo.outputs.sha }}"
-          echo "Command ID: ${{ steps.launchSimulation.outputs.command_id }}"
-          echo "Log file: s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/logs/RunDeerSimulation.log"
-
+          echo "## DEER Simulation Submitted" >> $GITHUB_STEP_SUMMARY
+          echo "- Run ID: ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit SHA: ${{ steps.gitinfo.outputs.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Measure path: ${{ inputs.measure_path }}" >> $GITHUB_STEP_SUMMARY
+          echo "- SSM Command ID: $COMMAND_ID" >> $GITHUB_STEP_SUMMARY
+          echo "- Log file: s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/logs/RunDeerSimulation.log" >> $GITHUB_STEP_SUMMARY
+          
       - name: Wait for simulation to complete
         shell: bash
         run: |
@@ -92,8 +105,7 @@ jobs:
             STATUS=$(aws ssm get-command-invocation \
               --instance-id "${{ vars.SIMULATION_INSTANCE_ID }}" \
               --command-id "${{ steps.launchSimulation.outputs.command_id }}" \
-              --details \
-              --query "CommandInvocations[0].Status" \
+              --query "Status" \
               --output text)
             echo "Current status: $STATUS"
             if [[ "$STATUS" == "Failed" ]]; then
@@ -113,7 +125,18 @@ jobs:
       - name: Download status file
         shell: bash
         run: |
-          aws s3 cp "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/status.json" status.json
+          for i in {1..10}; do
+            if aws s3 cp \
+              "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/status.json" \
+              status.json
+            then
+              break
+            fi
+
+            echo "Waiting for status.json..."
+            sleep 10
+          done
+
           cat status.json
 
       - name: Validate status
@@ -125,4 +148,19 @@ jobs:
             echo "Simulation failed"
             cat status.json
             exit 1
+          fi
+
+      - name: Add summary
+        shell: bash
+        run: |
+          STATUS=$(jq -r .Status status.json)
+          echo "## DEER Simulation Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Repository: $(jq -r .Repository status.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit: ${{ steps.gitinfo.outputs.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Measure: ${{ inputs.measure_path }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Runtime (seconds): $(jq -r .RunTimeSeconds status.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- Status: $(jq -r .Status status.json)" >> $GITHUB_STEP_SUMMARY
+          if [[ "$STATUS" != "Success" ]]; then
+            echo "- Failure message: $(jq -r .FailureMessage status.json)" >> $GITHUB_STEP_SUMMARY
           fi
