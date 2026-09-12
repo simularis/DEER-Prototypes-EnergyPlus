@@ -74,7 +74,7 @@ jobs:
         shell: bash
         run: |
           aws s3 cp \
-            workflow_repo/scripts/RunDeerSimulation.ps1
+            workflow_repo/scripts/RunDeerSimulation.ps1 \
             "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/RunDeerSimulation.ps1"
 
       - name: Launch simulation
