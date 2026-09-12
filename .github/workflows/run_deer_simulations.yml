@@ -73,4 +73,4 @@ jobs:
           aws ssm send-command \
             --instance-ids "${{ vars.SIMULATION_INSTANCE_ID }}" \
             --document-name "AWS-RunPowerShellScript" \
-            --parameters "commands=\"C:\\Scripts\\RunDeerSimulation.ps1 -RunId ${{ github.run_id }} -Repository simularis/DEER-Prototypes-in-EnergyPlus -CommitSha ${{ steps.gitinfo.outputs.sha }} -MeasurePath \\\"${{ inputs.measure_path }}\\\" -S3Bucket ${{ vars.SIMULATION_BUCKET }}\""
+            --parameters "commands=\"C:\\Scripts\\RunDeerSimulation.ps1 -RunId ${{ github.run_id }} -Repository ${{ github.repositoryUrl }} -CommitSha ${{ steps.gitinfo.outputs.sha }} -MeasurePath \\\"${{ inputs.measure_path }}\\\" -S3Bucket ${{ vars.SIMULATION_BUCKET }}\""
