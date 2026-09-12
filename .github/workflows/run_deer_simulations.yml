@@ -71,7 +71,10 @@ jobs:
           COMMAND_ID=$(aws ssm send-command \
             --instance-ids "${{ vars.SIMULATION_INSTANCE_ID }}" \
             --document-name "AWS-RunPowerShellScript" \
-            --parameters "commands=\"pwsh C:\\Scripts\\RunDeerSimulation.ps1 -RunId ${{ github.run_id }} -Repository ${{ github.repository }} -CommitSha ${{ steps.gitinfo.outputs.sha }} -MeasurePath \\\"${{ inputs.measure_path }}\\\" -S3Bucket ${{ vars.SIMULATION_BUCKET }} --cloud-watch-output-config CloudWatchOutputEnabled=true\"")
+            --parameters "commands=\"pwsh C:\\Scripts\\RunDeerSimulation.ps1 -RunId ${{ github.run_id }} -Repository ${{ github.repository }} -CommitSha ${{ steps.gitinfo.outputs.sha }} -MeasurePath \\\"${{ inputs.measure_path }}\\\" -S3Bucket ${{ vars.SIMULATION_BUCKET }} --cloud-watch-output-config CloudWatchOutputEnabled=true\"" \
+            --query 'Command.CommandId' \
+            --output text \
+            )
           echo "command_id=$COMMAND_ID" >> $GITHUB_OUTPUT
       
       - name: Show final command
