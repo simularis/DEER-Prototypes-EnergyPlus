@@ -70,7 +70,13 @@ jobs:
 
       - name: Launch simulation
         run: |
-          aws ssm send-command \
+          COMMAND_ID=$(aws ssm send-command \
             --instance-ids "${{ vars.SIMULATION_INSTANCE_ID }}" \
             --document-name "AWS-RunPowerShellScript" \
-            --parameters "commands=\"C:\\Scripts\\RunDeerSimulation.ps1 -RunId ${{ github.run_id }} -Repository ${{ github.repository }} -CommitSha ${{ steps.gitinfo.outputs.sha }} -MeasurePath \\\"${{ inputs.measure_path }}\\\" -S3Bucket ${{ vars.SIMULATION_BUCKET }}\""
+            --parameters "commands=\"C:\\Scripts\\RunDeerSimulation.ps1 -RunId ${{ github.run_id }} -Repository ${{ github.repository }} -CommitSha ${{ steps.gitinfo.outputs.sha }} -MeasurePath \\\"${{ inputs.measure_path }}\\\" -S3Bucket ${{ vars.SIMULATION_BUCKET }}\"")
+
+      - name: Capture command ID
+        id: commandinfo
+        shell: bash
+        run: |
+          echo "command_id=$COMMAND_ID" >> $GITHUB_OUTPUT
