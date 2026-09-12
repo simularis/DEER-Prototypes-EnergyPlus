@@ -24,6 +24,7 @@ Start-Transcript -Path $LogFile -Force
 $RunStatus = "Success"
 $FailureMessage = ""
 $StartDate = Get-Date
+$AwsCli = "C:\Program Files\Amazon\AWSCLIV2\aws.exe"
 
 try {
     Write-Host "RunId: $RunId"
@@ -45,13 +46,13 @@ try {
 
     modelkit rake compose *>> "$LogDir\compose.log"
 
-    & "C:\Program Files\Amazon\AWSCLIV2\aws.exe" s3 cp `
+    & $AwsCli s3 cp `
         "$LogDir\compose.log" `
         "s3://$S3Bucket/githubactions/$RunId/logs/compose.log"
 
     # modelkit rake run
 
-    & "C:\Program Files\Amazon\AWSCLIV2\aws.exe" s3 sync `
+    & $AwsCli s3 sync `
         "$Workspace\repo\$MeasurePath\runs" `
         "s3://$S3Bucket/githubactions/$RunId/runs"
 
@@ -88,11 +89,11 @@ finally {
 
     $status | Set-Content "$Workspace\status.json"
 
-    & "C:\Program Files\Amazon\AWSCLIV2\aws.exe" s3 cp `
+    & $AwsCli s3 cp `
     "$Workspace\status.json" `
     "s3://$S3Bucket/githubactions/$RunId/status.json"
 
-    & "C:\Program Files\Amazon\AWSCLIV2\aws.exe" s3 cp `
+    & $AwsCli s3 cp `
     $LogFile `
     "s3://$S3Bucket/githubactions/$RunId/logs/RunDeerSimulation.log"
 }

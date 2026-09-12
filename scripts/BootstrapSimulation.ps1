@@ -17,8 +17,9 @@ $Workspace = "E:\githubactions\$RunId"
 New-Item -ItemType Directory -Force -Path $Workspace
 
 # Download the RunDeerSimulation.ps1 script from S3 to the simulation instance
+$AwsCli = "C:\Program Files\Amazon\AWSCLIV2\aws.exe"
 
-& "C:\Program Files\Amazon\AWSCLIV2\aws.exe" s3 cp `
+& $AwsCli s3 cp `
   "s3://$S3Bucket/githubactions/$RunId/RunDeerSimulation.ps1" `
   "$Workspace\RunDeerSimulation.ps1"
 
