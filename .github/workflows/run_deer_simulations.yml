@@ -63,19 +63,21 @@ jobs:
           role-to-assume: ${{ vars.AWS_SIMULATION_ROLE_ARN }}
           aws-region: us-east-1
 
+      - name: Show final command
+        run: |
+          echo "${{ inputs.measure_path }}"
+          echo "${{ steps.gitinfo.outputs.sha }}"
+
       - name: Launch simulation
         run: |
           aws ssm send-command \
             --instance-ids "${{ vars.SIMULATION_INSTANCE_ID }}" \
             --document-name "AWS-RunPowerShellScript" \
-            --parameters '{
-              "commands":[
-                "C:\\Scripts\\RunDeerSimulation.ps1 ^
-                  -RunId ${{ github.run_id }} ^
-                  -Repository simularis/DEER-Prototypes-in-EnergyPlus ^
-                  -CommitSha ${{ steps.gitinfo.outputs.sha }} ^
-                  -MeasurePath ''${{ inputs.measure_path }}'' ^
-                  -S3Bucket ${{ vars.SIMULATION_BUCKET }}"
-              ]
-            }'
-
+            --parameters commands="
+                C:\\Scripts\\RunDeerSimulation.ps1
+                  -RunId ${{ github.run_id }}
+                  -Repository simularis/DEER-Prototypes-in-EnergyPlus
+                  -CommitSha ${{ steps.gitinfo.outputs.sha }}
+                  -MeasurePath ''${{ inputs.measure_path }}''
+                  -S3Bucket ${{ vars.SIMULATION_BUCKET }}
+            "
