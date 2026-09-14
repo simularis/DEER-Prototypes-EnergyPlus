@@ -95,12 +95,28 @@ try {
 
     # Use conda run instead of conda activate because this script executes
     # non-interactively through SSM.
-    & $CondaExe run --no-capture-output -n py314 `
-        papermill `
-        $QcNotebook `
-        $QcExecutedNotebook `
-        -p simfolder "$Workspace\repo\$MeasurePath" `
-        -p output_file $SimulationStats
+    $PapermillLog = Join-Path $LogDir "papermill.log"
+
+    try {
+        & $CondaExe run --no-capture-output -n py314 `
+            papermill `
+            $QcNotebook `
+            $QcExecutedNotebook `
+            -p simfolder "$Workspace\repo\$MeasurePath" `
+            -p output_file $SimulationStats `
+            *>&1 | Tee-Object -FilePath $PapermillLog
+
+        if ($LASTEXITCODE -ne 0) {
+            throw "Papermill failed with exit code $LASTEXITCODE. See $PapermillLog"
+        }
+    }
+    finally {
+        if (Test-Path -LiteralPath $PapermillLog) {
+            & $AwsCli s3 cp `
+                $PapermillLog `
+                "s3://$S3Bucket/githubactions/$RunId/attempt-$RunAttempt/papermill.log"
+        }
+    }
 
     Write-Host "Converting executed notebook to HTML..."
 
@@ -172,6 +188,7 @@ finally {
 
     & $AwsCli s3 cp `
         $LogFile `
-        "s3://$S3Bucket/githubactions/$RunId/logs/RunDeerSimulation.log"
+        "s3://$S3Bucket/githubactions/$RunId/attempt-$RunAttempt/RunDeerSimulation.log"
+
 }
 
