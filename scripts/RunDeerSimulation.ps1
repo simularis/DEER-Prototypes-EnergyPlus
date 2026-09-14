@@ -59,7 +59,7 @@ try {
 
     & $AwsCli s3 cp `
         "$LogDir\compose.log" `
-        "s3://$S3Bucket/githubactions/$RunId/logs/compose.log"
+        "s3://$S3Bucket/githubactions/$RunId/attempt-$RunAttempt/compose.log"
 
     # modelkit rake run
 
@@ -95,9 +95,13 @@ try {
     # non-interactively through SSM.
     
     & $CondaExe run --no-capture-output -n py314 `
-            python $QcNotebook
-            -p simfolder "$Workspace\repo\$MeasurePath" `
-            -p output_file $SimulationStats `
+        python $QcNotebook `
+        "$Workspace\repo\$MeasurePath" `
+        "$SimulationStats"
+
+    if (-not (Test-Path $SimulationStats)) {
+       throw "QC script did not produce $SimulationStats"
+    }
 
     Write-Host "Uploading QC outputs to S3..."
 

@@ -54,7 +54,7 @@ jobs:
           ref: ${{ inputs.model_ref }}
           path: model_repo
       
-      # Checkout simularis/building-energy-utils to get the notebook "QC incomplete simulations.ipynb"
+      # Checkout simularis/building-energy-utils to get the notebook "QC incomplete simulations.py"
       - uses: actions/checkout@v7
         with:
           repository: simularis/building-energy-utils
@@ -92,8 +92,8 @@ jobs:
             workflow_repo/scripts/RunDeerSimulation.ps1 \
             "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/RunDeerSimulation.ps1"
           aws s3 cp \
-            "building-energy-utils/deer-user-scripts/QC incomplete simulations.ipynb" \
-            "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/QC incomplete simulations.ipynb"
+            "building-energy-utils/deer-user-scripts/QC incomplete simulations.py" \
+            "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/QC incomplete simulations.py"
 
       - name: Start simulation instance
         run: |
@@ -139,7 +139,7 @@ jobs:
           echo "- Commit SHA: ${{ steps.gitinfo.outputs.sha }}" >> $GITHUB_STEP_SUMMARY
           echo "- Measure path: ${{ inputs.measure_path }}" >> $GITHUB_STEP_SUMMARY
           echo "- SSM Command ID: $COMMAND_ID" >> $GITHUB_STEP_SUMMARY
-          echo "- Log file: s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/logs/RunDeerSimulation.log" >> $GITHUB_STEP_SUMMARY
+          echo "- Log file: s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/attempt-${{ github.run_attempt }}/RunDeerSimulation.log" >> $GITHUB_STEP_SUMMARY
           
       - name: Wait for simulation to complete
         shell: bash
@@ -217,7 +217,6 @@ jobs:
         with:
           name: deer-qc-results-${{ github.run_id }}
           path: |
-            qc-artifacts/QC incomplete simulations.html
             qc-artifacts/simulation_stats.csv
           if-no-files-found: error
           retention-days: 30
@@ -241,6 +240,5 @@ jobs:
           echo "### QC results" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "- ${{ steps.upload-qc.outputs.artifact-url }}" >> "$GITHUB_STEP_SUMMARY"
-          echo "- Included file: \`QC incomplete simulations.html\`" >> "$GITHUB_STEP_SUMMARY"
           echo "- Included file: \`simulation_stats.csv\`" >> "$GITHUB_STEP_SUMMARY"
           echo "- S3 archive: \`s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/qc/\`" >> "$GITHUB_STEP_SUMMARY"
