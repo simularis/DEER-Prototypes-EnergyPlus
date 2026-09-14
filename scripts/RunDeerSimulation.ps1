@@ -5,14 +5,15 @@ param(
     [string]$Repository,
     [string]$CommitSha,
     [string]$MeasurePath,
-    [string]$S3Bucket
+    [string]$S3Bucket,
+    [int]$RunAttempt
 )
 
 $Workspace = "E:\githubactions\$RunId"
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $true
 
-$LogDir = "$Workspace\logs"
+$LogDir = "$Workspace\attempt-$RunAttempt"
 
 New-Item -ItemType Directory -Force -Path $LogDir | Out-Null
 
@@ -35,13 +36,21 @@ try {
 
     New-Item -ItemType Directory -Force -Path $Workspace
 
-    git clone "https://github.com/$Repository.git" "$Workspace\repo"
-    
-    Set-Location "$Workspace\repo"
-    
+    $RepoDir = "$Workspace\repo"
+
+    if (-not (Test-Path "$RepoDir\.git")) {
+        Write-Host "Repository not found. Cloning..."
+        git clone "https://github.com/$Repository.git" $RepoDir
+    }
+    else {
+        Write-Host "Repository already exists. Reusing existing checkout."
+    }
+
+    Set-Location $RepoDir
+    git remote get-url origin
+
     # In case the user re-runs the same job with a different commit, we need to fetch all commits to ensure the specified commit is available.
     git fetch --all
-
     git checkout $CommitSha
 
     Set-Location "$Workspace\repo\$MeasurePath"
@@ -75,9 +84,18 @@ try {
 
     Write-Host "Executing QC notebook..."
 
+    $CondaExe = "C:\ProgramData\Anaconda3\Scripts\conda.exe"
+
+    if (-not (Test-Path $CondaExe)) {
+        throw "Conda executable not found at $CondaExe"
+    }
+
+    & $CondaExe run --no-capture-output -n py314 `
+        python --version
+
     # Use conda run instead of conda activate because this script executes
     # non-interactively through SSM.
-    conda run --no-capture-output -n py314 `
+    & $CondaExe run --no-capture-output -n py314 `
         papermill `
         $QcNotebook `
         $QcExecutedNotebook `
@@ -86,7 +104,7 @@ try {
 
     Write-Host "Converting executed notebook to HTML..."
 
-    conda run --no-capture-output -n py314 `
+    & $CondaExe run --no-capture-output -n py314 `
         jupyter nbconvert `
         --to html `
         $QcExecutedNotebook `
