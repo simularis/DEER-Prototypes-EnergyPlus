@@ -206,14 +206,9 @@ jobs:
           mkdir -p qc-artifacts
 
           aws s3 cp \
-            "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/qc/QC incomplete simulations.html" \
-            "qc-artifacts/QC incomplete simulations.html"
-
-          aws s3 cp \
             "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/qc/simulation_stats.csv" \
             "qc-artifacts/simulation_stats.csv"
 
-          test -s "qc-artifacts/QC incomplete simulations.html"
           test -s "qc-artifacts/simulation_stats.csv"
 
       - name: Upload QC results
