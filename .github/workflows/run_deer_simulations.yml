@@ -42,15 +42,23 @@ jobs:
   submit:
     runs-on: ubuntu-latest
     steps:
+      # Checkout the repositories for github workflow, models, and build tools
       - uses: actions/checkout@v7
         with:
           ref: simularis-gh-actions
           path: workflow_repo
 
+      # Checkout the model repository at the specified ref (branch, tag, or SHA)
       - uses: actions/checkout@v7
         with:
           ref: ${{ inputs.model_ref }}
           path: model_repo
+      
+      # Checkout simularis/building-energy-utils to get the notebook "QC incomplete simulations.ipynb"
+      - uses: actions/checkout@v7
+        with:
+          repository: simularis/building-energy-utils
+          path: building-energy-utils
 
       - name: Capture commit SHA
         id: gitinfo
@@ -70,24 +78,22 @@ jobs:
             *) echo "Invalid measure path"; exit 1 ;;
           esac
 
-      - name: Debug workflow repo
-        run: |
-          cd workflow_repo
-          find . -name "RunDeerSimulation.ps1"
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: ${{ vars.AWS_SIMULATION_ROLE_ARN }}
           aws-region: us-east-1
 
-      - name: Send the RunDeerSimulation script to S3
+      - name: Send build scripts to S3
         id: sendScript
         shell: bash
         run: |
           aws s3 cp \
             workflow_repo/scripts/RunDeerSimulation.ps1 \
             "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/RunDeerSimulation.ps1"
+          aws s3 cp \
+            "building-energy-utils/deer-user-scripts/QC incomplete simulations.ipynb" \
+            "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/QC incomplete simulations.ipynb"
 
       - name: Start simulation instance
         run: |
@@ -192,6 +198,23 @@ jobs:
             cat status.json
             exit 1
           fi
+
+      - name: Download QC artifacts from S3
+        id: download-qc
+        shell: bash
+        run: |
+          mkdir -p qc-artifacts
+
+          aws s3 cp \
+            "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/qc/QC incomplete simulations.html" \
+            "qc-artifacts/QC incomplete simulations.html"
+
+          aws s3 cp \
+            "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/qc/simulation_stats.csv" \
+            "qc-artifacts/simulation_stats.csv"
+
+          test -s "qc-artifacts/QC incomplete simulations.html"
+          test -s "qc-artifacts/simulation_stats.csv"
 
       - name: Add summary
         shell: bash
