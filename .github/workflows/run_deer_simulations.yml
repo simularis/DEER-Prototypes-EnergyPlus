@@ -216,6 +216,17 @@ jobs:
           test -s "qc-artifacts/QC incomplete simulations.html"
           test -s "qc-artifacts/simulation_stats.csv"
 
+      - name: Upload QC results
+        id: upload-qc
+        uses: actions/upload-artifact@v4
+        with:
+          name: deer-qc-results-${{ github.run_id }}
+          path: |
+            qc-artifacts/QC incomplete simulations.html
+            qc-artifacts/simulation_stats.csv
+          if-no-files-found: error
+          retention-days: 30
+
       - name: Add summary
         shell: bash
         run: |
@@ -230,3 +241,11 @@ jobs:
           if [[ "$STATUS" != "Success" ]]; then
             echo "- Failure message: $(jq -r .FailureMessage status.json)" >> $GITHUB_STEP_SUMMARY
           fi
+
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "### QC results" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- ${{ steps.upload-qc.outputs.artifact-url }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Included file: \`QC incomplete simulations.html\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Included file: \`simulation_stats.csv\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- S3 archive: \`s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/qc/\`" >> "$GITHUB_STEP_SUMMARY"
