@@ -12,7 +12,6 @@ df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', 
 
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
-
 # %%
 #generate unique list of measure names for Com
 
@@ -25,7 +24,7 @@ print(measures)
 #%%
 #Define measure name here (name of the measure folder itself
 ##NOTE: The example folder used here, 'SWXX111-00 Example_SEER_AC' is only used to illustrate an example workflow thru post-procesing
-measure_name = 'SWCR003-04 Refrig Fan Motor'
+measure_name = 'SWXX111-00 Example_SEER_AC'
 
 #filter to specific measure mapping records from mapping workbook
 df_measure = df_com[df_com['Modelkit Folder Primary Name']== measure_name]
@@ -228,8 +227,7 @@ def end_use_rearrange(df_in):
                             df_in['Interior Lighting (kWh)'] +\
                             df_in['Exterior Lighting (kWh)'] +\
                             df_in['Fans (kWh)']+\
-                            df_in['Pumps (kWh)']+\
-                            df_in['Refrigeration (kWh)'])
+                            df_in['Pumps (kWh)'])
 
     df_in['kwh_ltg'] = (df_in['Interior Lighting (kWh)'] +\
                                     df_in['Exterior Lighting (kWh)'])
@@ -248,7 +246,7 @@ def end_use_rearrange(df_in):
 
     df_in['kwh_venthtg'] =0 #placeholders fields for now
     df_in['kwh_ventclg'] =0
-    df_in['kwh_refg'] = df_in['Refrigeration (kWh)'] 
+    df_in['kwh_refg'] = 0
     df_in['kwh_hpsup'] = 0
     df_in['kwh_shw'] = 0
     df_in['kwh_ext'] = 0
