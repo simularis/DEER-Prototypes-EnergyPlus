@@ -1,5 +1,5 @@
 --Format measure impact table for ex ante database using appropriate significant figures
-SET search_path TO "MC_results_database";
+SET search_path TO PUBLIC;
 DROP TABLE IF EXISTS meas_impacts_2022_res;
 CREATE TABLE meas_impacts_2022_res AS 
 SELECT
@@ -41,12 +41,12 @@ NULL::FLOAT4 as "AStdEUtherm",
 20::INT2 as "Flag",
 ''::VARCHAR as "SourceDesc",
 --new fields added 6/20/2022
-(case "APreUseWBkWh" when 0 then 0 else round("APreUseWBkWh"::numeric(15,5), 4-floor(log(abs("APreUseWBkWh")))::INT) end) as "APreUseWBkWh",
-(case "APreUseWBtherm" when 0 then 0 else round("APreUseWBtherm"::numeric(15,5), 4-floor(log(abs("APreUseWBtherm")))::INT) end) as "APreUseWBtherm",
-(case "AStdUseWBkWh" when 0 then 0 else round("AStdUseWBkWh"::numeric(15,5), 4-floor(log(abs("AStdUseWBkWh")))::INT) end) as "AStdUseWBkWh",
-(case "AStdUseWBtherm" when 0 then 0 else round("AStdUseWBtherm"::numeric(15,5), 4-floor(log(abs("AStdUseWBtherm")))::INT) end) as "AStdUseWBtherm",
-(case "AMsrUseWBkWh" when 0 then 0 else round("AMsrUseWBkWh"::numeric(15,5), 4-floor(log(abs("AMsrUseWBkWh")))::INT) end) as "AMsrUseWBkWh",
-(case "AMsrUseWBtherm" when 0 then 0 else round("AMsrUseWBtherm"::numeric(15,5), 4-floor(log(abs("AMsrUseWBtherm")))::INT) end) as "AMsrUseWBtherm",
+"APreUseWBkWh",
+"APreUseWBtherm",
+"AStdUseWBkWh",
+"AStdUseWBtherm",
+"AMsrUseWBkWh",
+"AMsrUseWBtherm",
 "APreUseEUkWh",
 "APreUseEUtherm",
 "AStdUseEUkWh",
