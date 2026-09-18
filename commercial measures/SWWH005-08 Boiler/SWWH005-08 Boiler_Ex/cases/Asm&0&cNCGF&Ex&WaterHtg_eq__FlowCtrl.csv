@@ -1,0 +1,3 @@
+skip,case_name,:dhw_water_heater_volume,:dhw_water_heater_capacity,:dhw_water_heater_fuel,:dhw_water_heater_eff,:dhw_wh_config,:dhw_dhw_loop_configuration
+,Central_RecircLoop,Autosize,Autosize,NaturalGas,0.8,CENTRAL,RECIRCULATION-LOOP
+,Separate_DefaultLoop,Autosize,Autosize,NaturalGas,0.8,SEPARATE,DEFAULT-LOOP
