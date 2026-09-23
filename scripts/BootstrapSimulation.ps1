@@ -7,7 +7,8 @@ param(
     [string]$Repository,
     [string]$CommitSha,
     [string]$MeasurePath,
-    [string]$S3Bucket
+    [string]$S3Bucket,
+    [int]$RunAttempt
 )
 
 $ErrorActionPreference = 'Stop'
@@ -30,4 +31,5 @@ pwsh "$Workspace\RunDeerSimulation.ps1" `
   -Repository $Repository `
   -CommitSha $CommitSha `
   -MeasurePath "$MeasurePath" `
-  -S3Bucket $S3Bucket
+  -S3Bucket $S3Bucket `
+  -RunAttempt $RunAttempt
