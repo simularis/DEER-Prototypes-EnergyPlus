@@ -9,7 +9,9 @@ param(
     [int]$RunAttempt
 )
 
-$Workspace = "E:\githubactions\$RunId"
+#$Workspace = "E:\githubactions\$RunId"
+
+$Workspace = "C:\githubactions\$RunId"
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $true
 

@@ -14,7 +14,7 @@ param(
 $ErrorActionPreference = 'Stop'
 
 # Use for persistent server with a data drive, E: 
-$Workspace = "E:\githubactions\$RunId"
+#$Workspace = "E:\githubactions\$RunId"
 
 # Use for ephemeral server
 $Workspace = "C:\githubactions\$RunId"
