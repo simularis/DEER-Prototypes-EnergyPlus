@@ -1,4 +1,4 @@
-name: Run DEER simulations
+name: Run DEER simulations on ephemeral server
 run-name: Run by @${{ github.actor }} from ${{ inputs.model_ref }} using ${{ inputs.run_profile }} profile in ${{ inputs.measure_path }}
 
 on:
@@ -12,6 +12,7 @@ on:
         type: choice
         options: [test, standard, large]
       compose_only: {description: "Compose models without running EnergyPlus", required: false, type: boolean, default: false}
+      keep_instance: {description: "Do not terminate instance after run",  type: boolean, default: false}
 
 concurrency: {group: ec2-simulations2, cancel-in-progress: false}
 permissions: {id-token: write, contents: read}
@@ -175,7 +176,7 @@ jobs:
           retention-days: 30
 
       - name: Terminate ephemeral instance
-        if: always() && steps.launch.outputs.instance_id != ''
+        if: always() && steps.launch.outputs.instance_id != '' && inputs.keep_instance != true
         run: |
           aws ec2 terminate-instances --instance-ids "${{ steps.launch.outputs.instance_id }}"
           aws ec2 wait instance-terminated --instance-ids "${{ steps.launch.outputs.instance_id }}"
