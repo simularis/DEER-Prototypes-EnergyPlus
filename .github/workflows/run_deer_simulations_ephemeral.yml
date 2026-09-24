@@ -79,9 +79,10 @@ jobs:
             --instance-type "${{ steps.instanceType.outputs.instance_type }}" \
             --subnet-id "${{ vars.EC2_SUBNET_ID }}" \
             --client-token "deer-${{ github.run_id }}-${{ github.run_attempt }}" \
-            --tag-specifications "ResourceType=instance,Tags=[{Key=GitHubRunId,Value=${{ github.run_id }}},{Key=GitHubRunAttempt,Value=${{ github.run_attempt }}},{Key=Repository,Value=${{ github.repository }}},{Key=ManagedBy,Value=GitHubActions}]" \
+            --tag-specifications "ResourceType=instance,Tags=[{Key=GitHubRunId,Value=${{ github.run_id }}},{Key=GitHubRunAttempt,Value=${{ github.run_attempt }}},{Key=Repository,Value=${{ github.repository }}},{Key=ManagedBy,Value=GitHubActions},{Key=Workload,Value=RunDeerSimulations}]" \
             --query 'Instances[0].InstanceId' --output text)
           test -n "$INSTANCE_ID" && test "$INSTANCE_ID" != None
+          echo "- Instance ID: $INSTANCE_ID" >> $GITHUB_STEP_SUMMARY
           echo "instance_id=$INSTANCE_ID" >> "$GITHUB_OUTPUT"
           aws ec2 wait instance-running --instance-ids "$INSTANCE_ID"
           aws ec2 wait instance-status-ok --instance-ids "$INSTANCE_ID"
