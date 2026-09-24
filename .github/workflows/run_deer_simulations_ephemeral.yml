@@ -77,7 +77,6 @@ jobs:
           INSTANCE_ID=$(aws ec2 run-instances \
             --launch-template "LaunchTemplateId=${{ vars.EC2_LAUNCH_TEMPLATE_ID }},Version=${{ vars.EC2_LAUNCH_TEMPLATE_VERSION }}" \
             --instance-type "${{ steps.instanceType.outputs.instance_type }}" \
-            --subnet-id "${{ vars.EC2_SUBNET_ID }}" \
             --client-token "deer-${{ github.run_id }}-${{ github.run_attempt }}" \
             --tag-specifications "ResourceType=instance,Tags=[{Key=GitHubRunId,Value=${{ github.run_id }}},{Key=GitHubRunAttempt,Value=${{ github.run_attempt }}},{Key=Repository,Value=${{ github.repository }}},{Key=ManagedBy,Value=GitHubActions},{Key=Workload,Value=RunDeerSimulations}]" \
             --query 'Instances[0].InstanceId' --output text)
