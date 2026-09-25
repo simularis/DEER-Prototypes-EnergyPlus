@@ -29,7 +29,7 @@ import zipfile
 import pandas
 import sqlite3
 import os
-import Path from pathlib
+from pathlib import Path
 
 def clean_loadshapes_zip(zip_filename,
                          output_dir=Path('cleaned_loadshapes'),
@@ -107,19 +107,169 @@ def clean_loadshapes_zip(zip_filename,
 if __name__ == '__main__':
     # Step 1. Modify the input filename(s) as needed
     input_zips = [
-        'CEDARS_LoadShape_DMo.zip', 
-        'CEDARS_LoadShape_MFm.zip',
-        'CEDARS_LoadShape_SFm.zip'
+        'CEDARS_LoadShape_Com_Asm.csv.zip',
+        'CEDARS_LoadShape_Com_ECC.csv.zip',
+        'CEDARS_LoadShape_Com_EPr.csv.zip',
+        'CEDARS_LoadShape_Com_ERC.csv.zip',
+        'CEDARS_LoadShape_Com_ESe.csv.zip',
+        'CEDARS_LoadShape_Com_EUn.csv.zip',
+        'CEDARS_LoadShape_Com_Gro.csv.zip',
+        'CEDARS_LoadShape_Com_Hsp.csv.zip',
+        'CEDARS_LoadShape_Com_Htl.csv.zip',
+        'CEDARS_LoadShape_Com_MBT.csv.zip',
+        'CEDARS_LoadShape_Com_MLI.csv.zip',
+        'CEDARS_LoadShape_Com_Mtl.csv.zip',
+        'CEDARS_LoadShape_Com_Nrs.csv.zip',
+        'CEDARS_LoadShape_Com_OfL.csv.zip',
+        'CEDARS_LoadShape_Com_OfS.csv.zip',
+        'CEDARS_LoadShape_Com_RFF.csv.zip',
+        'CEDARS_LoadShape_Com_RSD.csv.zip',
+        'CEDARS_LoadShape_Com_Rt3.csv.zip',
+        'CEDARS_LoadShape_Com_RtL.csv.zip',
+        'CEDARS_LoadShape_Com_RtS.csv.zip',
+        'CEDARS_LoadShape_Com_SCn.csv.zip'
     ]
 
     # Step 2. Modify this query based on TechID & BldgLoc exclusions specific to the measure.
     query_exclusions = """
+    UPDATE loadshapes_long
+    SET TechType = 'spltSEER'
+    WHERE TechID IN (
+                    'NE-dxHP_equip-spltSEER-14.4-SEER2-8.7-HSPF',
+                    'NE-dxHP_equip-spltSEER-15.4-SEER2-9-HSPF',
+                    'NE-dxHP_equip-spltSEER-16.3-SEER2-9.4-HSPF',
+                    'NE-dxHP_equip-spltSEER-17.3-SEER2-9.7-HSPF'
+    );
 
+    INSERT INTO loadshapes_long (
+    Sector,
+    BldgType,
+    BldgVint,
+    BldgHVAC,
+    BldgLoc,
+    Type,
+    "Source Year",
+    TechGroup,
+    TechType,
+    TechID,
+    "Hour of Year",
+    UECproportion
+    )
+    SELECT
+        Sector,
+        BldgType,
+        BldgVint,
+        BldgHVAC,
+        BldgLoc,
+        Type,
+        "Source Year",
+        TechGroup,
+        'spltSEER' AS TechType,
+        CASE TechID
+            WHEN 'NE-dxAC_equip-pkgSEER-12.35-SEER2'
+                THEN 'NE-dxAC_equip-spltSEER-12.35-SEER2'
+            WHEN 'NE-dxAC_equip-pkgSEER-13.4-SEER2'
+                THEN 'NE-dxAC_equip-spltSEER-13.4-SEER2'
+        END AS TechID,
+        "Hour of Year",
+        UECproportion
+    FROM loadshapes_long
+    WHERE TechID IN (
+        'NE-dxAC_equip-pkgSEER-12.35-SEER2',
+        'NE-dxAC_equip-pkgSEER-13.4-SEER2'
+    );
+
+    
+    DELETE FROM loadshapes_long
+    WHERE TechID IN (
+            'NE-dxAC_equip-pkgEER-14.2-IEER-TE-0.81-VarFan',
+            'NE-dxAC_equip-pkgEER-13.2-IEER-TE-0.81-VarFan',
+            'NE-dxAC_equip-pkgEER-14.8-IEER-TE-0.81-VarFan',
+            'NE-dxAC_equip-pkgSEER-13.4-SEER2-VarFan'
+    )
+    AND (BldgType IN ('EUn'));
+
+    
+    DELETE FROM loadshapes_long
+    WHERE TechID IN (
+                    'NE-dxAC_equip-pkgEER-14.2-IEER-TE-0.81',
+                    'NE-dxAC_equip-pkgEER-13.2-IEER-TE-0.81',
+                    'NE-dxAC_equip-pkgEER-14.8-IEER-TE-0.81',
+                    'NE-dxAC_equip-pkgSEER-13.4-SEER2'
+    )
+    AND (
+            (
+                BldgType IN ('ECC', 'EPr', 'ERC', 'ESe')
+                AND BldgLoc IN (
+                    'CZ01', 'CZ02', 'CZ03', 'CZ04', 'CZ05',
+                    'CZ06', 'CZ07', 'CZ08', 'CZ09', 'CZ10',
+                    'CZ11', 'CZ12', 'CZ13', 'CZ14', 'CZ15'
+                )
+            )
+            OR
+            (
+                BldgType IN ('Gro', 'OfL', 'OfS', 'Rt3', 'RtL', 'RtS')
+                AND BldgLoc IN (
+                    'CZ03', 'CZ04', 'CZ05', 'CZ06', 'CZ07',
+                    'CZ08', 'CZ09', 'CZ10', 'CZ11', 'CZ12',
+                    'CZ13', 'CZ15'
+                )
+            )
+        );
+
+
+    DELETE FROM loadshapes_long
+        WHERE TechID IN (
+                'NE-dxAC_equip-pkgEER-14.2-IEER-TE-0.81-VarFan',
+                'NE-dxAC_equip-pkgEER-13.2-IEER-TE-0.81-VarFan',
+                'NE-dxAC_equip-pkgEER-14.8-IEER-TE-0.81-VarFan',
+                'NE-dxAC_equip-pkgSEER-13.4-SEER2-VarFan'
+        )
+        AND (
+                (
+                    BldgType IN ('ECC', 'EPr', 'ERC', 'ESe')
+                    AND BldgLoc IN ('CZ16')
+                )
+                OR
+                (
+                    BldgType IN ('Gro', 'OfL', 'OfS', 'Rt3', 'RtL', 'RtS')
+                    AND BldgLoc IN ('CZ01', 'CZ02', 'CZ14', 'CZ16')
+                )
+            );
+
+    
+    UPDATE loadshapes_long
+    SET TechID = REPLACE(TechID, '-VarFan', '')
+    WHERE TechID IN (
+        'NE-dxAC_equip-pkgEER-14.2-IEER-TE-0.81-VarFan',
+        'NE-dxAC_equip-pkgEER-13.2-IEER-TE-0.81-VarFan',
+        'NE-dxAC_equip-pkgEER-14.8-IEER-TE-0.81-VarFan',
+        'NE-dxAC_equip-pkgSEER-13.4-SEER2-VarFan'
+    )
+    AND (
+        (
+            BldgType IN ('ECC', 'EPr', 'ERC', 'ESe')
+            AND BldgLoc IN (
+                'CZ01', 'CZ02', 'CZ03', 'CZ04', 'CZ05',
+                'CZ06', 'CZ07', 'CZ08', 'CZ09', 'CZ10',
+                'CZ11', 'CZ12', 'CZ13', 'CZ14', 'CZ15'
+            )
+        )
+        OR
+        (
+            BldgType IN ('Gro', 'OfL', 'OfS', 'Rt3', 'RtL', 'RtS')
+            AND BldgLoc IN (
+                'CZ03', 'CZ04', 'CZ05', 'CZ06', 'CZ07',
+                'CZ08', 'CZ09', 'CZ10', 'CZ11', 'CZ12',
+                'CZ13', 'CZ15'
+            )
+        )
+    );
     """
     
     # Enter list of assumed column names in the input file to raise an error if the assumption is wrong.
     expected_input_columns = ['Sector', 'BldgType', 'BldgVint', 'BldgHVAC', 'BldgLoc',
-        'Type (Whole Building or End Use)', 'Source Year', 'TechGroup',
+        'Type', 'Source Year', 'TechGroup',
         'TechType', 'TechID', 'Hour of Year', 'UECproportion']
     
     # Enter list of required output column names to raise an error if the data transformation fails to yield these columns.
@@ -137,11 +287,12 @@ if __name__ == '__main__':
     "BldgType" AS "BldgType",
     "BldgVint" AS "BldgVint",
     "BldgHVAC" AS "BldgHVAC", -- customize to match measure case BldgHVAC
+    -- 'Any' AS "BldgHVAC",
     "BldgLoc" AS "BldgLoc",
-    "NormUnit" AS "NormUnit", -- use this line if the input CSV already has a column named "NormUnit"
-    -- 'Cap-Tons' AS "NormUnit", -- uncomment this line if the input CSV does not have a column named "NormUnit"
-    "Type (Whole Building or End Use)" AS "Type (Whole Building or End Use)", -- use this line if the input CSV already has the column
-    -- "Type" AS "Type (Whole Building or End Use)", -- uncomment this line if "Type" column needs to be renamed in output
+    -- "NormUnit" AS "NormUnit", -- use this line if the input CSV already has a column named "NormUnit"
+    'Cap-Tons' AS "NormUnit", -- uncomment this line if the input CSV does not have a column named "NormUnit"
+    -- "Type (Whole Building or End Use)" AS "Type (Whole Building or End Use)", -- use this line if the input CSV already has the column
+    "Type" AS "Type (Whole Building or End Use)", -- uncomment this line if "Type" column needs to be renamed in output
     "Source Year" AS "Source Year",
     "TechGroup" AS "TechGroup",
     "TechType" AS "TechType",
