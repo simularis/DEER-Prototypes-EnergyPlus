@@ -102,12 +102,12 @@ jobs:
         shell: bash
         run: |
           # The bootstrap script downloads the simulation script and then launches it.
-          PARAMS=$(jq -nc --arg command 'pwsh C:/Scripts/BootstrapSimulation.ps1' \
-            ' -RunId "${{ github.run_id }}"' \
-            ' -Repository "${{ github.repository }}"' \
-            ' -CommitSha "${{ steps.gitinfo.outputs.sha }}"' \
-            ' -MeasurePath "${{ inputs.measure_path }}"' \
-            ' -S3Bucket "${{ vars.SIMULATION_BUCKET }}"' \
+          PARAMS=$(jq -nc --arg command 'pwsh C:/Scripts/BootstrapSimulation.ps1'\
+            ' -RunId "${{ github.run_id }}"'\
+            ' -Repository "${{ github.repository }}"'\
+            ' -CommitSha "${{ steps.gitinfo.outputs.sha }}"'\
+            ' -MeasurePath "${{ inputs.measure_path }}"'\
+            ' -S3Bucket "${{ vars.SIMULATION_BUCKET }}"'\
             ' -RunAttempt "${{ github.run_attempt }}"' \
             '{commands:[$command]}')
           COMMAND_ID=$(aws ssm send-command \
