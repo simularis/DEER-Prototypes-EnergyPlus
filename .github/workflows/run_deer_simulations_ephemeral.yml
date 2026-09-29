@@ -105,14 +105,16 @@ jobs:
           # Composing the command string in bash: juxtapose strings to concatenate ('str1''str2')
           # Continue over new lines with line continuation character, no space ('str1'\)
           # Indentation on new line counts as a space. Do not indent between juxtaposed strings.
-          PARAMS=$(jq -nc --arg command 'pwsh C:/Scripts/BootstrapSimulation.ps1'\
-          ' -RunId "${{ github.run_id }}"'\
-          ' -Repository "${{ github.repository }}"'\
-          ' -CommitSha "${{ steps.gitinfo.outputs.sha }}"'\
-          ' -MeasurePath "${{ inputs.measure_path }}"'\
-          ' -S3Bucket "${{ vars.SIMULATION_BUCKET }}"'\
-          ' -RunAttempt "${{ github.run_attempt }}"'\
-           '{commands:[$command]}')
+          COMMAND="pwsh 'C:/Scripts/BootstrapSimulation.ps1'"
+          COMMAND+=" -RunId '${{ github.run_id }}'"
+          COMMAND+=" -Repository '${{ github.repository }}'"
+          COMMAND+=" -CommitSha '${{ steps.gitinfo.outputs.sha }}'"
+          COMMAND+=" -MeasurePath '${{ inputs.measure_path }}'"
+          COMMAND+=" -S3Bucket '${{ vars.SIMULATION_BUCKET }}'"
+          COMMAND+=" -RunAttempt '${{ github.run_attempt }}'"
+          echo "COMMAND=$COMMAND"
+          PARAMS=$(jq -nc --arg command "$COMMAND" '{commands:[$command]}')
+          echo "PARAMS=$PARAMS"
           COMMAND_ID=$(aws ssm send-command \
             --instance-ids "${{ steps.launch.outputs.instance_id }}" \
             --document-name AWS-RunPowerShellScript --parameters "$PARAMS" \
