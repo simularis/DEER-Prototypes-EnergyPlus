@@ -1,4 +1,4 @@
-# RunDeerSimulation.ps1
+# RunDeerSimulation2.ps1
 
 param(
     [string]$RunId,
@@ -9,21 +9,20 @@ param(
     [int]$RunAttempt
 )
 
-#$Workspace = "E:\githubactions\$RunId"
-
-$Workspace = "C:\githubactions\$RunId"
-$ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $true
+$ErrorActionPreference = 'Stop'
 
-$LogDir = "$Workspace\attempt-$RunAttempt"
+$RunWorkspace = "C:\githubactions\$RunId" # Location to clone repository and store files to be re-used from one attempt to the next
+$AttemptDirectory = "$RunWorkspace\attempt-$RunAttempt" # Location for 
+New-Item -ItemType Directory -Force -Path $RunWorkspace | Out-Null
+New-Item -ItemType Directory -Force -Path $AttemptDirectory | Out-Null
 
-New-Item -ItemType Directory -Force -Path $LogDir | Out-Null
-
-$LogFile = "$LogDir\RunDeerSimulation.log"
+$LogFile = "$AttemptDirectory\RunDeerSimulation2.log"
 
 # Capture everything written to the console
 Start-Transcript -Path $LogFile -Force
 
+# Initialize status variables to defaults
 $RunStatus = "Success"
 $FailureMessage = ""
 $StartDate = Get-Date
@@ -154,3 +153,12 @@ finally {
 
 }
 
+
+
+Import-Module .\workflow\Invoke-WorkflowStep.psm1
+
+Invoke-WorkflowStep ...
+
+Invoke-WorkflowStep ...
+
+Invoke-WorkflowStep ...
