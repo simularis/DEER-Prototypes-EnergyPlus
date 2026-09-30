@@ -29,6 +29,7 @@ on:
         required: false
         type: boolean
         default: false
+      keep_running: {description: "Do not stop instance after run",  type: boolean, default: false}
 
 concurrency:
   group: ec2-simulations2
@@ -425,11 +426,10 @@ jobs:
   # This final job runs regardless of the success or failure of job1 and job2
   stop-cloud:
     needs: [calculate]
-    if: ${{ always() }}
+    if: ${{ !inputs.keep_running }}
     runs-on: ubuntu-latest
     steps:
       - name: Stop simulation instance
-        if: always()
         run: |
           aws ec2 stop-instances \
             --instance-ids "${{ vars.SIMULATION_INSTANCE_ID }}"
