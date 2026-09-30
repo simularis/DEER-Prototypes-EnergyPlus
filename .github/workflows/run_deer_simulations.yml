@@ -168,19 +168,14 @@ jobs:
       - name: Download status file
         shell: bash
         run: |
+          echo "Waiting for step-status.json..."
           for i in {1..10}; do
-            if aws s3 cp
+            aws s3 cp \
               "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/steps/package-qc/step-status.json" \
-              "step-status.json"
-            then
-              break
-            fi
-
-            echo "Waiting for status.json..."
+              step-status.json && break
             sleep 10
           done
-
-          cat step-status.json
+          test -s step-status.json
 
       - name: Validate status
         shell: bash
