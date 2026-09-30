@@ -121,6 +121,7 @@ jobs:
           COMMAND+=" -MeasurePath '${{ inputs.measure_path }}'"
           COMMAND+=" -S3Bucket '${{ vars.SIMULATION_BUCKET }}'"
           COMMAND+=" -RunAttempt '${{ github.run_attempt }}'"
+          COMMAND+=" -RequestedSteps 'package-qc'"
           echo "COMMAND=$COMMAND"
           PARAMS=$(jq -nc --arg command "$COMMAND" '{commands:[$command]}')
           echo "PARAMS=$PARAMS"
