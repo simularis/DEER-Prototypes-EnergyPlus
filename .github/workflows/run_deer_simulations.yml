@@ -167,9 +167,9 @@ jobs:
         shell: bash
         run: |
           for i in {1..10}; do
-            if aws s3 sync
-              "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/steps" \
-              "steps"
+            if aws s3 cp
+              "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/steps/package-qc/step-status.json" \
+              "step-status.json"
             then
               break
             fi
@@ -178,16 +178,16 @@ jobs:
             sleep 10
           done
 
-          cat status.json
+          cat step-status.json
 
       - name: Validate status
         shell: bash
         run: |
-          STATUS=$(jq -r .Status status.json)
+          STATUS=$(jq -r .Status step-status.json)
 
           if [[ "$STATUS" != "Success" ]]; then
             echo "Simulation failed"
-            cat status.json
+            cat step-status.json
             exit 1
           fi
 
@@ -216,16 +216,16 @@ jobs:
       - name: Add summary
         shell: bash
         run: |
-          STATUS=$(jq -r .Status status.json)
+          STATUS=$(jq -r .Status step-status.json)
           echo "## DEER Simulation Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- Repository: $(jq -r .Repository status.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- Repository: $(jq -r .Repository step-status.json)" >> $GITHUB_STEP_SUMMARY
           echo "- Commit: ${{ steps.gitinfo.outputs.sha }}" >> $GITHUB_STEP_SUMMARY
           echo "- Measure: ${{ inputs.measure_path }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Runtime (seconds): $(jq -r .RunTimeSeconds status.json)" >> $GITHUB_STEP_SUMMARY
-          echo "- Status: $(jq -r .Status status.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- Runtime (seconds): $(jq -r .RunTimeSeconds step-status.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- Status: $(jq -r .Status step-status.json)" >> $GITHUB_STEP_SUMMARY
           if [[ "$STATUS" != "Success" ]]; then
-            echo "- Failure message: $(jq -r .FailureMessage status.json)" >> $GITHUB_STEP_SUMMARY
+            echo "- Failure message: $(jq -r .FailureMessage step-status.json)" >> $GITHUB_STEP_SUMMARY
           fi
 
           echo "" >> "$GITHUB_STEP_SUMMARY"
@@ -333,8 +333,8 @@ jobs:
         run: |
           for i in {1..10}; do
             if aws s3 cp \
-              "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/status.json" \
-              status.json
+              "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/steps/compose/step-status.json" \
+              step-status.json
             then
               break
             fi
@@ -343,16 +343,16 @@ jobs:
             sleep 10
           done
 
-          cat status.json
+          cat step-status.json
 
       - name: Validate status
         shell: bash
         run: |
-          STATUS=$(jq -r .Status status.json)
+          STATUS=$(jq -r .Status step-status.json)
 
           if [[ "$STATUS" != "Success" ]]; then
             echo "Simulation failed"
-            cat status.json
+            cat step-status.json
             exit 1
           fi
 
@@ -381,16 +381,16 @@ jobs:
       - name: Add summary
         shell: bash
         run: |
-          STATUS=$(jq -r .Status status.json)
+          STATUS=$(jq -r .Status step-status.json)
           echo "## DEER Simulation Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- Repository: $(jq -r .Repository status.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- Repository: $(jq -r .Repository step-status.json)" >> $GITHUB_STEP_SUMMARY
           echo "- Commit: ${{ steps.gitinfo.outputs.sha }}" >> $GITHUB_STEP_SUMMARY
           echo "- Measure: ${{ inputs.measure_path }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Runtime (seconds): $(jq -r .RunTimeSeconds status.json)" >> $GITHUB_STEP_SUMMARY
-          echo "- Status: $(jq -r .Status status.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- Runtime (seconds): $(jq -r .RunTimeSeconds step-status.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- Status: $(jq -r .Status step-status.json)" >> $GITHUB_STEP_SUMMARY
           if [[ "$STATUS" != "Success" ]]; then
-            echo "- Failure message: $(jq -r .FailureMessage status.json)" >> $GITHUB_STEP_SUMMARY
+            echo "- Failure message: $(jq -r .FailureMessage step-status.json)" >> $GITHUB_STEP_SUMMARY
           fi
 
           echo "" >> "$GITHUB_STEP_SUMMARY"
