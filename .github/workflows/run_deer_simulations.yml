@@ -236,15 +236,9 @@ jobs:
           echo "- S3 archive: \`s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/qc/\`" >> "$GITHUB_STEP_SUMMARY"
 
   compose:
+    needs: package-qc
     runs-on: ubuntu-latest
     steps:
-      # Checkout the repositories for cloud-based build script
-      - uses: actions/checkout@v7
-        with:
-          repository: simularis/deer-cloud-compute-setup
-          ref: main
-          path: workflow_repo
-
       # Checkout the model repository at the specified ref (branch, tag, or SHA)
       - uses: actions/checkout@v7
         with:
@@ -285,9 +279,6 @@ jobs:
         id: sendScript
         shell: bash
         run: |
-          aws s3 cp \
-            workflow_repo/scripts/RunDeerSimulation.ps1 \
-            "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/RunDeerSimulation.ps1"
           aws s3 cp \
             "building-energy-utils/deer-user-scripts/QC incomplete simulations.py" \
             "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/QC incomplete simulations.py"
