@@ -424,7 +424,7 @@ jobs:
 
   # This final job runs regardless of the success or failure of job1 and job2
   stop-cloud:
-    needs: [collect]
+    needs: [calculate]
     if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
