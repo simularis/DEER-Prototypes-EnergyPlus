@@ -414,7 +414,7 @@ jobs:
   # This final job runs regardless of the success or failure of job1 and job2
   stop-cloud:
     needs: [calculate]
-    if: ${{ !inputs.keep_running }}
+    if: ${{ always() && !inputs.keep_running }}
     runs-on: ubuntu-latest
     steps:
       - name: Stop simulation instance
