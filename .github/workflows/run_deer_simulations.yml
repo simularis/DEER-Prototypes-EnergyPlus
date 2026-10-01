@@ -58,30 +58,34 @@ jobs:
           aws ec2 wait instance-running \
             --instance-ids "${{ vars.SIMULATION_INSTANCE_ID }}"
 
-      - name: Wait for SSM
+      - name: Wait for SSM ping
+        id: ssm
         run: |
-          while true; do
+          for attempt in {1..12}; do
             STATUS=$(aws ssm describe-instance-information \
               --filters "Key=InstanceIds,Values=${{ vars.SIMULATION_INSTANCE_ID }}" \
               --query "InstanceInformationList[0].PingStatus" \
               --output text)
-
             echo "SSM status: $STATUS"
-
-            if [[ "$STATUS" == "Online" ]]; then
-              break
-            fi
-
-            sleep 15
+            [[ "$STATUS" == "Online" ]] && exit 0
+            sleep 5
           done
-  
+          exit 1
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Cloud server startup summary" >> $GITHUB_STEP_SUMMARY
+          echo " - Simulation instance ID ${{ vars.SIMULATION_INSTANCE_ID }}"
+          echo " - SSM ping status ${{ steps.ssm.outcome }}"
+
   package-qc:
     needs: start-cloud
     runs-on: ubuntu-latest
     outputs:
+      s3bucket: s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}
       start_date: ${{ steps.gitinfo.outputs.start_date }}
       sha: ${{ steps.gitinfo.outputs.sha }}
-
     steps:
       # Checkout the model repository at the specified ref (branch, tag, or SHA)
       - uses: actions/checkout@v7
@@ -139,11 +143,12 @@ jobs:
             )
           echo "command_id=$COMMAND_ID" >> $GITHUB_OUTPUT
           echo "## Measure QC submitted" >> $GITHUB_STEP_SUMMARY
+          echo "- S3 archive: \`s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}\`" >> "$GITHUB_STEP_SUMMARY"
           echo "- Run ID: ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
           echo "- Commit SHA: ${{ steps.gitinfo.outputs.sha }}" >> $GITHUB_STEP_SUMMARY
           echo "- Measure path: ${{ inputs.measure_path }}" >> $GITHUB_STEP_SUMMARY
           echo "- SSM Command ID: $COMMAND_ID" >> $GITHUB_STEP_SUMMARY
-          echo "- Log file: s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/attempt-${{ github.run_attempt }}/RunDeerSimulation.log" >> $GITHUB_STEP_SUMMARY
+          echo "- Log file: s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/attempt-${{ github.run_attempt }}/transcript_package-qc.log" >> $GITHUB_STEP_SUMMARY
 
       - name: Wait for commands to complete
         shell: bash
@@ -236,8 +241,8 @@ jobs:
           echo "### QC results" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "- ${{ steps.upload-qc.outputs.artifact-url }}" >> "$GITHUB_STEP_SUMMARY"
-          echo "- Included file: \`simulation_stats.csv\`" >> "$GITHUB_STEP_SUMMARY"
-          echo "- S3 archive: \`s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/qc/\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Included files: \`measure-qc.json,scenario-index.json\`" >> "$GITHUB_STEP_SUMMARY"
+          
 
   compose:
     needs: package-qc
@@ -249,15 +254,26 @@ jobs:
           role-to-assume: ${{ vars.AWS_SIMULATION_ROLE_ARN }}
           aws-region: us-east-1
 
-      - name: Launch simulation
-        id: launchSimulation
+      - name: Send command to server
+        id: sendCommand
         shell: bash
         run: |
           # The bootstrap script downloads the simulation script and then launches it.
+          COMMAND="pwsh 'C:/DEER/deer-cloud-compute-setup/workflow/BootstrapSimulation.ps1'"
+          COMMAND+=" -RunId '${{ github.run_id }}'"
+          COMMAND+=" -Repository '${{ github.repository }}'"
+          COMMAND+=" -CommitSha '${{ needs.package-qc.outputs.sha }}'"
+          COMMAND+=" -MeasurePath '${{ inputs.measure_path }}'"
+          COMMAND+=" -S3Bucket '${{ vars.SIMULATION_BUCKET }}'"
+          COMMAND+=" -RunAttempt '${{ github.run_attempt }}'"
+          COMMAND+=" -RequestedSteps 'compose'"
+          echo "COMMAND=$COMMAND"
+          PARAMS=$(jq -nc --arg command "$COMMAND" '{commands:[$command]}')
+          echo "PARAMS=$PARAMS"
           COMMAND_ID=$(aws ssm send-command \
             --instance-ids "${{ vars.SIMULATION_INSTANCE_ID }}" \
             --document-name "AWS-RunPowerShellScript" \
-            --parameters "commands=\"pwsh C:/DEER/deer-cloud-compute-setup/workflow/BootstrapSimulation.ps1 -RunId ${{ github.run_id }} -Repository ${{ github.repository }} -CommitSha ${{ needs.package-qc.outputs.sha }} -MeasurePath \\\"${{ inputs.measure_path }}\\\" -S3Bucket ${{ vars.SIMULATION_BUCKET }} -RunAttempt ${{ github.run_attempt }}\"" \
+            --parameters "$PARAMS" \
             --cloud-watch-output-config CloudWatchOutputEnabled=true,CloudWatchLogGroupName="/aws/ssm/githubactions" \
             --query 'Command.CommandId' \
             --output text \
@@ -276,7 +292,7 @@ jobs:
           while true; do
             STATUS=$(aws ssm get-command-invocation \
               --instance-id "${{ vars.SIMULATION_INSTANCE_ID }}" \
-              --command-id "${{ steps.launchSimulation.outputs.command_id }}" \
+              --command-id "${{ steps.sendCommand.outputs.command_id }}" \
               --query "Status" \
               --output text)
             echo "Current status: $STATUS"
