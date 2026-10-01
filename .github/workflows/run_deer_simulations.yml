@@ -78,6 +78,10 @@ jobs:
   package-qc:
     needs: start-cloud
     runs-on: ubuntu-latest
+    outputs:
+      start_date: ${{ steps.gitinfo.outputs.start_date }}
+      sha: ${{ steps.gitinfo.outputs.sha }}
+
     steps:
       # Checkout the model repository at the specified ref (branch, tag, or SHA)
       - uses: actions/checkout@v7
@@ -239,49 +243,11 @@ jobs:
     needs: package-qc
     runs-on: ubuntu-latest
     steps:
-      # Checkout the model repository at the specified ref (branch, tag, or SHA)
-      - uses: actions/checkout@v7
-        with:
-          ref: ${{ inputs.model_ref }}
-          path: model_repo
-      
-      # Checkout simularis/building-energy-utils to get the notebook "QC incomplete simulations.py"
-      - uses: actions/checkout@v7
-        with:
-          repository: simularis/building-energy-utils
-          path: building-energy-utils
-
-      - name: Capture commit SHA
-        id: gitinfo
-        shell: bash
-        run: |
-          cd model_repo
-          echo "start_date=$(date)" >> $GITHUB_OUTPUT
-          echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
-
-      - name: Validate measure path
-        shell: bash
-        run: |
-          cd model_repo
-          test -d "${{ inputs.measure_path }}"
-          case "${{ inputs.measure_path }}" in
-            "commercial measures/"*|"residential measures/"*) ;;
-            *) echo "Invalid measure path"; exit 1 ;;
-          esac
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: ${{ vars.AWS_SIMULATION_ROLE_ARN }}
           aws-region: us-east-1
-
-      - name: Send build scripts to S3
-        id: sendScript
-        shell: bash
-        run: |
-          aws s3 cp \
-            "building-energy-utils/deer-user-scripts/QC incomplete simulations.py" \
-            "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/QC incomplete simulations.py"
 
       - name: Launch simulation
         id: launchSimulation
@@ -291,7 +257,7 @@ jobs:
           COMMAND_ID=$(aws ssm send-command \
             --instance-ids "${{ vars.SIMULATION_INSTANCE_ID }}" \
             --document-name "AWS-RunPowerShellScript" \
-            --parameters "commands=\"pwsh C:/DEER/deer-cloud-compute-setup/workflow/BootstrapSimulation.ps1 -RunId ${{ github.run_id }} -Repository ${{ github.repository }} -CommitSha ${{ steps.gitinfo.outputs.sha }} -MeasurePath \\\"${{ inputs.measure_path }}\\\" -S3Bucket ${{ vars.SIMULATION_BUCKET }} -RunAttempt ${{ github.run_attempt }}\"" \
+            --parameters "commands=\"pwsh C:/DEER/deer-cloud-compute-setup/workflow/BootstrapSimulation.ps1 -RunId ${{ github.run_id }} -Repository ${{ github.repository }} -CommitSha ${{ needs.package-qc.outputs.sha }} -MeasurePath \\\"${{ inputs.measure_path }}\\\" -S3Bucket ${{ vars.SIMULATION_BUCKET }} -RunAttempt ${{ github.run_attempt }}\"" \
             --cloud-watch-output-config CloudWatchOutputEnabled=true,CloudWatchLogGroupName="/aws/ssm/githubactions" \
             --query 'Command.CommandId' \
             --output text \
@@ -299,7 +265,7 @@ jobs:
           echo "command_id=$COMMAND_ID" >> $GITHUB_OUTPUT
           echo "## DEER Simulation Submitted" >> $GITHUB_STEP_SUMMARY
           echo "- Run ID: ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Commit SHA: ${{ steps.gitinfo.outputs.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit SHA: ${{ needs.package-qc.outputs.sha }}" >> $GITHUB_STEP_SUMMARY
           echo "- Measure path: ${{ inputs.measure_path }}" >> $GITHUB_STEP_SUMMARY
           echo "- SSM Command ID: $COMMAND_ID" >> $GITHUB_STEP_SUMMARY
           echo "- Log file: s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/attempt-${{ github.run_attempt }}/RunDeerSimulation.log" >> $GITHUB_STEP_SUMMARY
@@ -385,7 +351,7 @@ jobs:
           echo "## DEER Simulation Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- Repository: $(jq -r .Repository step-status.json)" >> $GITHUB_STEP_SUMMARY
-          echo "- Commit: ${{ steps.gitinfo.outputs.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit: ${{ needs.package-qc.outputs.sha }}" >> $GITHUB_STEP_SUMMARY
           echo "- Measure: ${{ inputs.measure_path }}" >> $GITHUB_STEP_SUMMARY
           echo "- Runtime (seconds): $(jq -r .RunTimeSeconds step-status.json)" >> $GITHUB_STEP_SUMMARY
           echo "- Status: $(jq -r .Status step-status.json)" >> $GITHUB_STEP_SUMMARY
