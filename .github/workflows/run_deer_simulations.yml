@@ -195,18 +195,21 @@ jobs:
           mkdir -p qc-artifacts
 
           aws s3 cp \
-            "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/qc/simulation_stats.csv" \
-            "qc-artifacts/simulation_stats.csv"
+            "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/outputs/package-qc/measure-qc.json" \
+            "outputs/package-qc/measure-qc.json"
+          aws s3 cp \
+            "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/outputs/package-qc/scenario-index.json" \
+            "outputs/package-qc/scenario-index.json"
 
-          test -s "qc-artifacts/simulation_stats.csv"
+          test -s "outputs/package-qc/measure-qc.json"
+          test -s "outputs/package-qc/scenario-index.json"
 
       - name: Upload QC results
         id: upload-qc
         uses: actions/upload-artifact@v4
         with:
-          name: deer-qc-results-${{ github.run_id }}
-          path: |
-            qc-artifacts/simulation_stats.csv
+          name: package-qc
+          path: outputs/package-qc/*
           if-no-files-found: error
           retention-days: 30
 
