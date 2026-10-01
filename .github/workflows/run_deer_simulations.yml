@@ -207,10 +207,14 @@ jobs:
             "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/outputs/package-qc/measure-qc.json" \
             "outputs/package-qc/measure-qc.json"
           aws s3 cp \
+            "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/outputs/package-qc/measure-qc.md" \
+            "outputs/package-qc/measure-qc.md"
+          aws s3 cp \
             "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/outputs/package-qc/scenario-index.json" \
             "outputs/package-qc/scenario-index.json"
 
           test -s "outputs/package-qc/measure-qc.json"
+          test -s "outputs/package-qc/measure-qc.md"
           test -s "outputs/package-qc/scenario-index.json"
 
       - name: Upload QC results
@@ -226,13 +230,13 @@ jobs:
         shell: bash
         run: |
           STATUS=$(jq -r .Status step-status.json)
-          echo "## DEER Simulation Results" >> $GITHUB_STEP_SUMMARY
+          echo "## Package QC submission info" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- Repository: $(jq -r .Repository step-status.json)" >> $GITHUB_STEP_SUMMARY
           echo "- Commit: ${{ steps.gitinfo.outputs.sha }}" >> $GITHUB_STEP_SUMMARY
           echo "- Measure: ${{ inputs.measure_path }}" >> $GITHUB_STEP_SUMMARY
           echo "- Runtime (seconds): $(jq -r .RunTimeSeconds step-status.json)" >> $GITHUB_STEP_SUMMARY
-          echo "- Status: $(jq -r .Status step-status.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- Task status: $(jq -r .Status step-status.json)" >> $GITHUB_STEP_SUMMARY
           if [[ "$STATUS" != "Success" ]]; then
             echo "- Failure message: $(jq -r .FailureMessage step-status.json)" >> $GITHUB_STEP_SUMMARY
           fi
@@ -240,6 +244,9 @@ jobs:
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "### QC results" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
+          if [[ ${{ steps.download-qc.outcome }} == "success" ]]; then
+            cat outputs/package-qc/measure-qc.md >> $GITHUB_STEP_SUMMARY
+          fi
           echo "- ${{ steps.upload-qc.outputs.artifact-url }}" >> "$GITHUB_STEP_SUMMARY"
           echo "- Included files: \`measure-qc.json,scenario-index.json\`" >> "$GITHUB_STEP_SUMMARY"
           
